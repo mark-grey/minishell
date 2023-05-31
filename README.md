@@ -7,11 +7,11 @@ O **minishell**, como o nome já sugere, é um programa que reproduz alguns comp
 
 ## Implementações <img src="https://img.shields.io/badge/GRADE-0%2F100-red" align="right">
 
-- Prompt display
-- Histórico de comandos
-- Executáveis do sistema disponíveis no ambiente (`ls`, `cat`, `grep`, etc.)
-- Executáveis locais (`./minishell`)
-- Pipes (`|`) que redirecionam a saída de um comando para a entrada do próximo
+- Prompt display.
+- Histórico de comandos.
+- Executáveis do sistema disponíveis no ambiente (`ls`, `cat`, `grep`, etc.).
+- Executáveis locais (`./minishell`).
+- Pipes (`|`) que redirecionam a saída de um comando para a entrada do próximo.
 - Variáveis de ambiente (`$VAR`) que se expandem para seus valores.
 - Variável especial `$?` que armazena o código de saída (exit code) do último comando executado (Exemplo: 200 Success).
 
@@ -24,8 +24,8 @@ O **minishell**, como o nome já sugere, é um programa que reproduz alguns comp
 ### Redirecionadores
 
 - `>` *\<arquivo>*: Redireciona a saída para o 'arquivo' especificado.
-- `>>` *\<arquivo>*: Redireciona a saída, mas acrescenta ao final do arquivo ao invés de substituir o conteúdo.
 - `<` *\<arquivo>*: Redireciona  a entrada para o 'arquivo' especificado.
+- `>>` *\<arquivo>*: Redireciona a saída, mas acrescenta ao final do arquivo ao invés de substituir o conteúdo.
 - `<<` *\<delimitador>*: Permite a entrada de múltiplas linhas, terminando com o delimitador. Exibe um novo prompt interativo, lê a entrada até atingir o 'delimitador', redireciona a entrada do usuário para a entrada do comando (não atualiza o histórico).
 
 ### Builtins
