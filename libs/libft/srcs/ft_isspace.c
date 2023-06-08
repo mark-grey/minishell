@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:59:25 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/07 16:53:58 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/07 21:31:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_isspace(int c)
 {
-	return ((unsigned)c - '0' < 10);
+	return (c == ' ' || (unsigned)c - '\t' < 5);
 }
