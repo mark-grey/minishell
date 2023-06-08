@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 20:57:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/08 08:31:33 by inwagner         ###   ########.fr       */
+/*   Created: 2023/06/08 08:31:17 by inwagner          #+#    #+#             */
+/*   Updated: 2023/06/08 09:27:31 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+size_t	ft_abs(int n)
 {
-	int	n;
-	int	neg;
+	size_t	num;
 
-	n = 0;
-	neg = 0;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '-')
-		neg = 1;
-	if (*str == '-' || *str == '+')
-		str++;
-	while (ft_isdigit(*str))
-		n = 10 * n - (*str++ - '0');
-	if (neg)
-		return (n);
-	return (-n);
+	num = n;
+	if (n < 0)
+		return (-num);
+	return (num);
 }
