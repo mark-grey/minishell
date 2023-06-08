@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:43:42 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/07 21:02:50 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:55:21 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,4 @@ int		ft_to_tester(int (*f)(int), int (*ft_f)(int), int test)
 	return (1);
 }
 
-// cc -Wall -Werror -Wextra -I ../incl/ ft_isalpha.c ft_isalnum.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c tester_char.c ft_tolower.c ft_toupper.c ft_isblank.c ft_isgraph.c ft_islower.c ft_isupper.c ft_isxdigit.c ft_ispunct.c
+// clang -Wall -Werror -Wextra -I ../incl/ ft_isalpha.c ft_isalnum.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_isspace.c tester_char.c ft_tolower.c ft_toupper.c ft_isblank.c ft_isgraph.c ft_islower.c ft_isupper.c ft_isxdigit.c ft_ispunct.c
