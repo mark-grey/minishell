@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:03:22 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/07 20:48:33 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:12:22 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# ifndef INT_MAX
-#  define INT_MAX 2147483647
+# ifndef I_MAX
+#  define I_MAX 2147483647
 # endif
 
-# ifndef INT_MIN
-#  define INT_MIN -2147483648
+# ifndef I_MIN
+#  define I_MIN -2147483648
 # endif
 
 // Char
@@ -57,8 +57,9 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 int		ft_strncmp(const char *stra, const char *strb, size_t n);
 
 // Conversion
+size_t	ft_abs(int n);
 char	*ft_itoa(int n);
-int		ft_atoi(const char *strNum);
+int		ft_atoi(const char *str);
 
 // Memory
 void	ft_bzero(void *s, size_t n);
