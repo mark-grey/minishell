@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tester_char.c                                   :+:      :+:    :+:   */
+/*   tester_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:43:42 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/07 17:30:53 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:52:08 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,33 @@ int		ft_to_tester(int (*f)(int), int (*ft_f)(int), int test);
 int main(void)
 {
 	int		i;
-	char	str[] = "Life is like a CAMERA. Focus on the GOOD TIMES, develop from the negatives, and if things do not work out, TAKE ANOTHER SHOT.\n";
+	//char	str[] = "Life is like a CAMERA. Focus on the GOOD TIMES, develop from the negatives, and if things do not work out, TAKE ANOTHER SHOT.\n";
 
 	/* IS TESTER
 	i = 0;
 	while (i < 128)
 	{
-		ft_is_tester(&isalnum, &ft_isalnum, i);
-		ft_is_tester(&isalpha, &ft_isalpha, i);
-		ft_is_tester(&isascii, &ft_isascii, i);
-		ft_is_tester(&isdigit, &ft_isdigit, i);
-		ft_is_tester(&isprint, &ft_isprint, i);
-		ft_is_tester(&isspace, &ft_isspace, i);
+		//ft_is_tester(&isalnum, &ft_isalnum, i);
+		//ft_is_tester(&isalpha, &ft_isalpha, i);
+		//ft_is_tester(&isascii, &ft_isascii, i);
+		//ft_is_tester(&isdigit, &ft_isdigit, i);
+		//ft_is_tester(&isprint, &ft_isprint, i);
+		//ft_is_tester(&isspace, &ft_isspace, i);
+		//ft_is_tester(&isupper, &ft_isupper, i);
+		//ft_is_tester(&islower, &ft_islower, i);
+		//ft_is_tester(&isblank, &ft_isblank, i);
+		//ft_is_tester(&isgraph, &ft_isgraph, i);
+		//ft_is_tester(&ispunct, &ft_ispunct, i);
+		//ft_is_tester(&isxdigit, &ft_isxdigit, i);
 		i++;
 	}
 	*/
 	
 	/* TO LOWER TESTER
-	*/
 	i = 0;
 	while (ft_to_tester(&tolower, &ft_tolower, str[i]))
 		i++;
+	*/
 		
 	/* TO LOWER TESTER
 	i = 0;

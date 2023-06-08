@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_isxdigit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 18:11:25 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/07 20:16:08 by inwagner         ###   ########.fr       */
+/*   Created: 2023/06/07 20:32:01 by inwagner          #+#    #+#             */
+/*   Updated: 2023/06/07 20:50:14 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_tolower(int c)
+int	ft_isxdigit(int c)
 {
-	if (ft_isupper(c))
-		return (c + 32);
-	return (c);
+	return (ft_isdigit(c) || \
+	((unsigned)c - 'a' < 6) || ((unsigned)c - 'A' < 6));
 }

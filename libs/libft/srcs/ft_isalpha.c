@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:08:56 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/07 17:19:50 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:19:15 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_isalpha(int c)
 {
-	return((unsigned)c - 'A' < 26 || (unsigned)c - 'a' < 26);
+	return ((unsigned)c - 'A' < 26 || (unsigned)c - 'a' < 26);
 }
