@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:03:22 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/08 18:32:44 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:47:51 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,10 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
+
+// New Functions
+size_t	ft_strspn(const char *str, const char *charset);
+size_t	ft_strcspn(const char *str, const char *reject);
+char	*ft_strtok(char *str, const char *delimiters);
 
 #endif
