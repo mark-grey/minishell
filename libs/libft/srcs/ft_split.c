@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:08:08 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/08 19:22:46 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 11:31:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	ft_substr_len(char const *s, int start, char c)
 	int	len;
 
 	len = 0;
-	while (s[start++] != c && s[start])
+	while (s[start] != c && s[start++])
 		len++;
 	return (len);
 }
