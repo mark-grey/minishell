@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:43:42 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/09 13:14:49 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:29:59 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int main()
 	test_ft_strtok("one;two;three;four", ";");  // Esperado: one | two | three | four
 	test_ft_strtok("apple,banana,,grape", ",");  // Esperado: apple | banana | (vazio) | grape
 	test_ft_strtok("The_quick_brown_fox", "_");  // Esperado: The | quick | brown | fox
-	test_ft_strtok(" ", ".");  // Esperado:
+	test_ft_strtok(" ", ".");  // Esperado: (espaço)
+	test_ft_strtok("Testando..test1.test2, teste3", ".,");  // Esperado: Testando | test1 |  test3 (delimitador é um charset)
+	test_ft_strtok("|Bugbug~byebye|", "|");  // Esperado: Bugbug~byebye
+	test_ft_strtok("", "i");  // Esperado:
 
 	return 0;
 }
