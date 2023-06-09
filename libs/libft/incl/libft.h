@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:03:22 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/08 13:12:22 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:32:44 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strrchr(const char *src, int c);
+char	*ft_strdup(const char *s1);
 size_t	ft_strlcat(char *dst, const char *src, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t len);
 size_t	ft_strlen(const char *src);
@@ -63,12 +64,11 @@ int		ft_atoi(const char *str);
 
 // Memory
 void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t nitems, size_t size);
+void	*ft_calloc(size_t num, size_t size);
 void	*ft_memchr(const void *src, int c, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memset(void *src, int c, size_t n);
-char	*ft_strdup(const char *s1);
 int		ft_memcmp(const void *stra, const void *strb, size_t n);
 
 // File Descriptor
