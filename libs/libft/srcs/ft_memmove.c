@@ -6,12 +6,11 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:09:03 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/08 18:33:35 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/08 21:59:08 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 void	*ft_memmove(void *dst, const void *src, size_t n)
 {
