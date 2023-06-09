@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:07:11 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/08 18:45:41 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 11:28:50 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 void	*ft_calloc(size_t num, size_t size)
 {
 	void	*dst;
+	size_t	sz;
 
-	if (!num || !size || num * size / size != num)
+	sz = num * size;
+	if (!num || !size || sz / size != num)
 		return (NULL);
-	dst = malloc(num * size);
+	dst = malloc(sz);
 	if (!dst)
 		return (NULL);
-	ft_bzero(dst, num * size);
+	ft_bzero(dst, sz);
 	return (dst);
 }
