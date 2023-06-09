@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:11:45 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/09 12:28:33 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:13:37 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 size_t	ft_strcspn(const char *str, const char *reject)
 {
-	size_t	count;
+	size_t	size;
 
-	count = 0;
+	size = 0;
 	while (*str)
 	{
 		if (!ft_strchr(reject, *str))
-			count++;
+			size++;
 		else
 			break ;
 		str++;
 	}
-	return (count);
+	return (size);
 }

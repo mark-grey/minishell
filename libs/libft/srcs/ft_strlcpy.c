@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:09:49 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/09 11:31:37 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:37:28 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 size_t	ft_strlcpy(char *dst, const char *src, size_t len)
 {
 	size_t	i;
-	size_t	lsrc;
 
 	if (!dst || !src)
 		return (0);
+	if (!len)
+		return (ft_strlen(src));
 	i = -1;
-	while (len && i != (len - 1) && src[++i])
+	while (src[++i] && i < len - 1)
 		dst[i] = src[i];
-	if (len)
-		dst[i] = '\0';
-	lsrc = ft_strlen(src);
-	return (lsrc);
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }
