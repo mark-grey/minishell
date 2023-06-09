@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:03:22 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/09 12:47:51 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:48:33 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t len);
 size_t	ft_strlen(const char *src);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-int		ft_strncmp(const char *stra, const char *strb, size_t n);
+int		ft_strncmp(const char *str1, const char *str2, size_t n);
 
 // Conversion
 size_t	ft_abs(int n);
