@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 17:06:10 by inwagner          #+#    #+#              #
-#    Updated: 2023/06/06 17:25:15 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/09 16:45:33 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@
 NAME	:=	libft.a
 
 # FLAGS
-HDR		:=	-I ./includes/
+HDR		:=	-I ./incl/
 CFLAG	:=	-Wall -Wextra -Werror
 
 # PATHS
-SRC		:=	./src/
+SRC		:=	./srcs/
 OSRC	:=	./objs/
 
 # MANDATORY
