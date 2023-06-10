@@ -6,58 +6,86 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/10 16:21:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:54:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_type(char *path, char *exec, int path_len, int exec_len)
+/*
+	Builds a complete filename for checking with the access function,
+	joining the path and exec so the access function can be called
+	regardless of the current directory
+*/
+char	*get_full_path(char *path, char *command, int path_len, int command_len)
 {
 	char	*full;
-	int		is_exec;
 
-	is_exec = 0;
-	full = malloc(path_len + exec_len + 2);
+	full = malloc(path_len + command_len + 2);
 	if (!full)
-		return (-1);
+		return (NULL);
 	ft_memcpy(full, path, path_len);
-	ft_memcpy(full + path_len + 1, exec, exec_len);
+	ft_memcpy(full + path_len + 1, command, command_len);
 	full[path_len] = '/';
-	full[path_len + exec_len + 1] = '\0';
-	printf("%s\n", full);
-	if (!access(full, X_OK))
-		is_exec = 1;
-	free(full);
-	return (is_exec);
+	full[path_len + command_len + 1] = '\0';
+	return (full);
 }
 
-int	find_exec(char *path, char *exec_name)
+/*
+	Checks if the complete path is an executable
+*/
+char	*check_requested_exec(char *path, char *command, int path_len, int command_len)
+{
+	char	*str;
+
+	str = NULL;
+	str = get_full_path(path, command, path_len, command_len);
+	if (access(str, X_OK))
+	{
+		free(str);
+		str = NULL;
+	}
+	return (str);
+}
+
+/*
+	Searches the directory "path" for an executable named "command"
+*/
+char	*find_exec(char *path, char *command)
 {
 	struct dirent	*files;
 	DIR				*dir;
+	char			*full_path;
 	size_t			len;
 
 	dir = opendir(path);
 	if (!dir)
-		return (-1);
-	len = ft_strlen(exec_name);
-	while (len)
+		return (NULL);
+	full_path = NULL;
+	files = readdir(dir);
+	len = ft_strlen(command);
+	while (len && files)
 	{
-		files = readdir(dir);
-		if (!files)
+		if (!ft_strncmp(command, files->d_name, len + 1))
+			full_path = check_requested_exec(path, command, ft_strlen(path), len);
+		if (full_path)
 			break ;
-		if (!ft_strncmp(exec_name, files->d_name, len + 1))
-			if (check_type(path, exec_name, ft_strlen(path), len))
-				printf("GOTCHA\n");
+		files = readdir(dir);
 	}
 	closedir(dir);
-	return (0);
+	return (full_path);
 }
 
 int	main(int argc, char **argv)
 {
+	char *str;
+
 	if (argc != 3)
 		return (1);
-	find_exec(argv[1], argv[2]);
+	str = find_exec(argv[1], argv[2]);
+	if (str)
+	{
+		printf("%s\n", str);
+		free(str);
+	}
 }
