@@ -5,69 +5,65 @@
 #                                                     +:+ +:+         +:+      #
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/31 20:14:08 by inwagner          #+#    #+#              #
-#    Updated: 2023/05/31 21:47:05 by inwagner         ###   ########.fr        #
+#    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
+#    Updated: 2023/06/09 21:04:42 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/31 19:51:29 by inwagner          #+#    #+#              #
-#    Updated: 2023/05/31 20:09:37 by inwagner         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# Program name
+NAME := minishell
 
-# NAMES
-NAME	:=	minishell
+# Directories for source, object and libraries
+SRC_DIR := ./srcs
+OBJ_DIR := ./objs
+BSRC_DIR := ./bonus/srcs
+HDR_DIR := ./incl
+FTLIB_DIR := ./libs/libft
+FTLIB := $(FTLIB_DIR)/libft.a
 
-# PATHS
-SRC		:=	./srcs/
-OSRC	:=	./objs/
-BSRC	:=	./bonus/srcs/
-HDR		:=	./incl/
-LSRC	:=	./libs/libft
-LBFT	:=	$(LSRC)/libft.a
+# Compilation flags
+CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
+BCFLAGS := -Wall -Wextra -Werror -I ./bonus/incl
 
-# FLAGS
-CFLAG	:=	-Wall -Wextra -Werror -I $(HDR)
+# Source files
+FUN := mini.c check_commands.c
 
-# FILES
-FTS		:=	main.c
+# Object files
+OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
+BOBJ := $(BFUN:%.c=$(OBJ_DIR)/%.o)
 
-# OBJECTS
-OBJ		:=	$(FTS:%.c=$(OSRC)%.o)
-
-# Commands
 all: $(NAME)
 
-# Link objects
-$(NAME): $(OBJ) $(LBFT)
-	cc $(OBJ) $(LBFT) -o $@
+$(NAME): $(OBJ) $(FTLIB)
+	cc $(OBJ) $(FTLIB) -lreadline -o $@
 
-# Compile libraries
-$(LBFT):
-	@$(MAKE) -C $(LSRC) --silent
+$(FTLIB):
+	@$(MAKE) -C $(FTLIB_DIR) --silent
 
-# Compile objects
-$(OSRC)%.o: $(SRC)%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
-	cc $(CFLAG) -c $< -o $@
+	cc $(CFLAGS) -c $< -o $@
 
-# Cleaners and Remakers
+bonus: $(NAMEB)
+
+$(NAMEB): $(BOBJ) $(FTLIB)
+	cc $(BOBJ) $(FTLIB) -o $@
+
+$(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@cc $(BCFLAGS) -c $< -o $@
+
+val:
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME}
 clean:
-	@$(MAKE) -C $(LSRC) --silent clean
-	@[ -d $(OSRC) ] && rm -rf $(OSRC) || echo Object directory doesn\'t exist.
+	@$(MAKE) -C $(FTLIB_DIR) --silent clean
+	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
 fclean: clean
-	@$(MAKE) -C $(LSRC) --silent fclean
-	@[ -f ./$(NAME) ] && rm $(NAME) || echo Program $(NAME) isn\'t compiled.
+	@$(MAKE) -C $(FTLIB_DIR) --silent fclean
+	@[ -f ./$(NAME) ] && rm $(NAME) || echo Program $(NAME) isn\'t compiled
+	@[ -f ./$(NAMEB) ] && rm $(NAMEB)|| echo Bonus $(NAMEB) isn\'t compiled
 
 re: fclean all
 
-# Recipes
 .PHONY: all bonus clean fclean re
