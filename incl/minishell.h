@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libs/libft/incl/libft.h"
+
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -17,6 +19,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-# include "../libs/libft/incl/libft.h"
+// Functions
+int	is_builtin(char *str);
 
 #endif
