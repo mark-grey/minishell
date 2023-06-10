@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/09 21:02:27 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/10 14:30:47 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ void	print_env(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
+	t_env	*env_list;
+
 	(void)argc;
 	(void)argv;
-	print_env(env);
+	env_list = parse_env(env);
+	(void)env_list;
 	while (1)
 		prompt_user("minishell:> ");
 }
