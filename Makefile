@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/10 13:03:09 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/10 15:32:42 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,7 @@ BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
 # Source files
 FUN			:=	main.c \
 				checkers.c \
-				parse_env.c \
-				utils_list.c
+				parse_env.c
 
 # Object files
 OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)
