@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/09 21:04:42 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/10 08:14:10 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 BCFLAGS := -Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
-FUN := mini.c check_commands.c
+FUN := main.c checkers.c
 
 # Object files
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
