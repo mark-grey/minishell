@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/10 21:03:59 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 10:34:31 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,21 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+// Structs
+typedef struct	s_env
+{
+	char			*key;
+	char			*value;
+	struct	s_env	*next;
+}					t_env;
+
 // Functions
 int		is_builtin(char *str);
 char	*find_exec(char *path, char *command);
+t_env	*parse_env(char **env);
+t_env	*ft_add_var(t_env *prev, char *var);
+t_env	*ft_search_var(char *str, t_env *list);
+void	ft_remove_var(char *str, t_env *list);
+void	ft_set_var(const char *src, t_env *node);
 
 #endif
