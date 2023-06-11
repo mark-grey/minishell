@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 11:04:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:58:30 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_env	*ft_add_var(t_env *prev, char *var)
 	newnode = malloc(sizeof(t_env));
 	if (!newnode)
 		exit(1);
+	*newnode = (t_env){0};
 	if (prev)
 		prev->next = newnode;
-	newnode->next = NULL;
 	ft_set_var(var, newnode);
 	return (newnode);
 }
@@ -61,7 +61,7 @@ t_env	*ft_search_var_node(char *str, t_env *list)
 {
 	int	size;
 
-	size = ft_strlen(str);
+	size = ft_strlen(str) + 1;
 	while (list)
 	{
 		if (!ft_strncmp(str, list->key, size + 1))

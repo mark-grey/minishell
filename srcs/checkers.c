@@ -6,45 +6,15 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:32:31 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/11 11:55:46 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:58:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Testing part
-void	print_env(char **env)
-{
-	while (*env)
-	{
-		ft_putstr_fd(*env++, 1);
-		write(1, "\n", 2);
-	}
-	write(1, "\n", 1);
-}
-
-void	print_var_list(t_env *list)
-{
-	while (list)
-	{
-		printf("%s=%s\n", list->key, list->value);
-		list = list->next;
-	}
-}
-
-void	clear_var_list(t_env *list)
-{
-	if (!list)
-		return ;
-	clear_var_list(list->next);
-	if (list->key)
-		free(list->key);
-	free(list);
-}
-// End test
-
 int	is_builtin(char *str, t_env *env_list)
 {
+
 	if (!ft_strncmp(str, "ping\0", 5))
 	{
 		printf("pong\n");
