@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/10 20:54:43 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/10 21:17:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,22 @@ char	*find_exec(char *path, char *command)
 	return (full_path);
 }
 
-int	main(int argc, char **argv)
+/*
+	Loops through path variable to find executable file
+*/
+char	*path_parser(char *env_path, char *command)
 {
-	char *str;
+	char	*token;
+	char	*str;
 
-	if (argc != 3)
-		return (1);
-	str = find_exec(argv[1], argv[2]);
-	if (str)
+	token = ft_strtok(env_path, ":");
+	str = NULL;
+	while (token)
 	{
-		printf("%s\n", str);
-		free(str);
+		str = find_exec(token, command);
+		if (str)
+			return (str);
+		token = ft_strtok(NULL, ":");
 	}
+	return (NULL);
 }
