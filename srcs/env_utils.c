@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkers.c                                         :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 21:32:31 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/11 13:51:32 by maalexan         ###   ########.fr       */
+/*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
+/*   Updated: 2023/06/11 13:53:01 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(char *str, t_env *env_list)
+void	print_var_list(t_env *list)
 {
-	if (!ft_strncmp(str, "ping\0", 5))
-	{
-		printf("pong\n");
-		return (1);
-	}
-	if (!ft_strncmp(str, "exit\0", 5))
-	{
-		clear_var_list(env_list);
-		free(str);
-		exit(0);
-	}
-	if (!ft_strncmp(str, "env\0", 4))
-	{
-		print_var_list(env_list);
-		return (1);
-	}
-	return (0);
+	if (!list)
+		return ;
+	printf("%s=%s\n", list->key, list->value);
+	print_var_list(list->next);
+}
+
+void	clear_var_list(t_env *list)
+{
+	if (!list)
+		return ;
+	clear_var_list(list->next);
+	if (list->key)
+		free(list->key);
+	free(list);
 }
