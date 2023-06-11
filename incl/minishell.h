@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 10:34:31 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 11:29:44 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ typedef struct	s_env
 }					t_env;
 
 // Functions
-int		is_builtin(char *str);
-char	*find_exec(char *path, char *command);
+int		is_builtin(char *str, t_env *env_list);
+int		is_exec(char *path, char *command);
+char	*path_parser(char *path, char *command);
 t_env	*parse_env(char **env);
 t_env	*ft_add_var(t_env *prev, char *var);
-t_env	*ft_search_var(char *str, t_env *list);
+t_env	*ft_search_var_node(char *str, t_env *list);
 void	ft_remove_var(char *str, t_env *list);
 void	ft_set_var(const char *src, t_env *node);
 

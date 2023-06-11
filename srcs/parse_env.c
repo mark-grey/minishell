@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/10 15:27:01 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/11 11:04:19 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ t_env	*ft_add_var(t_env *prev, char *var)
  * Procura uma variável na lista, e, caso não
  * encontre, retorna nulo.
  */
-t_env	*ft_search_var(char *str, t_env *list)
+t_env	*ft_search_var_node(char *str, t_env *list)
 {
 	int	size;
 
 	size = ft_strlen(str);
 	while (list)
 	{
-		if (!ft_strncmp(str, list->key, size))
+		if (!ft_strncmp(str, list->key, size + 1))
 			return (list);
 		list = list->next;
 	}
