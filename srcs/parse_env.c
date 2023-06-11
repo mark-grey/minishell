@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 13:58:30 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:03:49 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ t_env	*ft_add_var(t_env *prev, char *var)
  * Procura uma variável na lista, e, caso não
  * encontre, retorna nulo.
  */
-t_env	*ft_search_var_node(char *str, t_env *list)
+t_env	*ft_search_var(char *str, t_env *list)
 {
 	int	size;
 
 	size = ft_strlen(str) + 1;
 	while (list)
 	{
-		if (!ft_strncmp(str, list->key, size + 1))
+		if (!ft_strncmp(str, list->key, size))
 			return (list);
 		list = list->next;
 	}

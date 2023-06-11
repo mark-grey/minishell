@@ -6,23 +6,17 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 11:45:04 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:10:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_var_value(char *value, t_env *env_list)
+void	exit_program(int code, t_env *list)
 {
-	char	*list_value;
-	t_env	*env_node;
-
-	list_value = NULL;
-	env_node = NULL;
-	env_node = ft_search_var_node(value, env_list);
-	if (env_node)
-		list_value = env_node->value;
-	return (list_value);
+	if (list)
+		clear_var_list(list);
+	exit(code);
 }
 
 void	prompt_user(const char *prompt, t_env *env_list)
@@ -33,7 +27,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
-		exit(127);
+		exit_program(127, env_list);
 	if (!is_builtin(line, env_list))
 		if (!is_exec(path, line))
 			printf("Command \"%s\" not found\n", line);
