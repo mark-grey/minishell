@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathfinder.c                                       :+:      :+:    :+:   */
+/*   t_pathfinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:19:17 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/10 21:20:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/10 21:30:47 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 }
 
 /*
-gcc -Wall -Werror -Wextra -I ./incl/ test/pathfinder.c srcs/finders.c libs/libft/libft.a -o pathfinder
+gcc -Wall -Werror -Wextra -I ./incl/ test/t_pathfinder.c srcs/finders.c libs/libft/libft.a -o pathfinder
 
 Usage: ./pathfinder <executable name>
 
