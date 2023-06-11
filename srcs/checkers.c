@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:32:31 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/11 11:38:13 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 11:55:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ void	print_var_list(t_env *list)
 		list = list->next;
 	}
 }
+
+void	clear_var_list(t_env *list)
+{
+	if (!list)
+		return ;
+	clear_var_list(list->next);
+	if (list->key)
+		free(list->key);
+	free(list);
+}
 // End test
 
 int	is_builtin(char *str, t_env *env_list)
@@ -42,6 +52,7 @@ int	is_builtin(char *str, t_env *env_list)
 	}
 	if (!ft_strncmp(str, "exit\0", 5))
 	{
+		clear_var_list(env_list);
 		free(str);
 		exit(0);
 	}
