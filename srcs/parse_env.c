@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/12 22:12:12 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:21:05 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_set_var(const char *src, t_env *node)
 
 	if (node->key)
 		free (node->key);
-	len	= ft_strlen(src) + 1;
+	len = ft_strlen(src) + 1;
 	dst = malloc(sizeof(char) * len);
 	if (!dst)
 		exit(1);
@@ -41,7 +41,7 @@ void	ft_set_var(const char *src, t_env *node)
  */
 t_env	*ft_add_var(t_env *prev, char *var)
 {
-	t_env *newnode;
+	t_env	*newnode;
 
 	newnode = malloc(sizeof(t_env));
 	if (!newnode)
@@ -75,7 +75,7 @@ t_env	*ft_search_var(char *str, t_env *list)
  * Através do endereço do item anterior da lista,
  * é deletado o item desejado.
  */
-t_env*	ft_remove_var(char* str, t_env* list)
+t_env	*ft_remove_var(char *str, t_env *list)
 {
 	t_env	*prev;
 	t_env	*current;
@@ -94,7 +94,7 @@ t_env*	ft_remove_var(char* str, t_env* list)
 				prev->next = current->next;
 			free(current->key);
 			free(current);
-			break;
+			break ;
 		}
 		prev = current;
 		current = current->next;

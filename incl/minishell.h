@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/10 14:56:36 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:19:23 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
 # include <readline/readline.h>
 
 // Structs
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	struct	s_env	*next;
+	struct s_env	*next;
 }					t_env;
 
 // Functions
