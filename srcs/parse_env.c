@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 13:41:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:12:12 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,31 @@ t_env	*ft_search_var(char *str, t_env *list)
  * Através do endereço do item anterior da lista,
  * é deletado o item desejado.
  */
-void	ft_remove_var(char *str, t_env *list)
+t_env*	ft_remove_var(char* str, t_env* list)
 {
-	t_env	*temp;
-	int		size;
+	t_env	*prev;
+	t_env	*current;
 
-	size = ft_strlen(str) + 1;
-	while (list)
+	if (!str || !list)
+		return (list);
+	prev = NULL;
+	current = list;
+	while (current)
 	{
-		if (!ft_strncmp(str, list->next->key, size))
-			break ;
-		list = list->next;
+		if (!ft_strcmp(str, current->key))
+		{
+			if (prev == NULL)
+				list = current->next;
+			else
+				prev->next = current->next;
+			free(current->key);
+			free(current);
+			break;
+		}
+		prev = current;
+		current = current->next;
 	}
-	free(list->next->key);
-	temp = list->next;
-	list->next = list->next->next;
-	free(temp);
+	return (list);
 }
 
 /* PARSE ENV
