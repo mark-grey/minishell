@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 14:03:49 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:23:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_set_var(const char *src, t_env *node)
 
 	if (node->key)
 		free (node->key);
-	len	= ft_strlen(src) + 1;
+	len = ft_strlen(src) + 1;
 	dst = malloc(sizeof(char) * len);
 	if (!dst)
 		exit(1);
@@ -41,7 +41,7 @@ void	ft_set_var(const char *src, t_env *node)
  */
 t_env	*ft_add_var(t_env *prev, char *var)
 {
-	t_env *newnode;
+	t_env	*newnode;
 
 	newnode = malloc(sizeof(t_env));
 	if (!newnode)
@@ -75,22 +75,31 @@ t_env	*ft_search_var(char *str, t_env *list)
  * Através do endereço do item anterior da lista,
  * é deletado o item desejado.
  */
-void	ft_remove_var(char *str, t_env *list)
+t_env	*ft_remove_var(char *str, t_env *list)
 {
-	t_env	*temp;
-	int		size;
+	t_env	*prev;
+	t_env	*current;
 
-	size = ft_strlen(str) + 1;
-	while (list)
+	if (!str || !list)
+		return (list);
+	prev = NULL;
+	current = list;
+	while (current)
 	{
-		if (!ft_strncmp(str, list->next->key, size))
+		if (!ft_strncmp(str, current->key, ft_strlen(str) + 1))
+		{
+			if (prev == NULL)
+				list = current->next;
+			else
+				prev->next = current->next;
+			free(current->key);
+			free(current);
 			break ;
-		list = list->next;
+		}
+		prev = current;
+		current = current->next;
 	}
-	free(list->next->key);
-	temp = list->next;
-	list->next = list->next->next;
-	free(temp);
+	return (list);
 }
 
 /* PARSE ENV
