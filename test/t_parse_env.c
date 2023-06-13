@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   t_parse_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/10 15:02:13 by inwagner         ###   ########.fr       */
+/*   Created: 2023/06/10 15:01:31 by inwagner          #+#    #+#             */
+/*   Updated: 2023/06/10 15:29:47 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt_user(const char *prompt)
+void	print_env(char **env)
 {
-	char	*line;
+	while (*env)
+	{
+		ft_putstr_fd(*env++, 1);
+		write(1, "\n", 2);
+	}
+	write(1, "\n", 1);
+}
 
-	line = readline(prompt);
-	if (!line)
-		exit(127);
-	if (!is_builtin(line))
-		printf("temp\n");
-	free(line);
+void	print_var_list(t_env *list)
+{
+	while (list)
+	{
+		printf("%s=%s\n", list->key, list->value);
+		list = list->next;
+	}
 }
 
 int	main(int argc, char **argv, char **env)
@@ -30,8 +37,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	print_env(env);
 	env_list = parse_env(env);
+	print_var_list(env_list);
 	(void)env_list;
-	while (1)
-		prompt_user("minishell:> ");
 }

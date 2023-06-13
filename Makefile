@@ -6,31 +6,33 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/10 08:14:10 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/10 15:32:42 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Program name
-NAME := minishell
+NAME		:=	minishell
 
 # Directories for source, object and libraries
-SRC_DIR := ./srcs
-OBJ_DIR := ./objs
-BSRC_DIR := ./bonus/srcs
-HDR_DIR := ./incl
-FTLIB_DIR := ./libs/libft
-FTLIB := $(FTLIB_DIR)/libft.a
+SRC_DIR		:=	./srcs
+OBJ_DIR		:=	./objs
+BSRC_DIR	:=	./bonus/srcs
+HDR_DIR		:=	./incl
+FTLIB_DIR	:=	./libs/libft
+FTLIB		:=	$(FTLIB_DIR)/libft.a
 
 # Compilation flags
-CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
-BCFLAGS := -Wall -Wextra -Werror -I ./bonus/incl
+CFLAGS		:=	-Wall -Wextra -Werror -I $(HDR_DIR)
+BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
-FUN := main.c checkers.c
+FUN			:=	main.c \
+				checkers.c \
+				parse_env.c
 
 # Object files
-OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
-BOBJ := $(BFUN:%.c=$(OBJ_DIR)/%.o)
+OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)
+BOBJ		:=	$(BFUN:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
