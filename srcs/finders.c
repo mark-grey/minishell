@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/10 21:17:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/11 11:42:50 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,11 @@ char	*path_parser(char *env_path, char *command)
 	char	*token;
 	char	*str;
 
-	token = ft_strtok(env_path, ":");
 	str = NULL;
+	str = find_exec(".", command);
+	if (str)
+		return (str);
+	token = ft_strtok(env_path, ":");
 	while (token)
 	{
 		str = find_exec(token, command);

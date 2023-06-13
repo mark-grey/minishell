@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/12 22:21:05 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:23:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_env	*ft_remove_var(char *str, t_env *list)
 	current = list;
 	while (current)
 	{
-		if (!ft_strcmp(str, current->key))
+		if (!ft_strncmp(str, current->key, ft_strlen(str) + 1))
 		{
 			if (prev == NULL)
 				list = current->next;
