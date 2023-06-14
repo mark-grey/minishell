@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/13 19:22:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:40:54 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_env
 }					t_env;
 
 // Functions
-int		is_builtin(char *str, t_env *env_list);
+int		is_builtin(char *builtin, t_env *env_list, char *args);
 int		is_exec(char *path, char *command);
 char	*path_parser(char *path, char *command);
 char	*find_exec(char *path, char *command);

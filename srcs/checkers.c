@@ -3,35 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:32:31 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/11 13:58:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:59:42 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(char *str, t_env *env_list)
+int	is_builtin(char *builtin, t_env *env_list, char *args)
 {
-
-	if (!ft_strncmp(str, "ping\0", 5))
-	{
-		printf("pong\n");
+	(void)args;
+	if (!ft_strncmp(builtin, "", 1))
 		return (1);
-	}
-	if (!ft_strncmp(str, "exit\0", 5))
+	else if (!ft_strncmp(builtin, "env", 3))
+		print_var_list(env_list);
+	else if (!ft_strncmp(builtin, "echo", 5))
+		printf("Soon: echo\n");
+	else if (!ft_strncmp(builtin, "cd", 3))
+		printf("Soon: cd\n");
+	else if (!ft_strncmp(builtin, "pwd", 4))
+		printf("Soon: pwd\n");
+	else if (!ft_strncmp(builtin, "export", 3))
+		printf("Soon: export\n");
+	else if (!ft_strncmp(builtin, "unset", 3))
+		printf("Soon: unset\n");
+	else if (!ft_strncmp(builtin, "exit", 5))
 	{
 		clear_var_list(env_list);
-		free(str);
+		free(builtin);
 		exit(0);
 	}
-	if (!ft_strncmp(str, "env\0", 4))
-	{
-		print_var_list(env_list);
-		return (1);
-	}
-	return (0);
+	else if (!ft_strncmp(builtin, "ping", 5))
+		printf("pong\n");
+	else
+		return (0);
+	return (1);
 }
 
 int	is_exec(char *path, char *command)

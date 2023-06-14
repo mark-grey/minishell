@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/11 13:59:49 by maalexan         ###   ########.fr        #
+#    Updated: 2023/06/13 20:54:35 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,9 @@ BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
 # Source files
 FUN			:=	main.c \
 				checkers.c \
-				parse_env.c \
+				env_parse.c \
 				env_utils.c \
-				finders.c
+				exec_finders.c
 
 # Object files
 OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 14:10:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:00:48 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	line = readline(prompt);
 	if (!line)
 		exit_program(127, env_list);
-	if (!is_builtin(line, env_list))
+	// tratamento da 'line', separando em comando e argumento, e dividindo por partes.
+	if (!is_builtin(line, env_list, NULL))
 		if (!is_exec(path, line))
-			printf("Command \"%s\" not found\n", line);
+			printf("\"%s\": command not found\n", line);
 	free(line);
 }
 
