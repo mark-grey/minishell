@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/13 19:22:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:38:18 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_args
+{
+	char			*arg;
+	struct s_args	*next;
+}					t_args;
+
+typedef struct s_cli
+{
+	char			*command;
+	struct t_args	*args;
+	char			*director;
+	struct s_cli	*next;
+}					t_cli;
+
 // Functions
 int		is_builtin(char *str, t_env *env_list);
 int		is_exec(char *path, char *command);
@@ -52,6 +66,5 @@ void	ft_set_var(const char *src, t_env *node);
 void	print_var_list(t_env *list);
 void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
-
 
 #endif

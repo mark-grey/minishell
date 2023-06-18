@@ -6,25 +6,13 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/18 15:54:37 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:33:38 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef struct		s_args
-{
-	char			*arg;
-	struct s_args	*next;
-}					t_args;
 
-typedef struct		s_cli
-{
-	char			*command;
-	s_args			*args;
-	char			*director;
-	struct s_cli	*next;
-}					t_cli;
 
 /* VERIFICA SE É QUOTE
  * Comportamento do bash quando não encontra fechamento do quote:
@@ -33,7 +21,14 @@ typedef struct		s_cli
  */
 int	ft_isquote(char c)
 {
-	return (c == "\"" || c == "\'");
+	return (c == '\"' || c == '\'');
+}
+
+/* VERIFICA SE É CARACTERE DE REDIRECIONADOR
+ */
+int	ft_isredirector(char c)
+{
+	return (c == '>' || c == '<' || c == '|');
 }
 
 /* PEGA O TRECHO ENTRE QUOTES
@@ -45,10 +40,9 @@ void	get_quote(char *input, int *i)
 {
 	char	quote;
 
-	quote = input[*i];
-	*i++;
+	quote = input[(*i)++];
 	while (input[*i] != quote && input[*i])
-			*i++;
+			(*i)++;
 	if (!input[*i])
 		exit(0); //não fechou a quote
 }
@@ -58,94 +52,104 @@ void	get_quote(char *input, int *i)
  * Elimina espaços antes e depois.
  * Retorna uma string.
  */
-char	*get_command(char *input, int i)
+char	*get_command(char *input, int *i)
 {
 	int		size;
 	int		start;
 	char	*cmd;
 
-	while (ft_isblank(input[i]) && input[i])
-		i++;
-	start = i;
-	while (!ft_isredirector(input[i]) && input[i])
+	while (ft_isblank(input[*i]) && input[*i])
+		(*i)++;
+	start = *i;
+	while (!ft_isredirector(input[*i]) && input[*i])
 	{
-		if (ft_isquote(input[i]))
-			get_quote(input, &i);
-		i++;
+		if (ft_isquote(input[*i]))
+			get_quote(input, i);
+		(*i)++;
 	}
-	i--;
-	while (ft_isblank(input[i]) && i)
-		i--;
-	if (i <= start)
+	(*i)--;
+	while (ft_isblank(input[*i]) && *i)
+		(*i)--;
+	if (*i <= start)
 		return (NULL);
-	size = ++i - start + 1;
+	size = ++(*i) - start + 1;
 	cmd = malloc(sizeof(char) * size);
 	if (!cmd)
 		exit(1);
-	ft_strlcpy(cmd, input[start], size);
+	ft_strlcpy(cmd, &input[start], size);
 	return (cmd);
-}
-
-/* VERIFICA SE É CARACTERE DE REDIRECIONADOR
- */
-int	ft_isredirector(char c)
-{
-	return (c == ">" || c == "<" || c == "|");
 }
 
 /* PEGA O REDIRECIONADOR
  * Os redirecionadores possíveis são:
  * >, >>, <, << e |.
  */
-char	*get_redirector(char *input, int i)
+char	*get_redirector(char *input, int *i)
 {
 	int		size;
 	int		start;
 	char	*red;
 
-	while (ft_isblank(input[i]) && input[i])
-		i++;
-	if (!input[i])
+	while (ft_isblank(input[*i]) && input[*i])
+		(*i)++;
+	if (!input[*i])
 		return (NULL);
-	start = i;
-	while (ft_isredirector(input[i]) && input[i])
-		i++;
-	size = i - start + 1;
+	start = *i;
+	while (ft_isredirector(input[*i]) && input[*i])
+		(*i)++;
+	size = *i - start + 1;
 	red = malloc(sizeof(char) * size);
 	if (!red)
 		exit(1);
-	ft_strlcpy(red, src, size);
+	ft_strlcpy(red, &input[start], size);
 	return (red);
 }
 
 
+// ============================================== //
 
-
-
-
-
-
-
-
-
-
-char	*input_parse(char *input)
+/* CRIAR VARIÁVEL
+ * Cria um novo node e coloca no final da lista.
+ */
+t_cli	*add_cli(t_cli *prev, char *command, char *director)
 {
-	char	**cmdbox;
-	int		i;
-	int		j;
+	t_cli	*newnode;
 
-	//Fazer lista linkada pra adicionar cada novo comando
+	newnode = malloc(sizeof(t_cli));
+	if (!newnode)
+		exit(1);
+	*newnode = (t_cli){0};
+	if (prev)
+		prev->next = newnode;
+	newnode->command = command;
+	newnode->director = director;
+	return (newnode);
+}
+
+t_cli	*input_parse(char *input)
+{
+	t_cli	*command_line;
+	t_cli	*prev;
+	char	*command;
+	char	*director;
+	int		i;
+
 	i = 0;
-	j = 0;
-	while (input[i])
+	command = get_command(input, &i);
+	if (!command)
+		return (NULL);
+	director = get_redirector(input, &i);
+	command_line = add_cli(NULL, command, director);
+	prev = command_line;
+	while (input[i] && director)
 	{
-		if (get_command(char *input, int i))
-			break ;
-		if (!get_redirector(char *input, int i))
-			break ;
-		i++;
+		command = get_command(input, &i);
+		if (!command)
+			exit(-1); // FALTA ARGUMENTO APÓS O DIRECIONADOR
+		director = get_redirector(input, &i);
+		prev = add_cli(prev, command, director);
 	}
+	return (command_line);
 }
 
 // ============================================== //
