@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/13 19:22:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/18 18:31:00 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+# define CHUNK 1023
+
 // Structs
 typedef struct s_env
 {
@@ -38,6 +40,12 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_pipe
+{
+	char			parsed[CHUNK + 1];
+	struct s_pipe	*next;
+}					t_pipe;
 
 // Functions
 int		is_builtin(char *str, t_env *env_list);
@@ -52,6 +60,8 @@ void	ft_set_var(const char *src, t_env *node);
 void	print_var_list(t_env *list);
 void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
-
+t_pipe	*parse_fd(int fd, t_pipe *prev);
+char	*copy_content(t_pipe *pip);
+void	clear_list(t_pipe *ptr);
 
 #endif
