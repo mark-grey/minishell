@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/21 11:25:48 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:50:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_command(char *input, int *i)
 	(*i)--;
 	while (ft_isblank(input[*i]) && *i)
 		(*i)--;
-	if (*i <= start)
+	if (*i < start)
 		return (NULL);
 	size = ++(*i) - start + 1;
 	cmd = malloc(sizeof(char) * size);
