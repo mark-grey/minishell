@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/21 10:44:41 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:25:48 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_redirector(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (!input[*i])
+	if (!input[*i] || !ft_isredirector(input[*i]))
 		return (NULL);
 	start = *i;
 	while (ft_isredirector(input[*i]) && input[*i])
@@ -121,7 +121,7 @@ void	command_divider(char *str, t_cli *newnode)
 
 	start = 0;
 	end = 0;
-	while (!ft_isblank(str[end]))
+	while (!ft_isblank(str[end]) && str[end])
 		end++;
 	len = end - start + 1;
 	newnode->command = malloc(sizeof(char) * len);
@@ -200,6 +200,5 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (-1);
 	t_cli	*command_line = input_parse(av[1]);
-	//printf("Hello");
 	print_cli_list(command_line);
 }
