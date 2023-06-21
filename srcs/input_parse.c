@@ -6,13 +6,11 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/18 20:33:38 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/21 10:44:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 /* VERIFICA SE É QUOTE
  * Comportamento do bash quando não encontra fechamento do quote:
@@ -105,6 +103,42 @@ char	*get_redirector(char *input, int *i)
 	return (red);
 }
 
+// ============================================== //
+
+/* SEPARAR COMANDO DOS ARGUMENTOS
+ * Separa a primeira palavra que deverá ser o comando,
+ * do restante que deverão ser os argumentos.
+ * Esta função leva em consideração a possibilidade
+ * de haver múltiplos espaços, cria novas cópias
+ * para cada informação e libera a memória da
+ * string completa.
+ */
+void	command_divider(char *str, t_cli *newnode)
+{
+	int	start;
+	int	end;
+	int	len;
+
+	start = 0;
+	end = 0;
+	while (!ft_isblank(str[end]))
+		end++;
+	len = end - start + 1;
+	newnode->command = malloc(sizeof(char) * len);
+	ft_strlcpy(newnode->command, &str[start], len);
+	while (ft_isblank(str[end]) && str[end])
+		end++;
+	if (str[end])
+	{
+		start = end;
+		while (str[end])
+			end++;
+		len = end - start + 1;
+		newnode->args = malloc(sizeof(char) * len);
+		ft_strlcpy(newnode->args, &str[start], len);
+	}
+	free(str);
+}
 
 // ============================================== //
 
@@ -121,7 +155,7 @@ t_cli	*add_cli(t_cli *prev, char *command, char *director)
 	*newnode = (t_cli){0};
 	if (prev)
 		prev->next = newnode;
-	newnode->command = command;
+	command_divider(command, newnode);
 	newnode->director = director;
 	return (newnode);
 }
@@ -153,9 +187,19 @@ t_cli	*input_parse(char *input)
 }
 
 // ============================================== //
+void	print_cli_list(t_cli *list)
+{
+	if (!list)
+		return ;
+	printf("Command: %s \t//\t Args: %s \t//\t Director: %s\n", list->command, list->args, list->director);
+	print_cli_list(list->next);
+}
+
 int	main(int ac, char **av)
 {
 	if (ac != 2)
 		return (-1);
-	input_parse(av[1]);
+	t_cli	*command_line = input_parse(av[1]);
+	//printf("Hello");
+	print_cli_list(command_line);
 }
