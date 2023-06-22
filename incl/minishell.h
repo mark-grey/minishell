@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/13 19:22:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:27:38 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_args
+{
+	char			*arg;
+	struct s_args	*next;
+}					t_args;
+
+typedef struct s_cli
+{
+	char			*command;
+	char			*args;
+	char			*director;
+	struct s_cli	*next;
+}					t_cli;
+
 // Functions
 int		is_builtin(char *str, t_env *env_list);
 int		is_exec(char *path, char *command);
@@ -53,5 +67,18 @@ void	print_var_list(t_env *list);
 void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
 
+// PARSE
+// Validator Functions
+int		is_bt(char *cmd);
+int		is_ex(char *cmd);
+int		is_redirector(char c);
+int		is_quote(char c);
+
+// Get Functions
+void	get_quote(char *input, int *i);
+char	*get_cli(char *input, int *i);
+char	*get_redirector(char *input, int *i);
+char	*get_command(char *cli, int *start, int *end);
+char	*get_args(char *cli, int *start, int *end);
 
 #endif
