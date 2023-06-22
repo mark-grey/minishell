@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/21 22:26:22 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:28:53 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,4 @@ t_cli	*input_parse(char *input)
 		prev = add_cli(prev, command, director);
 	}
 	return (command_line);
-}
-
-// ============================================== //
-void	print_cli_list(t_cli *list)
-{
-	if (!list)
-		return ;
-	printf("Command: %s \t//\t Args: %s \t//\t Director: %s\n", list->command, list->args, list->director);
-	print_cli_list(list->next);
-}
-
-int	main(int ac, char **av)
-{
-	if (ac != 2)
-		return (-1);
-	t_cli	*command_line = input_parse(av[1]);
-	print_cli_list(command_line);
 }
