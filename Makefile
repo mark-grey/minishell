@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/22 20:20:49 by maalexan         ###   ########.fr        #
+#    Updated: 2023/06/22 20:45:18 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,10 @@ FUN			:=	main.c \
 				checkers.c \
 				env_parse.c \
 				env_utils.c \
-				exec_finders.c
+				exec_finders.c \
+				input_parse_gets.c \
+				input_parse_utils.c \
+				input_parse.c
 
 # Object files
 OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)
