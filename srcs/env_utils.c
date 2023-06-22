@@ -6,11 +6,24 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/11 14:02:58 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:37:20 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	count_list(t_env *list)
+{
+	int	i;
+
+	i = 0;
+	while(list)
+	{
+		list = list->next;
+		i++;
+	}
+	return (i);
+}
 
 void	print_var_list(t_env *list)
 {
