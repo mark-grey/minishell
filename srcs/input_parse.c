@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/21 20:50:19 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:12:02 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	get_quote(char *input, int *i)
  * Elimina espaços antes e depois.
  * Retorna uma string.
  */
-char	*get_command(char *input, int *i)
+char	*get_cli(char *input, int *i)
 {
 	int		size;
 	int		start;
@@ -105,6 +105,74 @@ char	*get_redirector(char *input, int *i)
 
 // ============================================== //
 
+int	is_bt(char *cmd)
+{
+	return (\
+		!ft_strncmp(cmd, "ping\0", 5) || \
+		!ft_strncmp(cmd, "cd\0", 3) || \
+		!ft_strncmp(cmd, "pwd\0", 4) || \
+		!ft_strncmp(cmd, "echo\0", 5) || \
+		!ft_strncmp(cmd, "unset\0", 6) || \
+		!ft_strncmp(cmd, "export\0", 7) || \
+		!ft_strncmp(cmd, "env\0", 4) || \
+		!ft_strncmp(cmd, "exit\0", 5));
+}
+
+int	is_ex(char *cmd)
+{
+	if (\
+		!ft_strncmp(cmd, "ls\0", 3) || \
+		!ft_strncmp(cmd, "cat\0", 4) || \
+		!ft_strncmp(cmd, "grep\0", 5))
+		return (1);
+	return (0);
+}
+
+// ============================================== //
+
+char	*get_command(char *cli, int *start, int *end)
+{
+	int		len;
+	char	*cmd;
+
+	while (!ft_isblank(cli[*end]) && cli[*end])
+		(*end)++;
+	len = *end - *start + 1;
+	cmd = malloc(sizeof(char) * len);
+	if (!cmd)
+		exit (0);
+	ft_strlcpy(cmd, &cli[*start], len);
+	if (!is_bt(cmd) && !is_ex(cmd))
+	{
+		*start = 0;
+		free(cmd);
+		return (NULL);
+	}
+	return (cmd);
+}
+
+char	*get_args(char *cli, int *start, int *end)
+{
+	int		len;
+	char	*args;
+
+	while (ft_isblank(cli[*end]) && cli[*end])
+		(*end)++;
+	if (cli[*end])
+	{
+		*start = *end;
+		while (cli[*end])
+			(*end)++;
+		len = *end - *start + 1;
+		args = malloc(sizeof(char) * len);
+		ft_strlcpy(args, &cli[*start], len);
+	}
+	else
+		args = NULL;
+	free(cli);
+	return (args);
+}
+
 /* SEPARAR COMANDO DOS ARGUMENTOS
  * Separa a primeira palavra que deverá ser o comando,
  * do restante que deverão ser os argumentos.
@@ -113,31 +181,18 @@ char	*get_redirector(char *input, int *i)
  * para cada informação e libera a memória da
  * string completa.
  */
-void	command_divider(char *str, t_cli *newnode)
+void	command_divider(char *cli, t_cli *newnode)
 {
 	int	start;
 	int	end;
-	int	len;
 
 	start = 0;
 	end = 0;
-	while (!ft_isblank(str[end]) && str[end])
-		end++;
-	len = end - start + 1;
-	newnode->command = malloc(sizeof(char) * len);
-	ft_strlcpy(newnode->command, &str[start], len);
-	while (ft_isblank(str[end]) && str[end])
-		end++;
-	if (str[end])
-	{
-		start = end;
-		while (str[end])
-			end++;
-		len = end - start + 1;
-		newnode->args = malloc(sizeof(char) * len);
-		ft_strlcpy(newnode->args, &str[start], len);
-	}
-	free(str);
+	newnode->command = get_command(cli, &start, &end);
+	if (!newnode->command)
+		newnode->args = cli;
+	else
+		newnode->args = get_args(cli, &start, &end);
 }
 
 // ============================================== //
@@ -169,7 +224,7 @@ t_cli	*input_parse(char *input)
 	int		i;
 
 	i = 0;
-	command = get_command(input, &i);
+	command = get_cli(input, &i);
 	if (!command)
 		return (NULL);
 	director = get_redirector(input, &i);
@@ -177,7 +232,7 @@ t_cli	*input_parse(char *input)
 	prev = command_line;
 	while (input[i] && director)
 	{
-		command = get_command(input, &i);
+		command = get_cli(input, &i);
 		if (!command)
 			exit(-1); // FALTA ARGUMENTO APÓS O DIRECIONADOR
 		director = get_redirector(input, &i);
