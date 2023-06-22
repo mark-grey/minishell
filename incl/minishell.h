@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/18 20:38:18 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:27:38 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_args
 typedef struct s_cli
 {
 	char			*command;
-	struct t_args	*args;
+	char			*args;
 	char			*director;
 	struct s_cli	*next;
 }					t_cli;
@@ -66,5 +66,19 @@ void	ft_set_var(const char *src, t_env *node);
 void	print_var_list(t_env *list);
 void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
+
+// PARSE
+// Validator Functions
+int		is_bt(char *cmd);
+int		is_ex(char *cmd);
+int		is_redirector(char c);
+int		is_quote(char c);
+
+// Get Functions
+void	get_quote(char *input, int *i);
+char	*get_cli(char *input, int *i);
+char	*get_redirector(char *input, int *i);
+char	*get_command(char *cli, int *start, int *end);
+char	*get_args(char *cli, int *start, int *end);
 
 #endif
