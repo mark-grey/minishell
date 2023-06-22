@@ -6,11 +6,15 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 18:22:53 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/18 18:30:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:17:51 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	Clears linked list of t_pipe, preventing memory leaks
+*/
 
 void	clear_list(t_pipe *ptr)
 {
@@ -19,6 +23,10 @@ void	clear_list(t_pipe *ptr)
 	clear_list(ptr->next);
 	free(ptr);
 }
+
+/*
+	Accessory function to allow parse_fd to be recursive
+*/
 
 static void	handle_read_error(t_pipe **prev, t_pipe **new)
 {
@@ -33,6 +41,10 @@ static void	handle_read_error(t_pipe **prev, t_pipe **new)
 		*new = NULL;
 	}
 }
+
+/*
+	Runs through the linked list, counting the length of all the strings stored
+*/
 
 static int	count_content(t_pipe *pip)
 {
@@ -49,6 +61,10 @@ static int	count_content(t_pipe *pip)
 	}
 	return (len);
 }
+
+/*
+	Allocs and copies the whole content of struct t_pipe into a single string
+*/
 
 char	*copy_content(t_pipe *pip)
 {
@@ -69,6 +85,10 @@ char	*copy_content(t_pipe *pip)
 	}
 	return (str);
 }
+
+/*
+	Gets a file descriptor and reads the content, storing it on a linked list where each node has size CHUNK
+*/
 
 t_pipe	*parse_fd(int fd, t_pipe *prev)
 {
