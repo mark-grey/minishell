@@ -4,7 +4,7 @@
 
 Funciona apenas no local, servindo como um facilitador.
 
-> Instalação: `sudo apt install gitflow`
+> Instalação: `sudo apt install git-flow`
 
 ### Configurando o Gitflow
 
