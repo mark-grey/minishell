@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/22 20:45:18 by maalexan         ###   ########.fr        #
+#    Updated: 2023/06/22 21:46:22 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
-				checkers.c \
 				env_parse.c \
 				env_utils.c \
 				exec_finders.c \
@@ -62,6 +61,12 @@ $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 
 val:
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME}
+
+test: a.out
+	
+a.out:
+	gcc -Wall -Werror -Wextra -I incl/ srcs/pipe_dream.c srcs/pipe_parser.c libs/libft/libft.a -g
+
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) --silent clean
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist

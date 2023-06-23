@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 19:28:53 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
  * para cada informação e libera a memória da
  * string completa.
  */
-void	command_divider(char *cli, t_cli *newnode)
+void	cmd_divider(char *cli, t_cli *newnode, char *path)
 {
 	int	start;
 	int	end;
 
 	start = 0;
 	end = 0;
-	newnode->command = get_command(cli, &start, &end);
-	if (!newnode->command)
+	newnode->cmd = get_cmd(cli, &start, &end, path);
+	if (!newnode->cmd)
 		newnode->args = cli;
 	else
 		newnode->args = get_args(cli, &start, &end);
@@ -37,7 +37,7 @@ void	command_divider(char *cli, t_cli *newnode)
 /* CRIAR VARIÁVEL
  * Cria um novo node e coloca no final da lista.
  */
-t_cli	*add_cli(t_cli *prev, char *command, char *director)
+t_cli	*add_cli(t_cli *prev, char *cmd, char *director, char *path)
 {
 	t_cli	*newnode;
 
@@ -47,33 +47,33 @@ t_cli	*add_cli(t_cli *prev, char *command, char *director)
 	*newnode = (t_cli){0};
 	if (prev)
 		prev->next = newnode;
-	command_divider(command, newnode);
+	cmd_divider(cmd, newnode, path);
 	newnode->director = director;
 	return (newnode);
 }
 
-t_cli	*input_parse(char *input)
+t_cli	*parse_input(char *input, char *path)
 {
-	t_cli	*command_line;
+	t_cli	*cmd_line;
 	t_cli	*prev;
-	char	*command;
+	char	*cmd;
 	char	*director;
 	int		i;
 
 	i = 0;
-	command = get_cli(input, &i);
-	if (!command)
+	cmd = get_cli(input, &i);
+	if (!cmd)
 		return (NULL);
 	director = get_redirector(input, &i);
-	command_line = add_cli(NULL, command, director);
-	prev = command_line;
+	cmd_line = add_cli(NULL, cmd, director, path);
+	prev = cmd_line;
 	while (input[i] && director)
 	{
-		command = get_cli(input, &i);
-		if (!command)
+		cmd = get_cli(input, &i);
+		if (!cmd)
 			exit(-1); // FALTA ARGUMENTO APÓS O DIRECIONADOR
 		director = get_redirector(input, &i);
-		prev = add_cli(prev, command, director);
+		prev = add_cli(prev, cmd, director, path);
 	}
-	return (command_line);
+	return (cmd_line);
 }
