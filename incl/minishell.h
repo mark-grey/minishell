@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:36:22 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ typedef struct s_cli
 	char			*director;
 	struct s_cli	*next;
 }					t_cli;
+
+/* STRINGIFY FUNCTIONS */
+char	**stringify_envp(t_env *list);
+int		count_list(t_env *list);
 
 /* PARSE ENV FUNCTIONS */
 // Main

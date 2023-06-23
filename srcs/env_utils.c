@@ -6,11 +6,24 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/22 21:01:34 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:38:36 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	count_list(t_env *list)
+{
+	int	i;
+
+	i = 0;
+	while(list)
+	{
+		list = list->next;
+		i++;
+	}
+	return (i);
+}
 
 void	print_var_list(t_env *list)
 {
