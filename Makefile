@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/22 19:34:10 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/22 21:10:33 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
-				checkers.c \
 				env_parse.c \
 				env_utils.c \
 				exec_finders.c \
