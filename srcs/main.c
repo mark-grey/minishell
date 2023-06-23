@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/11 14:10:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:21:10 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	exit_program(int code, t_env *list)
 void	prompt_user(const char *prompt, t_env *env_list)
 {
 	char	*line;
+	t_cli	*cmds;
 	char	*path;
 
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
 		exit_program(127, env_list);
-	if (!is_builtin(line, env_list))
-		if (!is_exec(path, line))
-			printf("Command \"%s\" not found\n", line);
+	cmds = parse_input(line, path);
+	(void)cmds;
 	free(line);
 }
 

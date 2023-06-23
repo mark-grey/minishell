@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/21 22:27:26 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*get_redirector(char *input, int *i)
 	return (red);
 }
 
-char	*get_command(char *cli, int *start, int *end)
+char	*get_cmd(char *cli, int *start, int *end, char *path)
 {
 	int		len;
 	char	*cmd;
@@ -98,7 +98,7 @@ char	*get_command(char *cli, int *start, int *end)
 	if (!cmd)
 		exit (0);
 	ft_strlcpy(cmd, &cli[*start], len);
-	if (!is_bt(cmd) && !is_ex(cmd))
+	if (!is_builtin(cmd) && !is_exec(path, cmd))
 	{
 		*start = 0;
 		free(cmd);
