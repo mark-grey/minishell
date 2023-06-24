@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/24 11:21:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_cli	*add_cli(t_cli *prev, char *cmd, char *director, char *path)
 
 	newnode = malloc(sizeof(t_cli));
 	if (!newnode)
-		exit(1);
+		exit_program(OUT_OF_MEMORY);
 	*newnode = (t_cli){0};
 	if (prev)
 		prev->next = newnode;
@@ -54,7 +54,7 @@ t_cli	*add_cli(t_cli *prev, char *cmd, char *director, char *path)
 
 t_cli	*parse_input(char *input, char *path)
 {
-	t_cli	*cmd_line;
+	t_ctrl	*control;//new v
 	t_cli	*prev;
 	char	*cmd;
 	char	*director;
@@ -65,15 +65,16 @@ t_cli	*parse_input(char *input, char *path)
 	if (!cmd)
 		return (NULL);
 	director = get_redirector(input, &i);
-	cmd_line = add_cli(NULL, cmd, director, path);
-	prev = cmd_line;
+	control = get_control(); //new v
+	control->cli = add_cli(NULL, cmd, director, path);//new v
+	prev = control->cli;
 	while (input[i] && director)
 	{
 		cmd = get_cli(input, &i);
 		if (!cmd)
-			exit(-1); // FALTA ARGUMENTO APÓS O DIRECIONADOR
+			exit_program(OUT_OF_MEMORY); // FALTA ARGUMENTO APÓS O DIRECIONADOR
 		director = get_redirector(input, &i);
 		prev = add_cli(prev, cmd, director, path);
 	}
-	return (cmd_line);
+	return (control->cli);
 }

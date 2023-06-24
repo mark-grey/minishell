@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:21:10 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/24 11:32:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exit_program(int code, t_env *list)
-{
-	if (list)
-		clear_var_list(list);
-	exit(code);
-}
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
@@ -28,7 +21,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
-		exit_program(127, env_list);
+		exit_program(127);
 	cmds = parse_input(line, path);
 	(void)cmds;
 	free(line);
@@ -36,11 +29,12 @@ void	prompt_user(const char *prompt, t_env *env_list)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env	*env_list;
+	t_ctrl	*control;
 
 	(void)argc;
 	(void)argv;
-	env_list = parse_env(env);
+	control = get_control();
+	control->env = parse_env(env);
 	while (1)
-		prompt_user("minishell:> ", env_list);
+		prompt_user("minishell:> ", control->env);
 }

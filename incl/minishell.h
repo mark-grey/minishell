@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:36:22 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/24 11:14:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+# define OUT_OF_MEMORY 1
+
 // Structs
 typedef struct s_env
 {
@@ -53,6 +55,13 @@ typedef struct s_cli
 	struct s_cli	*next;
 }					t_cli;
 
+typedef struct s_ctrl
+{
+	t_env	*env;
+	t_args	*args;
+	t_cli	*cli;
+}			t_ctrl;
+
 /* STRINGIFY FUNCTIONS */
 char	**stringify_envp(t_env *list);
 int		count_list(t_env *list);
@@ -62,12 +71,12 @@ int		count_list(t_env *list);
 t_env	*parse_env(char **env);
 
 // Utils
+void	exit_program(int code);
 t_env	*add_var(t_env *prev, char *var);
 t_env	*search_var(char *str, t_env *list);
 t_env	*remove_var(char *str, t_env *list);
 void	set_var(const char *src, t_env *node);
 void	print_var_list(t_env *list);
-void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
 
 /* PARSE INPUT FUNCTIONS */
@@ -82,6 +91,7 @@ int		is_quote(char c);
 char	*parse_path(char *path, char *cmd);
 
 // Gets
+t_ctrl	*get_control(void);
 char	*get_cli(char *input, int *i);
 char	*get_redirector(char *input, int *i);
 char	*get_cmd(char *cli, int *start, int *end, char *path);
