@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/13 21:00:48 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:02:51 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ void	exit_program(int code, t_env *list)
 void	prompt_user(const char *prompt, t_env *env_list)
 {
 	char	*line;
+	t_cli	*cmds;
 	char	*path;
 
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
 		exit_program(127, env_list);
-	// tratamento da 'line', separando em comando e argumento, e dividindo por partes.
-	if (!is_builtin(line, env_list, NULL))
-		if (!is_exec(path, line))
-			printf("\"%s\": command not found\n", line);
+	cmds = parse_input(line, path);
+	(void)cmds;
 	free(line);
 }
 

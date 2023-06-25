@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 17:06:10 by inwagner          #+#    #+#              #
-#    Updated: 2023/06/10 18:40:49 by maalexan         ###   ########.fr        #
+#    Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ FTS		:=	ft_abs.c \
 
 OBJ		:=	$(addprefix $(OSRC), $(FTS:.c=.o))
 
-# Commands
+# cmds
 all: $(NAME)
 
 # Compile Objects

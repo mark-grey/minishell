@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   t_pathfinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:19:17 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/10 21:30:47 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*path_parser(char *env_path, char *command);
+char	*parse_path(char *env_path, char *cmd);
 
 static char	*findpath(char **env)
 {
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	char *path = findpath(envp);
 	char *pcopy = malloc(ft_strlen(path + 5));
 	ft_strlcpy(pcopy, path + 5, ft_strlen(path + 5));
-	retu = path_parser(pcopy, argv[1]);
+	retu = parse_path(pcopy, argv[1]);
 	if (retu)
 		printf("%s\n", retu);
 	free(pcopy);

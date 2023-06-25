@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/13 20:40:54 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:03:16 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,53 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-// Functions
-int		is_builtin(char *builtin, t_env *env_list, char *args);
-int		is_exec(char *path, char *command);
-char	*path_parser(char *path, char *command);
-char	*find_exec(char *path, char *command);
+typedef struct s_args
+{
+	char			*arg;
+	struct s_args	*next;
+}					t_args;
+
+typedef struct s_cli
+{
+	char			*cmd;
+	char			*args;
+	char			*director;
+	struct s_cli	*next;
+}					t_cli;
+
+/* STRINGIFY FUNCTIONS */
+char	**stringify_envp(t_env *list);
+int		count_list(t_env *list);
+
+/* PARSE ENV FUNCTIONS */
+// Main
 t_env	*parse_env(char **env);
-t_env	*ft_add_var(t_env *prev, char *var);
-t_env	*ft_search_var(char *str, t_env *list);
-t_env	*ft_remove_var(char *str, t_env *list);
-void	ft_set_var(const char *src, t_env *node);
+
+// Utils
+t_env	*add_var(t_env *prev, char *var);
+t_env	*search_var(char *str, t_env *list);
+t_env	*remove_var(char *str, t_env *list);
+void	set_var(const char *src, t_env *node);
 void	print_var_list(t_env *list);
 void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
 
+/* PARSE INPUT FUNCTIONS */
+// Main
+t_cli	*parse_input(char *input, char *path);
+
+// Validators
+int		is_builtin(char *cmd);
+int		is_exec(char *path, char *cmd);
+int		is_redirector(char c);
+int		is_quote(char c);
+char	*parse_path(char *path, char *cmd);
+
+// Gets
+char	*get_cli(char *input, int *i);
+char	*get_redirector(char *input, int *i);
+char	*get_cmd(char *cli, int *start, int *end, char *path);
+char	*get_args(char *cli, int *start, int *end);
+void	get_quote(char *input, int *i);
 
 #endif
