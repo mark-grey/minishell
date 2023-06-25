@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/24 10:38:09 by maalexan         ###   ########.fr        #
+#    Updated: 2023/06/25 13:05:02 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 
 val:
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME}
+
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) --silent clean
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist

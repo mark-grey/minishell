@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/24 10:37:13 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:39:48 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	count_list(t_env *list)
 	int	i;
 
 	i = 0;
-	while(list)
+	while (list)
 	{
 		list = list->next;
 		i++;
