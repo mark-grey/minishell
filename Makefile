@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/22 21:10:33 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/25 13:05:02 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,14 @@ BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
+				cleaners.c \
 				env_parse.c \
 				env_utils.c \
 				exec_finders.c \
 				input_parse_gets.c \
 				input_parse_utils.c \
-				input_parse.c
+				input_parse.c \
+
 
 # Object files
 OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)
@@ -61,6 +63,7 @@ $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 
 val:
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME}
+
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) --silent clean
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse_gets.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:45:53 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	get_quote(char *input, int *i)
 	while (input[*i] != quote && input[*i])
 			(*i)++;
 	if (!input[*i])
-		exit(0); //não fechou a quote
+		exit_program(23); //não fechou a quote
 }
 
 /* PEGA O COMANDO 
@@ -56,7 +56,7 @@ char	*get_cli(char *input, int *i)
 	size = ++(*i) - start + 1;
 	cmd = malloc(sizeof(char) * size);
 	if (!cmd)
-		exit(1);
+		exit_program(OUT_OF_MEMORY);
 	ft_strlcpy(cmd, &input[start], size);
 	return (cmd);
 }
@@ -81,7 +81,7 @@ char	*get_redirector(char *input, int *i)
 	size = *i - start + 1;
 	red = malloc(sizeof(char) * size);
 	if (!red)
-		exit(1);
+		exit_program(OUT_OF_MEMORY);
 	ft_strlcpy(red, &input[start], size);
 	return (red);
 }
@@ -96,7 +96,7 @@ char	*get_cmd(char *cli, int *start, int *end, char *path)
 	len = *end - *start + 1;
 	cmd = malloc(sizeof(char) * len);
 	if (!cmd)
-		exit (0);
+		exit_program((free(cli), OUT_OF_MEMORY));
 	ft_strlcpy(cmd, &cli[*start], len);
 	if (!is_builtin(cmd) && !is_exec(path, cmd))
 	{
@@ -121,10 +121,12 @@ char	*get_args(char *cli, int *start, int *end)
 			(*end)++;
 		len = *end - *start + 1;
 		args = malloc(sizeof(char) * len);
+		if (!args)
+			exit_program((free(cli), OUT_OF_MEMORY));
 		ft_strlcpy(args, &cli[*start], len);
 	}
 	else
 		args = NULL;
-	free(cli);
+	free (cli);
 	return (args);
 }
