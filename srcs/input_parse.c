@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 14:27:00 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:40:17 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_cli	*add_cli(t_cli *prev, char *cmd, char *director, char *path)
 
 t_cli	*parse_input(char *input, char *path)
 {
-	t_ctrl	*control;//new v
+	t_ctrl	*control;
 	t_cli	*prev;
 	char	*cmd;
 	char	*director;
@@ -72,8 +72,8 @@ t_cli	*parse_input(char *input, char *path)
 	if (!cmd)
 		return (NULL);
 	director = get_redirector(input, &i);
-	control = get_control(); //new v
-	control->cli = add_cli(NULL, cmd, director, path);//new v
+	control = get_control();
+	control->cli = add_cli(NULL, cmd, director, path);
 	prev = control->cli;
 	while (input[i] && director)
 	{
