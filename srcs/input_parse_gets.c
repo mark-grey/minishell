@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse_gets.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 16:45:53 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:37:28 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*get_cli(char *input, int *i)
 			get_quote(input, i);
 		(*i)++;
 	}
-	(*i)--;
+	if (*i != start)
+		(*i)--;
 	while (ft_isblank(input[*i]) && *i)
 		(*i)--;
 	if (*i < start)

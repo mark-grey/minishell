@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/25 13:05:02 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/25 17:31:16 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,8 @@ $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 	@mkdir -p $(@D)
 	@cc $(BCFLAGS) -c $< -o $@
 
-val:
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME}
+val: all
+	@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME} || echo ""
 
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) --silent clean
