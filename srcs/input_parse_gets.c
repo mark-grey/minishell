@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 14:40:38 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:37:21 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ char	*get_args(char *cli, int *start, int *end)
 	}
 	else
 		args = NULL;
+	free (cli);
 	return (args);
 }
