@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/24 11:14:35 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/24 12:23:34 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ typedef struct s_cli
 
 typedef struct s_ctrl
 {
-	t_env	*env;
 	t_args	*args;
 	t_cli	*cli;
+	t_env	*env;
 }			t_ctrl;
 
 /* STRINGIFY FUNCTIONS */
