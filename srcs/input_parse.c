@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 14:59:49 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:37:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	cmd_divider(char *cli, t_cli *newnode, char *path)
 		newnode->args = cli;
 	else
 		newnode->args = get_args(cli, &start, &end);
-	free (cli);
 }
 
 /* CRIAR VARIÁVEL
