@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/24 11:21:55 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:27:00 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	cmd_divider(char *cli, t_cli *newnode, char *path)
 		newnode->args = cli;
 	else
 		newnode->args = get_args(cli, &start, &end);
+	free (cli);
 }
 
 /* CRIAR VARIÁVEL
@@ -43,12 +44,18 @@ t_cli	*add_cli(t_cli *prev, char *cmd, char *director, char *path)
 
 	newnode = malloc(sizeof(t_cli));
 	if (!newnode)
+	{
+		if (cmd)
+			free(cmd);
+		if (director)
+			free(director);
 		exit_program(OUT_OF_MEMORY);
+	}
 	*newnode = (t_cli){0};
 	if (prev)
 		prev->next = newnode;
-	cmd_divider(cmd, newnode, path);
 	newnode->director = director;
+	cmd_divider(cmd, newnode, path);
 	return (newnode);
 }
 

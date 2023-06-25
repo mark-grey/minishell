@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse_gets.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/24 11:21:25 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:17:37 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*get_cmd(char *cli, int *start, int *end, char *path)
 	len = *end - *start + 1;
 	cmd = malloc(sizeof(char) * len);
 	if (!cmd)
-		exit_program(OUT_OF_MEMORY);
+		exit_program(OUT_OF_MEMORY); //precisa liberar o cli também
 	ft_strlcpy(cmd, &cli[*start], len);
 	if (!is_builtin(cmd) && !is_exec(path, cmd))
 	{
@@ -122,11 +122,11 @@ char	*get_args(char *cli, int *start, int *end)
 		len = *end - *start + 1;
 		args = malloc(sizeof(char) * len);
 		if (!args)
-			exit_program(OUT_OF_MEMORY);
+			exit_program(OUT_OF_MEMORY); //precisa liberar o cli também
 		ft_strlcpy(args, &cli[*start], len);
 	}
 	else
 		args = NULL;
-	free(cli);
+	//free(cli);
 	return (args);
 }
