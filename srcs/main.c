@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/24 12:33:42 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:44:10 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 {
 	char	*line;
 	t_cli	*cmds;
+	t_ctrl	*ctrl;
 	char	*path;
 
 	path = get_var_value("PATH", env_list);
@@ -23,7 +24,10 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	if (!line)
 		exit_program(127);
 	cmds = parse_input(line, path);
-	(void)cmds;
+	ctrl = get_control();
+	if (ctrl->cli)
+		clear_command_input(cmds);
+	ctrl->cli = NULL;
 	free(line);
 }
 

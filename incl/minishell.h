@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/24 12:23:34 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/25 15:16:06 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_env	*remove_var(char *str, t_env *list);
 void	set_var(const char *src, t_env *node);
 void	print_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
+void	clear_command_input(t_cli *cli);
 
 /* PARSE INPUT FUNCTIONS */
 // Main

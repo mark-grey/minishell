@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaners.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 10:25:37 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/25 14:38:33 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:41:10 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	clear_var_list(t_env *list)
 	free(list);
 }
 
-static void	clear_command_input(t_cli *cli)
+void	clear_command_input(t_cli *cli)
 {
 	if (!cli)
 		return ;
