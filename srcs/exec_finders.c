@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_finders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/22 21:07:50 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:58:18 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 
 	full = malloc(path_len + cmd_len + 2);
 	if (!full)
-		return (NULL);
+		exit_program(OUT_OF_MEMORY);
 	ft_memcpy(full, path, path_len);
 	ft_memcpy(full + path_len + 1, cmd, cmd_len);
 	full[path_len] = '/';
@@ -77,6 +77,29 @@ static char	*find_exec(char *path, char *cmd)
 }
 
 /*
+	Checks for executable on current dir "." or parent dir ".."
+*/
+static char	*search_dot_dirs(char *cmd)
+{
+	char	*str;
+
+	if (!cmd || (cmd[0] != '.' && cmd[0] != '/'))
+		return (NULL);
+	str = NULL;
+	if (cmd[0] == '/' && cmd[1])
+		str = check_exec(NULL, &cmd[1], 0, ft_strlen(&cmd[1]));
+	if (ft_strlen(cmd) < 3)
+		return (str);
+	if (cmd[0] == '.' && cmd[1] == '/')
+		str = find_exec(".", &cmd[2]);
+	if (ft_strlen(cmd) < 4)
+		return (NULL);
+	if (cmd[0] == '.' && cmd[1] == '.' && cmd[2] == '/')
+		str = find_exec("..", &cmd[3]);
+	return (str);
+}
+
+/*
 	Loops through path variable to find executable file
 */
 char	*parse_path(char *env_path, char *cmd)
@@ -84,10 +107,11 @@ char	*parse_path(char *env_path, char *cmd)
 	char	*token;
 	char	*str;
 
-	str = NULL;
-	str = find_exec(".", cmd);
+	str = search_dot_dirs(cmd);
 	if (str)
 		return (str);
+	if (!env_path)
+		return (NULL);
 	token = ft_strtok(env_path, ":");
 	while (token)
 	{

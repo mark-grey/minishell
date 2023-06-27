@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 16:44:10 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:51:47 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	if (!line)
 		exit_program(127);
 	cmds = parse_input(line, path);
+	if (cmds && cmds->cmd)
+		printf("Run %s\n", cmds->cmd);
 	ctrl = get_control();
 	if (ctrl->cli)
 		clear_command_input(cmds);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:20:34 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:13:38 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:39:31 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,22 @@ int	is_exec(char *path, char *cmd)
 	char	*temp_path;
 	size_t	len;
 
-	if (!path || !cmd)
+	if (!cmd)
 		return (0);
-	len = ft_strlen(path);
-	temp_path = malloc(sizeof(char) * len + 1);
-	if (!temp_path)
-		return (0);
-	ft_strlcpy(temp_path, path, len);
 	exec_path = NULL;
-	exec_path = parse_path(temp_path, cmd);
-	free(temp_path);
-	if (exec_path)
+	if (path)
 	{
-		free(exec_path);
-		return (1);
+		len = ft_strlen(path);
+		temp_path = malloc(sizeof(char) * len + 1);
+		if (!temp_path)
+			exit_program(OUT_OF_MEMORY);
+		ft_strlcpy(temp_path, path, len);
+		exec_path = parse_path(temp_path, cmd);
+		free(temp_path);
 	}
+	else
+		exec_path = parse_path(NULL, cmd);
+	if (exec_path)
+		return (free(exec_path), 1);
 	return (0);
 }
