@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/27 17:58:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:43:36 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,20 @@ static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 }
 
 /*
-	Checks if the complete path is an executable
+	Checks if the complete path is an executable, stat() checks file status,
+	S_ISREG makes sure it's a regular file, and access() validates permission 
+	to execute it
 */
 static char	*check_exec(char *path, char *cmd, int path_len, int cmd_len)
 {
-	char	*str;
+	char		*str;
+	struct stat	file_status;
 
 	str = NULL;
 	str = get_full_path(path, cmd, path_len, cmd_len);
-	if (access(str, X_OK))
+	if (stat(str, &file_status) || \
+		!S_ISREG(file_status.st_mode) || \
+		access(str, X_OK))
 	{
 		free(str);
 		str = NULL;
