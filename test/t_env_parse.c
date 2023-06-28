@@ -1,44 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   t_parse_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:21:46 by inwagner         ###   ########.fr       */
+/*   Created: 2023/06/10 15:01:31 by inwagner          #+#    #+#             */
+/*   Updated: 2023/06/10 15:29:47 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt_user(const char *prompt, t_env *env_list)
+void	print_env(char **env)
 {
-	char	*line;
-	t_cli	*cmds;
-	t_ctrl	*ctrl;
-	char	*path;
+	while (*env)
+	{
+		ft_putstr_fd(*env++, 1);
+		write(1, "\n", 2);
+	}
+	write(1, "\n", 1);
+}
 
-	path = get_var_value("PATH", env_list);
-	line = readline(prompt);
-	if (!line)
-		exit_program(127);
-	cmds = parse_input(line, path);
-	ctrl = get_control();
-	if (ctrl->cli)
-		clear_command_input(cmds);
-	ctrl->cli = NULL;
-	free(line);
+void	print_var_list(t_env *list)
+{
+	while (list)
+	{
+		printf("%s=%s\n", list->key, list->value);
+		list = list->next;
+	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_ctrl	*control;
+	t_env	*env_list;
 
 	(void)argc;
 	(void)argv;
-	control = get_control();
-	control->env = parse_env(env);
-	while (1)
-		prompt_user("minishell:> ", control->env);
+	print_env(env);
+	env_list = parse_env(env);
+	print_var_list(env_list);
+	(void)env_list;
 }
