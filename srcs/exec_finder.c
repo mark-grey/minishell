@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_finders.c                                     :+:      :+:    :+:   */
+/*   exec_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/28 17:53:46 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:22:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	Builds a complete filename for checking with the access function,
-	joining the path and exec so the access function can be called
-	regardless of the current directory
-*/
+ * Builds a complete filename for checking with the access function,
+ * joining the path and exec so the access function can be called
+ * regardless of the current directory
+ */
 static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 {
 	char	*full;
@@ -54,8 +54,8 @@ static char	*check_exec(char *path, char *cmd, int path_len, int cmd_len)
 }
 
 /*
-	Searches the directory "path" for an executable named "cmd"
-*/
+ * Searches the directory "path" for an executable named "cmd"
+ */
 static char	*find_exec(char *path, char *cmd)
 {
 	struct dirent	*files;
