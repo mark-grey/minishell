@@ -6,11 +6,34 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 17:51:47 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:14:32 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_cmds()
+{
+	t_ctrl *ctrl = get_control();
+	t_cli	*temp;
+
+	if (ctrl)
+		temp = ctrl->cli;
+	else
+		temp = NULL;
+	int	i = 1;
+	while (temp)
+	{
+		if (temp && temp->cmd)
+			printf("Command %i: %s\n", i, temp->cmd);
+		if (temp && temp->args)
+			printf("Arg %i: %s\n", i, temp->args);
+		if (temp && temp->director)
+			printf("Dir %i: %s\n", i, temp->director);
+		i++;
+		temp = temp->next;
+	}
+}
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
@@ -24,8 +47,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	if (!line)
 		exit_program(127);
 	cmds = parse_input(line, path);
-	if (cmds && cmds->cmd)
-		printf("Run %s\n", cmds->cmd);
+	print_cmds();
 	ctrl = get_control();
 	if (ctrl->cli)
 		clear_command_input(cmds);
