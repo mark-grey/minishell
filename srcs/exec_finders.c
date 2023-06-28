@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/27 18:43:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:27:26 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 	ft_memcpy(full, path, path_len);
 	ft_memcpy(full + path_len + 1, cmd, cmd_len);
 	full[path_len] = '/';
-	full[path_len + cmd_len + 1] = '\0';
+	full[path_len + cmd_len + 1] = '\0'; printf("Path full is %s\n", full);
 	return (full);
 }
 
@@ -96,11 +96,11 @@ static char	*search_dot_dirs(char *cmd)
 	if (ft_strlen(cmd) < 3)
 		return (str);
 	if (cmd[0] == '.' && cmd[1] == '/')
-		str = find_exec(".", &cmd[2]);
+		str = check_exec(".", &cmd[2], 1, ft_strlen(&cmd[2]));
 	if (ft_strlen(cmd) < 4)
-		return (NULL);
+		return (str);
 	if (cmd[0] == '.' && cmd[1] == '.' && cmd[2] == '/')
-		str = find_exec("..", &cmd[3]);
+		str = check_exec("..", &cmd[3], 2, ft_strlen(&cmd[3]));
 	return (str);
 }
 
