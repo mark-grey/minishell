@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 15:16:06 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:47:52 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,13 @@ int		count_list(t_env *list);
 t_env	*parse_env(char **env);
 
 // Utils
-void	exit_program(int code);
 t_env	*add_var(t_env *prev, char *var);
 t_env	*search_var(char *str, t_env *list);
 t_env	*remove_var(char *str, t_env *list);
-void	set_var(const char *src, t_env *node);
-void	print_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
+void	set_var(const char *src, t_env *node);
 void	clear_command_input(t_cli *cli);
+void	exit_program(int code);
 
 /* PARSE INPUT FUNCTIONS */
 // Main
@@ -98,5 +97,12 @@ char	*get_redirector(char *input, int *i);
 char	*get_cmd(char *cli, int *start, int *end, char *path);
 char	*get_args(char *cli, int *start, int *end);
 void	get_quote(char *input, int *i);
+
+/* BUILTINS */
+// Main
+void	call_builtin(char *builtin, t_env *env);
+
+// Commands
+void	print_env(t_env *list);
 
 #endif
