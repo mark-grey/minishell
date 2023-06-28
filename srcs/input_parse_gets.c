@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 17:37:28 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:26:48 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * Enquanto a quote estiver aberta, o restante do código
  * não será interpretado, considerando como parte do
  * conteúdo quotado.
+ * Sai do programa se não fechar o quote.
  */
 void	get_quote(char *input, int *i)
 {
@@ -25,7 +26,7 @@ void	get_quote(char *input, int *i)
 	while (input[*i] != quote && input[*i])
 			(*i)++;
 	if (!input[*i])
-		exit_program(23); //não fechou a quote
+		exit_program(23);
 }
 
 /* PEGA O COMANDO 
@@ -35,12 +36,13 @@ void	get_quote(char *input, int *i)
  */
 char	*get_cli(char *input, int *i)
 {
-	int		size;
 	int		start;
 	char	*cmd;
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
+	if (is_redirector(input[*i]) || !input[*i])
+		return (NULL);
 	start = *i;
 	while (!is_redirector(input[*i]) && input[*i])
 	{
@@ -48,23 +50,23 @@ char	*get_cli(char *input, int *i)
 			get_quote(input, i);
 		(*i)++;
 	}
-	if (*i != start)
-		(*i)--;
+	(*i)--;
 	while (ft_isblank(input[*i]) && *i)
 		(*i)--;
 	if (*i < start)
 		return (NULL);
-	size = ++(*i) - start + 1;
-	cmd = malloc(sizeof(char) * size);
+	cmd = malloc(sizeof(char) * (++(*i) - start + 1));
 	if (!cmd)
 		exit_program(OUT_OF_MEMORY);
-	ft_strlcpy(cmd, &input[start], size);
+	ft_strlcpy(cmd, &input[start], (*i - start + 1));
 	return (cmd);
 }
 
 /* PEGA O REDIRECIONADOR
- * Os redirecionadores possíveis são:
+ * Os redirecionadores que serão utilizados são:
  * >, >>, <, << e |.
+ * Mas aqui também é salvo ||||, <> ou outras combinações destes
+ * caracteres que serão validados posteriormente.
  */
 char	*get_redirector(char *input, int *i)
 {
