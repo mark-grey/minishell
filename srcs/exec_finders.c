@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/28 17:27:26 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:53:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 	ft_memcpy(full, path, path_len);
 	ft_memcpy(full + path_len + 1, cmd, cmd_len);
 	full[path_len] = '/';
-	full[path_len + cmd_len + 1] = '\0'; printf("Path full is %s\n", full);
+	full[path_len + cmd_len + 1] = '\0';
 	return (full);
 }
 
