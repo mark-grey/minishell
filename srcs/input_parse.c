@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 16:46:40 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:11:18 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ t_cli	*add_cli(t_cli *prev, char *cli, char *director, char *path)
 	if (prev)
 		prev->next = newnode;
 	newnode->director = director;
-	cmd_divider(cli, newnode, path);
+	if (cli)
+		cmd_divider(cli, newnode, path);
 	return (newnode);
 }
 
@@ -68,17 +69,15 @@ t_cli	*parse_input(char *input, char *path)
 
 	i = 0;
 	cli = get_cli(input, &i);
-	if (!cli)
-		return (NULL);
 	director = get_redirector(input, &i);
+	if (!cli && !director)
+		return (NULL);
 	control = get_control();
 	control->cli = add_cli(NULL, cli, director, path);
 	prev = control->cli;
 	while (input[i] && director)
 	{
 		cli = get_cli(input, &i);
-		if (!cli)
-			exit_program(OUT_OF_MEMORY); // FALTA ARGUMENTO APÓS O DIRECIONADOR
 		director = get_redirector(input, &i);
 		prev = add_cli(prev, cli, director, path);
 	}

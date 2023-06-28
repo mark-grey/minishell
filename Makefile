@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/25 17:31:16 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/26 19:14:25 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ FTLIB_DIR	:=	./libs/libft
 FTLIB		:=	$(FTLIB_DIR)/libft.a
 
 # Compilation flags
-CFLAGS		:=	-Wall -Wextra -Werror -I $(HDR_DIR)
-BCFLAGS		:=	-Wall -Wextra -Werror -I ./bonus/incl
+CFLAGS		:=	-Wall -Wextra -Werror -g -I $(HDR_DIR)
+BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
