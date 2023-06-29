@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_parse.c                                        :+:      :+:    :+:   */
+/*   env_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/24 12:15:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:43:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ t_env	*add_var(t_env *prev, char *var)
 {
 	t_env	*newnode;
 
+	if (prev)
+		while (prev->next)
+			prev = prev->next;
 	newnode = malloc(sizeof(t_env));
 	if (!newnode)
 		exit_program(OUT_OF_MEMORY);

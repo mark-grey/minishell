@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/28 20:48:15 by inwagner         ###   ########.fr        #
+#    Updated: 2023/06/28 21:02:07 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 FUN			:=	main.c \
 				builtin_caller.c \
 				builtin_env.c \
+				builtin_export.c \
 				cleaner.c \
 				env_parser.c \
 				env_utils.c \
