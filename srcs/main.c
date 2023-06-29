@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:33:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 22:09:45 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_cmds()
 {
-	t_ctrl *ctrl = get_control();
+	t_ctrl	*ctrl = get_control();
 	t_cli	*temp;
 
 	if (ctrl)
@@ -30,8 +30,11 @@ static void	print_cmds()
 			printf("Arg %i: %s\n", i, temp->args);
 		if (temp && temp->director)
 			printf("Dir %i: %s\n", i, temp->director);
+		if (temp && temp->full_exec)
+			printf("Exec: %i: %s\n", i, temp->full_exec);
 		i++;
 		temp = temp->next;
+		write(1, "\n", 1);
 	}
 }
 

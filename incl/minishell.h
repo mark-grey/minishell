@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/25 15:16:06 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:46:23 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_cli
 	char			*cmd;
 	char			*args;
 	char			*director;
+	char			*full_exec;
 	struct s_cli	*next;
 }					t_cli;
 
@@ -60,6 +61,7 @@ typedef struct s_ctrl
 	t_args	*args;
 	t_cli	*cli;
 	t_env	*env;
+	char	*exec_path;
 }			t_ctrl;
 
 /* STRINGIFY FUNCTIONS */

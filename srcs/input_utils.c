@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse_utils.c                                :+:      :+:    :+:   */
+/*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:20:34 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/26 20:39:31 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:48:51 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	is_builtin(char *cmd)
  */
 int	is_exec(char *path, char *cmd)
 {
-	char	*exec_path;
+	t_ctrl	*ctrl;
 	char	*temp_path;
 	size_t	len;
 
 	if (!cmd)
 		return (0);
-	exec_path = NULL;
+	ctrl = get_control();
 	if (path)
 	{
 		len = ft_strlen(path);
@@ -62,12 +62,12 @@ int	is_exec(char *path, char *cmd)
 		if (!temp_path)
 			exit_program(OUT_OF_MEMORY);
 		ft_strlcpy(temp_path, path, len);
-		exec_path = parse_path(temp_path, cmd);
+		ctrl->exec_path = parse_path(temp_path, cmd);
 		free(temp_path);
 	}
 	else
-		exec_path = parse_path(NULL, cmd);
-	if (exec_path)
-		return (free(exec_path), 1);
+		ctrl->exec_path = parse_path(NULL, cmd);
+	if (ctrl->exec_path)
+		return (1);
 	return (0);
 }
