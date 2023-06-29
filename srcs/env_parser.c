@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 21:50:34 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:43:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_env	*add_var(t_env *prev, char *var)
 {
 	t_env	*newnode;
 
-	if (prev->next)
+	if (prev)
 		while (prev->next)
 			prev = prev->next;
 	newnode = malloc(sizeof(t_env));
