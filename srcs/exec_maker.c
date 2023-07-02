@@ -15,13 +15,13 @@
 static void	print_args(char **args)
 {
 	int	i;
-
+printf("\ngonna print now:\n");
 	i = 1;
 	while (*args)
 		printf("%i: %s\n\n", i++, *args++);
 }
 
-int	count_args(char *args)
+static int	count_args(char *args, int single_arg)
 {
 	int	i;
 	int	count;
@@ -30,8 +30,13 @@ int	count_args(char *args)
 	count = 1;
 	while (args[i])
 	{
-		if (args[i] == ' ')
-			count++;
+		if (args[i] == ' ' || !args[i + 1])
+		{
+			if (single_arg)
+				return (i + 1);
+			else
+				count++;
+		}
 		if (is_quote(args[i]))
 		{
 			get_quote(args, &i);
@@ -42,6 +47,21 @@ int	count_args(char *args)
 	return (count);
 }
 
+static char	*set_arg(char *args, char **pointer)
+{
+	int			len;
+	static int	new_arg;
+
+	printf("gonna count from %s\n", &args[new_arg]);
+	len = count_args(&args[new_arg], 1);
+	(void)pointer;
+	printf("len is %i\n\n", len);
+	new_arg += len;
+	if (!args[new_arg])
+		new_arg = 0;
+	return NULL;
+}
+
 char	**stringify_args(char *args)
 {
 	int		i;
@@ -49,16 +69,16 @@ char	**stringify_args(char *args)
 	char	**pointers;
 
 	i = 0;
-	count = count_args(args);
+	count = count_args(args, 0);
 	printf("I counted %i args\n", count);
 	pointers = malloc(sizeof(char *) * (count + 1));
 	if (!pointers)
 		exit_program(OUT_OF_MEMORY);
 	pointers[count] = NULL;
 	while (i < count)
-		set_arg(args[i], )
+		pointers[i++] = set_arg(args, pointers);
 	free(pointers);
-	return (NULL);
+	return NULL;
 }
 
 int	main(int argc, char **argv)
