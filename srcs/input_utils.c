@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse_utils.c                                :+:      :+:    :+:   */
+/*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:20:34 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:13:38 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/02 14:22:38 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,21 @@ int	is_quote(char c)
 
 /* VERIFICA SE É CARACTERE DE REDIRECIONADOR
  */
-int	is_redirector(char c)
+int	is_redirector_char(char c)
 {
 	return (c == '>' || c == '<' || c == '|');
+}
+
+/* VERIFICA SE É REDIRECIONADOR
+ */
+int	is_redirector(char *red)
+{
+	return (\
+		!ft_strncmp(red, ">>\0", 3) || \
+		!ft_strncmp(red, "<<\0", 3) || \
+		!ft_strncmp(red, ">\0", 2) || \
+		!ft_strncmp(red, "<\0", 2) || \
+		!ft_strncmp(red, "|\0", 2));
 }
 
 /* VERIFICA SE É BUILTIN

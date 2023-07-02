@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse_gets.c                                 :+:      :+:    :+:   */
+/*   input_parser_gets.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:26:48 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/02 14:28:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ char	*get_cli(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (is_redirector(input[*i]) || !input[*i])
+	if (is_redirector_char(input[*i]) || !input[*i])
 		return (NULL);
 	start = *i;
-	while (!is_redirector(input[*i]) && input[*i])
+	while (!is_redirector_char(input[*i]) && input[*i])
 	{
 		if (is_quote(input[*i]))
 			get_quote(input, i);
@@ -76,12 +76,14 @@ char	*get_redirector(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (!input[*i] || !is_redirector(input[*i]))
+	if (!input[*i] || !is_redirector_char(input[*i]))
 		return (NULL);
 	start = *i;
-	while (is_redirector(input[*i]) && input[*i])
+	while (is_redirector_char(input[*i]) && input[*i])
 		(*i)++;
 	size = *i - start + 1;
+	if (!is_redirector(&input[start]))
+		exit_program(-1);
 	red = malloc(sizeof(char) * size);
 	if (!red)
 		exit_program(OUT_OF_MEMORY);
