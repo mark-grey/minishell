@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/28 21:02:07 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/02 18:18:12 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FUN			:=	main.c \
 				builtin_caller.c \
 				builtin_env.c \
 				builtin_export.c \
+				builtin_pwd.c \
 				cleaner.c \
 				env_parser.c \
 				env_utils.c \
