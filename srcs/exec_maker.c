@@ -15,7 +15,7 @@
 static void	print_args(char **args)
 {
 	int	i;
-printf("\ngonna print now:\n");
+
 	i = 1;
 	while (*args)
 		printf("%i: %s\n\n", i++, *args++);
@@ -33,27 +33,36 @@ static int	count_args(char *args, int single_arg)
 		if (args[i] == ' ' || !args[i + 1])
 		{
 			if (single_arg)
-				{printf("I'm gonna leave at index args[%i], char: %i\n", i, (int)args[i]);return (i);}
+				return (i);
 			else
 				count++;
 		}
 		if (is_quote(args[i]))
-		{
 			get_quote(args, &i);
-		printf("\nJust finished a quote, am at i %i and *args is %c\n", i, args[i]);
-		}
 		i++;
 	}
 	return (count);
 }
 
+void	clear_ptr_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
+
 static char	*set_arg(char *args, char **pointer)
 {
+	char		*str;
 	int			len;
+	int			start;
 	static int	new_arg;
 
-	printf("gonna count from %s\n", &args[new_arg]);
-	len = count_args(&args[new_arg], 1);
+	start = new_arg;
+	len = count_args(&args[start], 1);
 	(void)pointer;
 	new_arg += len + 1;
 	if (!args[new_arg])
@@ -61,8 +70,14 @@ static char	*set_arg(char *args, char **pointer)
 		len++;
 		new_arg = 0;
 	}
-	printf("len is %i\n", len);
-	return NULL;
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+	{
+		clear_ptr_array(pointer);
+		exit_program(OUT_OF_MEMORY);
+	}
+	ft_strlcpy(str, &args[start], len + 1);
+	return (str);
 }
 
 char	**stringify_args(char *args)
@@ -73,25 +88,26 @@ char	**stringify_args(char *args)
 
 	i = 0;
 	count = count_args(args, 0);
-	printf("\n\nI counted %i args\n", count);
 	pointers = malloc(sizeof(char *) * (count + 1));
 	if (!pointers)
 		exit_program(OUT_OF_MEMORY);
-	pointers[count] = NULL;
+	while (i <= count)
+		pointers[i++] = NULL;
+	i = 0;
 	while (i < count)
 		pointers[i++] = set_arg(args, pointers);
-	free(pointers);
-	return NULL;
+	return (pointers);
 }
 
 int	main(int argc, char **argv)
 {
+	char	**ptrs;
+
 	if (argc < 2)
 		return (-1);
-	stringify_args(argv[1]);
-	if (argv[2])
-		stringify_args(argv[2]);
-	print_args(argv + 1);
+	ptrs = stringify_args(argv[1]);
+	print_args(ptrs);
+	clear_ptr_array(ptrs);
 }
 
 //	gcc -Wall -Werror -Wextra -I ./incl ./srcs/exec_maker.c ./srcs/builtin_caller.c ./srcs/cleaner.c ./srcs/env_parser.c ./srcs/env_utils.c ./srcs/exec_finder.c ./srcs/input_parser_gets.c ./srcs/input_parser.c ./srcs/input_utils.c  ./libs/libft/libft.a -o execs 
