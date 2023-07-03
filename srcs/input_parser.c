@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/03 19:45:59 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:57:01 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ void	cmd_divider(char *cli, t_cli *newnode, char *path)
 		newnode->args = cli;
 	else
 		newnode->args = get_args(cli, &start, &end);
+}
+
+/* INSERE O COMANDO EXECUTAVEL
+ * Caso exista um comando na estrutura e o mesmo
+ * não seja um builtin, o caminho completo para seu
+ * acesso será incluído à estrutura de controle
+ */
+static void	set_exec(t_cli *newnode)
+{
+	t_ctrl	*control;
+
+	control = get_control();
+	if (newnode->cmd && !is_builtin(newnode->cmd))
+	{
+		newnode->full_exec = control->exec_path;
+		control->exec_path = NULL;
+	}
 }
 
 void	validate_redirector(char *cli, char *director)
@@ -68,6 +85,7 @@ t_cli	*add_cli(t_cli *prev, char *cli, char *director, char *path)
 	newnode->director = director;
 	if (cli)
 		cmd_divider(cli, newnode, path);
+	set_exec(newnode);
 	return (newnode);
 }
 

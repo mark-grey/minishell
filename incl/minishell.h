@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/02 14:22:55 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:46:23 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_cli
 	char			*cmd;
 	char			*args;
 	char			*director;
+	char			*full_exec;
 	struct s_cli	*next;
 }					t_cli;
 
@@ -60,10 +61,12 @@ typedef struct s_ctrl
 	t_args	*args;
 	t_cli	*cli;
 	t_env	*env;
+	char	*exec_path;
 }			t_ctrl;
 
 /* STRINGIFY FUNCTIONS */
 char	**stringify_envp(t_env *list);
+char	**stringify_args(char *args);
 int		count_list(t_env *list);
 
 /* PARSE ENV FUNCTIONS */
@@ -77,6 +80,7 @@ t_env	*remove_var(char *str, t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
 void	set_var(const char *src, t_env *node);
 void	clear_command_input(t_cli *cli);
+void	clear_ptr_array(char **array);
 void	exit_program(int code);
 
 /* PARSE INPUT FUNCTIONS */
