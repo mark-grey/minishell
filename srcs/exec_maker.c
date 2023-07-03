@@ -17,31 +17,10 @@ static void	print_args(char **args)
 	int	i;
 
 	i = 1;
-	while (*args)
+	while (*args) {
+		printf("len is %li ", ft_strlen(*args));
 		printf("%i: %s\n\n", i++, *args++);
-}
-
-static int	count_args(char *args, int single_arg)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (args[i])
-	{
-		if (args[i] == ' ' || !args[i + 1])
-		{
-			if (single_arg)
-				return (i);
-			else
-				count++;
-		}
-		if (is_quote(args[i]))
-			get_quote(args, &i);
-		i++;
 	}
-	return (count);
 }
 
 void	clear_ptr_array(char **array)
@@ -54,6 +33,33 @@ void	clear_ptr_array(char **array)
 	free(array);
 }
 
+static int	count_args(char *args, int single_arg)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (args[i])
+	{
+		if (is_quote(args[i]))
+			get_quote(args, &i);
+		while(ft_isblank(args[i + 1]))
+			args++;
+		if (ft_isblank(args[i]) || !args[i + 1])
+		{
+			if (single_arg && args[i + 1])
+				return (i + 1);
+			else if (single_arg)
+				return (i);
+			else
+				count++;
+		}
+		i++;
+	}
+	return (count);
+}
+
 static char	*set_arg(char *args, char **pointer)
 {
 	char		*str;
@@ -63,8 +69,9 @@ static char	*set_arg(char *args, char **pointer)
 
 	start = new_arg;
 	len = count_args(&args[start], 1);
-	(void)pointer;
 	new_arg += len + 1;
+	while (ft_isblank(args[new_arg]))
+		new_arg++;
 	if (!args[new_arg])
 	{
 		len++;
