@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:21:46 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/28 22:09:45 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_cmds()
+{
+	t_ctrl	*ctrl = get_control();
+	t_cli	*temp;
+
+	if (ctrl)
+		temp = ctrl->cli;
+	else
+		temp = NULL;
+	int	i = 1;
+	while (temp)
+	{
+		if (temp && temp->cmd)
+			printf("Command %i: %s\n", i, temp->cmd);
+		if (temp && temp->args)
+			printf("Arg %i: %s\n", i, temp->args);
+		if (temp && temp->director)
+			printf("Dir %i: %s\n", i, temp->director);
+		if (temp && temp->full_exec)
+			printf("Exec: %i: %s\n", i, temp->full_exec);
+		i++;
+		temp = temp->next;
+		write(1, "\n", 1);
+	}
+}
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
@@ -24,6 +50,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	if (!line)
 		exit_program(127);
 	cmds = parse_input(line, path);
+	print_cmds();
 	ctrl = get_control();
 	if (ctrl->cli)
 		clear_command_input(cmds);

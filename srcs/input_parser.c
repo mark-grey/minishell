@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse.c                                      :+:      :+:    :+:   */
+/*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:11:18 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/28 22:14:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ void	cmd_divider(char *cli, t_cli *newnode, char *path)
 		newnode->args = get_args(cli, &start, &end);
 }
 
+/* INSERE O COMANDO EXECUTAVEL
+ * Caso exista um comando na estrutura e o mesmo
+ * não seja um builtin, o caminho completo para seu
+ * acesso será incluído à estrutura de controle
+ */
+static void	set_exec(t_cli *newnode)
+{
+	t_ctrl	*control;
+
+	control = get_control();
+	if (newnode->cmd && !is_builtin(newnode->cmd))
+	{
+		newnode->full_exec = control->exec_path;
+		control->exec_path = NULL;
+	}
+}
+
 /* CRIAR VARIÁVEL
  * Cria um novo node e coloca no final da lista.
  */
@@ -56,6 +73,7 @@ t_cli	*add_cli(t_cli *prev, char *cli, char *director, char *path)
 	newnode->director = director;
 	if (cli)
 		cmd_divider(cli, newnode, path);
+	set_exec(newnode);
 	return (newnode);
 }
 
