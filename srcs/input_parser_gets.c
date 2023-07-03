@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/02 14:28:19 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:37:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ char	*get_redirector(char *input, int *i)
 	while (is_redirector_char(input[*i]) && input[*i])
 		(*i)++;
 	size = *i - start + 1;
-	if (!is_redirector(&input[start]))
-		exit_program(-1);
 	red = malloc(sizeof(char) * size);
 	if (!red)
 		exit_program(OUT_OF_MEMORY);

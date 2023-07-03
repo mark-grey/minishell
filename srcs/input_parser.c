@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse.c                                      :+:      :+:    :+:   */
+/*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:11:18 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:45:59 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ void	cmd_divider(char *cli, t_cli *newnode, char *path)
 		newnode->args = get_args(cli, &start, &end);
 }
 
+void	validate_redirector(char *cli, char *director)
+{
+	if (director && !is_redirector(director))
+	{
+		free(director);
+		if (cli)
+			free(cli);
+		exit_program(-1);
+	}
+}
+
 /* CRIAR VARIÁVEL
  * Cria um novo node e coloca no final da lista.
  */
@@ -41,6 +52,7 @@ t_cli	*add_cli(t_cli *prev, char *cli, char *director, char *path)
 {
 	t_cli	*newnode;
 
+	validate_redirector(cli, director);
 	newnode = malloc(sizeof(t_cli));
 	if (!newnode)
 	{
