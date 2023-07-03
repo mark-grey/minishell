@@ -66,6 +66,7 @@ typedef struct s_ctrl
 
 /* STRINGIFY FUNCTIONS */
 char	**stringify_envp(t_env *list);
+char	**stringify_args(char *args);
 int		count_list(t_env *list);
 
 /* PARSE ENV FUNCTIONS */
@@ -79,6 +80,7 @@ t_env	*remove_var(char *str, t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
 void	set_var(const char *src, t_env *node);
 void	clear_command_input(t_cli *cli);
+void	clear_ptr_array(char **array);
 void	exit_program(int code);
 
 /* PARSE INPUT FUNCTIONS */

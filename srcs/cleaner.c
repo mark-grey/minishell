@@ -38,6 +38,16 @@ void	clear_command_input(t_cli *cli)
 	free(cli);
 }
 
+void	clear_ptr_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
+
 t_ctrl	*get_control(void)
 {
 	static t_ctrl	control;

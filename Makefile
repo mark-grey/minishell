@@ -36,7 +36,8 @@ FUN			:=	main.c \
 				exec_finder.c \
 				input_parser_gets.c \
 				input_parser.c \
-				input_utils.c
+				input_utils.c \
+				input_stringify.c
 
 
 # Object files
