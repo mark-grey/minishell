@@ -60,6 +60,33 @@ static int	count_args(char *args, int single_arg)
 	return (count);
 }
 
+static char	*strlcpy_quoted(char *args, int len)
+{
+	char	*str;
+	int		i;
+	int		has_quote;
+
+	i = -1;
+	has_quote = 0;
+	while (++i < len -1 && !has_quote)
+		if (is_quote(args[i]))
+			has_quote = (int)args[i];
+	if (has_quote)
+		len -= 2;
+	str = malloc(sizeof(char) * len);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len - 1)
+	{
+		if (*args != (char)has_quote)
+			str[i++] = *args;
+		args++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
 static char	*set_arg(char *args, char **pointer)
 {
 	char		*str;
@@ -77,13 +104,12 @@ static char	*set_arg(char *args, char **pointer)
 		len++;
 		new_arg = 0;
 	}
-	str = malloc(sizeof(char) * (len + 1));
+	str = strlcpy_quoted(&args[start], len + 1);
 	if (!str)
 	{
 		clear_ptr_array(pointer);
 		exit_program(OUT_OF_MEMORY);
 	}
-	ft_strlcpy(str, &args[start], len + 1);
 	return (str);
 }
 
