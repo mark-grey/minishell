@@ -12,10 +12,22 @@
 
 #include "minishell.h"
 
+static void	print_args(char **args)
+{
+	int	i;
+	static int	argun;
+
+	i = 1;
+	argun++;
+	while (*args)
+		printf("\nPRINTING ARGS\nchar ** number %i\n arg%i: %s\n", argun, i++, *args++);
+}
+
 static void	print_cmds()
 {
 	t_ctrl	*ctrl = get_control();
 	t_cli	*temp;
+	char	**args;
 
 	if (ctrl)
 		temp = ctrl->cli;
@@ -32,6 +44,10 @@ static void	print_cmds()
 			printf("Dir %i: %s\n", i, temp->director);
 		if (temp && temp->full_exec)
 			printf("Exec: %i: %s\n", i, temp->full_exec);
+		args = stringify_args(temp->args);
+		if (args)
+			print_args(args);
+		clear_ptr_array(args);
 		i++;
 		temp = temp->next;
 		write(1, "\n", 1);
