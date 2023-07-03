@@ -34,6 +34,7 @@ static void	print_cmds()
 	else
 		temp = NULL;
 	int	i = 1;
+	args = NULL;
 	while (temp)
 	{
 		if (temp && temp->cmd)
@@ -44,10 +45,14 @@ static void	print_cmds()
 			printf("Dir %i: %s\n", i, temp->director);
 		if (temp && temp->full_exec)
 			printf("Exec: %i: %s\n", i, temp->full_exec);
-		args = stringify_args(temp->args);
+		if (temp->args)
+			args = stringify_args(temp->args);
 		if (args)
+		{
 			print_args(args);
-		clear_ptr_array(args);
+			clear_ptr_array(args);
+		}
+		args = NULL;
 		i++;
 		temp = temp->next;
 		write(1, "\n", 1);
