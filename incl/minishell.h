@@ -72,6 +72,7 @@ int		count_list(t_env *list);
 /* PARSE ENV FUNCTIONS */
 // Main
 t_env	*parse_env(char **env);
+void	update_env(char **argv, char *cmd);
 
 // Utils
 t_env	*add_var(t_env *prev, char *var);
