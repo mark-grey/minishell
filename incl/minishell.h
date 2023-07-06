@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 21:46:23 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/05 22:43:09 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_args
-{
-	char			*arg;
-	struct s_args	*next;
-}					t_args;
-
 typedef struct s_cli
 {
 	char			*cmd;
@@ -58,7 +52,6 @@ typedef struct s_cli
 
 typedef struct s_ctrl
 {
-	t_args	*args;
 	t_cli	*cli;
 	t_env	*env;
 	char	*exec_path;
@@ -101,7 +94,7 @@ char	*get_cli(char *input, int *i);
 char	*get_redirector(char *input, int *i);
 char	*get_cmd(char *cli, int *start, int *end, char *path);
 char	*get_args(char *cli, int *start, int *end);
-void	get_quote(char *input, int *i);
+int		get_quote(char *input, int *i);
 
 /* BUILTINS */
 // Main

@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/03 19:37:41 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:02:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
  * conteúdo quotado.
  * Sai do programa se não fechar o quote.
  */
-void	get_quote(char *input, int *i)
+int		get_quote(char *input, int *i)
 {
 	char	quote;
 
 	quote = input[(*i)++];
 	while (input[*i] != quote && input[*i])
-			(*i)++;
-	if (!input[*i])
-		exit_program(23);
+		(*i)++;
+	if (!input[(*i)--])
+		return (-1);
+	return (0);
 }
 
 /* PEGA O COMANDO 
@@ -44,7 +45,7 @@ char	*get_cli(char *input, int *i)
 	if (is_redirector_char(input[*i]) || !input[*i])
 		return (NULL);
 	start = *i;
-	while (!is_redirector_char(input[*i]) && input[*i])
+	while (input[*i] && !is_redirector_char(input[*i]))
 	{
 		if (is_quote(input[*i]))
 			get_quote(input, i);
@@ -59,6 +60,7 @@ char	*get_cli(char *input, int *i)
 	if (!cmd)
 		exit_program(OUT_OF_MEMORY);
 	ft_strlcpy(cmd, &input[start], (*i - start + 1));
+	printf("teste: %s\n", cmd);
 	return (cmd);
 }
 
