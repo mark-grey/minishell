@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/05 23:02:32 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:06:58 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*get_cli(char *input, int *i)
 	if (!cmd)
 		exit_program(OUT_OF_MEMORY);
 	ft_strlcpy(cmd, &input[start], (*i - start + 1));
-	printf("teste: %s\n", cmd);
 	return (cmd);
 }
 
