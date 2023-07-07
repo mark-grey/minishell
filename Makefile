@@ -32,6 +32,7 @@ FUN			:=	main.c \
 				builtin_export.c \
 				cleaner.c \
 				env_parser.c \
+				env_shifter.c \
 				env_utils.c \
 				exec_finder.c \
 				input_parser_gets.c \
