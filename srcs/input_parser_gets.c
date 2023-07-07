@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser_gets.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/03 19:37:41 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:13:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_quote(char *input, int *i)
 
 	quote = input[(*i)++];
 	while (input[*i] != quote && input[*i])
-			(*i)++;
+		(*i)++;
 	if (!input[*i])
 		exit_program(23);
 }

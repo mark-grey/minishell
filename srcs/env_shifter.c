@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_shifter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/28 20:39:35 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:13:47 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*last_input(char **argv, char *cmd)
+static char	*last_input(char **argv, char *cmd)
 {
 	char	*cursor;
 
@@ -22,7 +22,6 @@ static char		*last_input(char **argv, char *cmd)
 	while (*(++argv))
 		cursor = *argv;
 	return (cursor);
-	
 }
 
 static t_env	*new_underscore(char **argv, char *cmd)
