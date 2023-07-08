@@ -1,44 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_env_parse.c                                      :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:01:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 20:37:18 by inwagner         ###   ########.fr       */
+/*   Created: 2023/06/28 21:02:09 by inwagner          #+#    #+#             */
+/*   Updated: 2023/06/29 20:42:11 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_str_env(char **env)
+static t_env	*exist_var(t_env *list, char *arg)
 {
-	while (*env)
-	{
-		ft_putstr_fd(*env++, 1);
-		write(1, "\n", 2);
-	}
-	write(1, "\n", 1);
-}
+	int	len;
 
-void	print_env(t_env *list)
-{
+	len = ft_strlen(arg);
 	while (list)
 	{
-		printf("%s=%s\n", list->key, list->value);
+		if (!ft_strncmp(arg, list->key, len) && !list->key[len])
+			return (list);
 		list = list->next;
 	}
+	return (NULL);
 }
 
-int	main(int argc, char **argv, char **env)
+static void	new_var(t_env *env, char *args)
 {
-	t_env	*env_list;
+	t_env	*var_to_update;
 
-	(void)argc;
-	(void)argv;
-	print_env(env);
-	env_list = parse_env(env);
-	print_var_list(env_list);
-	(void)env_list;
+	var_to_update = exist_var(env, args);
+	if (!var_to_update)
+		add_var(env, args);
+	else
+		set_var(args, var_to_update);
+}
+
+void	b_export(t_env *env, char **args)
+{
+	if (!args)
+		return ;
+	while (*args)
+	{
+		new_var(env, *args);
+		args++;
+	}
 }

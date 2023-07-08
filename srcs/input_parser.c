@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse.c                                      :+:      :+:    :+:   */
+/*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:15:25 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,46 +34,82 @@ void	cmd_divider(char *cli, t_cli *newnode, char *path)
 		newnode->args = get_args(cli, &start, &end);
 }
 
+/* INSERE O COMANDO EXECUTAVEL
+ * Caso exista um comando na estrutura e o mesmo
+ * não seja um builtin, o caminho completo para seu
+ * acesso será incluído à estrutura de controle
+ */
+static void	set_exec(t_cli *newnode)
+{
+	t_ctrl	*control;
+
+	control = get_control();
+	if (newnode->cmd && !is_builtin(newnode->cmd))
+	{
+		newnode->full_exec = control->exec_path;
+		control->exec_path = NULL;
+	}
+}
+
+void	validate_redirector(char *cli, char *director)
+{
+	if (director && !is_redirector(*director))
+	{
+		free(director);
+		if (cli)
+			free(cli);
+		exit_program(-1);
+	}
+}
+
 /* CRIAR VARIÁVEL
  * Cria um novo node e coloca no final da lista.
  */
-t_cli	*add_cli(t_cli *prev, char *cmd, char *director, char *path)
+t_cli	*add_cli(t_cli *prev, char *cli, char *director, char *path)
 {
 	t_cli	*newnode;
 
+	validate_redirector(cli, director);
 	newnode = malloc(sizeof(t_cli));
 	if (!newnode)
-		exit(1);
+	{
+		if (cli)
+			free(cli);
+		if (director)
+			free(director);
+		exit_program(OUT_OF_MEMORY);
+	}
 	*newnode = (t_cli){0};
 	if (prev)
 		prev->next = newnode;
-	cmd_divider(cmd, newnode, path);
 	newnode->director = director;
+	if (cli)
+		cmd_divider(cli, newnode, path);
+	set_exec(newnode);
 	return (newnode);
 }
 
 t_cli	*parse_input(char *input, char *path)
 {
-	t_cli	*cmd_line;
+	t_ctrl	*control;
 	t_cli	*prev;
-	char	*cmd;
+	char	*cli;
 	char	*director;
 	int		i;
 
 	i = 0;
-	cmd = get_cli(input, &i);
-	if (!cmd)
-		return (NULL);
+	cli = get_cli(input, &i);
 	director = get_redirector(input, &i);
-	cmd_line = add_cli(NULL, cmd, director, path);
-	prev = cmd_line;
+	if (!cli && !director)
+		return (NULL);
+	control = get_control();
+	control->cli = add_cli(NULL, cli, director, path);
+	prev = control->cli;
 	while (input[i] && director)
 	{
-		cmd = get_cli(input, &i);
-		if (!cmd)
-			exit(-1); // FALTA ARGUMENTO APÓS O DIRECIONADOR
+		cli = get_cli(input, &i);
 		director = get_redirector(input, &i);
-		prev = add_cli(prev, cmd, director, path);
+		prev = add_cli(prev, cli, director, path);
 	}
-	return (cmd_line);
+	return (control->cli);
 }

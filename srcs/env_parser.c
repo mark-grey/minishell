@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_parse.c                                        :+:      :+:    :+:   */
+/*   env_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:01:54 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:43:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	set_var(const char *src, t_env *node)
 	len = ft_strlen(src) + 1;
 	dst = malloc(sizeof(char) * len);
 	if (!dst)
-		exit(1);
+		exit_program(OUT_OF_MEMORY);
 	ft_strlcpy(dst, src, len);
 	c = ft_strchr(dst, '=');
 	*c = '\0';
@@ -43,9 +43,12 @@ t_env	*add_var(t_env *prev, char *var)
 {
 	t_env	*newnode;
 
+	if (prev)
+		while (prev->next)
+			prev = prev->next;
 	newnode = malloc(sizeof(t_env));
 	if (!newnode)
-		exit(1);
+		exit_program(OUT_OF_MEMORY);
 	*newnode = (t_env){0};
 	if (prev)
 		prev->next = newnode;

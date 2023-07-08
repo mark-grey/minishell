@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/22 21:38:36 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:39:35 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,12 @@ int	count_list(t_env *list)
 	int	i;
 
 	i = 0;
-	while(list)
+	while (list)
 	{
 		list = list->next;
 		i++;
 	}
 	return (i);
-}
-
-void	print_var_list(t_env *list)
-{
-	if (!list)
-		return ;
-	printf("%s=%s\n", list->key, list->value);
-	print_var_list(list->next);
-}
-
-void	clear_var_list(t_env *list)
-{
-	if (!list)
-		return ;
-	clear_var_list(list->next);
-	if (list->key)
-		free(list->key);
-	free(list);
 }
 
 char	*get_var_value(char *value, t_env *env_list)
@@ -54,4 +36,43 @@ char	*get_var_value(char *value, t_env *env_list)
 	if (env_node)
 		list_value = env_node->value;
 	return (list_value);
+}
+
+static char	*copy_to_env(char *key, char *value)
+{
+	char	*new_var;
+	int		key_len;
+	int		val_len;
+
+	key_len = ft_strlen(key) + 1;
+	val_len = ft_strlen(value) + 1;
+	new_var = malloc(sizeof(char) * (key_len + val_len));
+	if (!new_var)
+		return (NULL);
+	ft_strlcpy(new_var, key, key_len);
+	ft_strlcpy(new_var + key_len, value, val_len);
+	new_var[key_len - 1] = '=';
+	return (new_var);
+}
+
+char	**stringify_envp(t_env *list)
+{
+	char	**env;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = count_list(list);
+	env = malloc(sizeof(char *) * (len + 1));
+	if (!env)
+		return (NULL);
+	while (i < len)
+	{
+		env[i] = copy_to_env(list->key, list->value);
+		if (!env[i++])
+			return (NULL);
+		list = list->next;
+	}
+	env[i] = NULL;
+	return (env);
 }

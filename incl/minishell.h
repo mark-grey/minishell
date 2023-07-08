@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/23 18:03:16 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:21:46 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+# define OUT_OF_MEMORY 1
+
 // Structs
 typedef struct s_env
 {
@@ -50,25 +52,37 @@ typedef struct s_cli
 	char			*cmd;
 	char			*args;
 	char			*director;
+	char			*full_exec;
 	struct s_cli	*next;
 }					t_cli;
 
+typedef struct s_ctrl
+{
+	t_args	*args;
+	t_cli	*cli;
+	t_env	*env;
+	char	*exec_path;
+}			t_ctrl;
+
 /* STRINGIFY FUNCTIONS */
 char	**stringify_envp(t_env *list);
+char	**stringify_args(char *args);
 int		count_list(t_env *list);
 
 /* PARSE ENV FUNCTIONS */
 // Main
 t_env	*parse_env(char **env);
+void	update_env(char **argv, char *cmd);
 
 // Utils
 t_env	*add_var(t_env *prev, char *var);
 t_env	*search_var(char *str, t_env *list);
 t_env	*remove_var(char *str, t_env *list);
-void	set_var(const char *src, t_env *node);
-void	print_var_list(t_env *list);
-void	clear_var_list(t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
+void	set_var(const char *src, t_env *node);
+void	clear_command_input(t_cli *cli);
+void	clear_ptr_array(char **array);
+void	exit_program(int code);
 
 /* PARSE INPUT FUNCTIONS */
 // Main
@@ -82,10 +96,21 @@ int		is_quote(char c);
 char	*parse_path(char *path, char *cmd);
 
 // Gets
+t_ctrl	*get_control(void);
 char	*get_cli(char *input, int *i);
 char	*get_redirector(char *input, int *i);
 char	*get_cmd(char *cli, int *start, int *end, char *path);
 char	*get_args(char *cli, int *start, int *end);
 void	get_quote(char *input, int *i);
+
+/* BUILTINS */
+// Main
+void	call_builtin(char *builtin, char **args, t_env *env);
+
+// Commands
+void	b_export(t_env *env, char **args);
+void	b_env(t_env *list);
+void	b_pwd(void);
+void	b_echo(char **args, int fd);
 
 #endif
