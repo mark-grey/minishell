@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 17:35:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:11:34 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,6 @@ char	*get_args(char *cli, int *start, int *end)
 	}
 	else
 		args = NULL;
-	free (cli);
+//	free (cli);
 	return (args);
 }
