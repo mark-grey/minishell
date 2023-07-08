@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_stringify.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/03 19:58:36 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:36:18 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	count_args(char *args, int single_arg)
 	while (args[i])
 	{
 		if (is_quote(args[i]))
-			get_quote(args, &i);
+			i += ft_abs(get_quote(args, &i));
 		while (ft_isblank(args[i + 1]))
 			args++;
 		if (ft_isblank(args[i]) || !args[i + 1])
@@ -98,6 +98,8 @@ char	**stringify_args(char *args)
 	int		count;
 	char	**pointers;
 
+	if (!args)
+		return (NULL);
 	i = 0;
 	count = count_args(args, 0);
 	pointers = malloc(sizeof(char *) * (count + 1));

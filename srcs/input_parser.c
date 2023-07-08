@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/05 19:58:28 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:01:50 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,23 @@
  */
 void	cmd_divider(char *cli, t_cli *newnode, char *path)
 {
-	int	start;
-	int	end;
+	int		start;
+	int		end;
+	char	*temp;
 
 	start = 0;
 	end = 0;
+	temp = NULL;
 	newnode->cmd = get_cmd(cli, &start, &end, path);
 	if (!newnode->cmd)
-		newnode->args = cli;
+		newnode->args = stringify_args(cli);
 	else
-		newnode->args = get_args(cli, &start, &end);
+	{
+		temp = get_args(cli, &start, &end);
+		newnode->args = stringify_args(temp);
+		if (temp)
+			free(temp);
+	}
 }
 
 /* INSERE O COMANDO EXECUTAVEL
@@ -46,7 +53,7 @@ static void	set_exec(t_cli *newnode)
 	control = get_control();
 	if (newnode->cmd && !is_builtin(newnode->cmd))
 	{
-		newnode->full_exec = control->exec_path;
+		newnode->exec = control->exec_path;
 		control->exec_path = NULL;
 	}
 }

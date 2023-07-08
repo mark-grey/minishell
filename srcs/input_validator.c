@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/05 23:00:35 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:45:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	validate_redirector(char *director)
 		exit_program(-1);
 }
 
-void	validate_cli(t_cli cli)
+void	validate_cli(t_cli *cli)
 {
-	validate_redirector(cli->redirector);
+	validate_redirector(cli->director);
 	validate_args(cli->args);
 }

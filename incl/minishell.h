@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/05 22:43:09 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:33:56 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef struct s_env
 typedef struct s_cli
 {
 	char			*cmd;
-	char			*args;
+	char			**args;
 	char			*director;
-	char			*full_exec;
+	char			*exec;
 	struct s_cli	*next;
 }					t_cli;
 

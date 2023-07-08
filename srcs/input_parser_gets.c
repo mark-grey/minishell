@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/07 20:45:54 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:35:52 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		get_quote(char *input, int *i)
 		(*i)++;
 	if (!input[(*i)--])
 		return (-1);
-	return (0);
+	return (1);
 }
 
 /* PEGA O COMANDO 
