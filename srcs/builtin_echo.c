@@ -6,26 +6,26 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 20:57:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/02 17:34:13 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:23:34 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	b_echo(char **args, int fd)
+void	b_echo(char **args)
 {
 	if (!args)
 		return ;
 	if (ft_strncmp(*args, "-n\0", 3))
 	{
 		while (*args)
-			ft_putstr_fd(*args++, fd);
-		ft_putstr_fd("\n", fd);
+			printf("%s", *args++);
+		printf("\n");
 	}
 	else
 	{
 		args++;
 		while (*args)
-			ft_putstr_fd(*args++, fd);
+			printf("%s", *args++);
 	}
 }

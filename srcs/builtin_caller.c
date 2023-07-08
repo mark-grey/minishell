@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 19:34:20 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 16:12:06 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:23:56 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	call_builtin(char *builtin, char **args, t_env *env)
 	else if (!ft_strncmp(builtin, "pwd\0", 4))
 		b_pwd();
 	else if (!ft_strncmp(builtin, "echo\0", 5))
-		b_echo(args, 1);
+		b_echo(args);
 	else if (!ft_strncmp(builtin, "unset\0", 6))
 		printf("unset\n");
 	else if (!ft_strncmp(builtin, "export\0", 7))

@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 16:21:46 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:24:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void	call_builtin(char *builtin, char **args, t_env *env);
 void	b_export(t_env *env, char **args);
 void	b_env(t_env *list);
 void	b_pwd(void);
-void	b_echo(char **args, int fd);
+void	b_echo(char **args);
 
 #endif
