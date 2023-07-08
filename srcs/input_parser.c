@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/03 19:57:01 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:15:25 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	set_exec(t_cli *newnode)
 
 void	validate_redirector(char *cli, char *director)
 {
-	if (director && !is_redirector(director))
+	if (director && !is_redirector(*director))
 	{
 		free(director);
 		if (cli)
