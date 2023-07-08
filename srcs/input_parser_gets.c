@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parser_gets.c                                :+:      :+:    :+:   */
+/*   input_parse_gets.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/05 23:13:59 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:26:48 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_quote(char *input, int *i)
 
 	quote = input[(*i)++];
 	while (input[*i] != quote && input[*i])
-		(*i)++;
+			(*i)++;
 	if (!input[*i])
 		exit_program(23);
 }
@@ -41,10 +41,10 @@ char	*get_cli(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (is_redirector_char(input[*i]) || !input[*i])
+	if (is_redirector(input[*i]) || !input[*i])
 		return (NULL);
 	start = *i;
-	while (!is_redirector_char(input[*i]) && input[*i])
+	while (!is_redirector(input[*i]) && input[*i])
 	{
 		if (is_quote(input[*i]))
 			get_quote(input, i);
@@ -76,10 +76,10 @@ char	*get_redirector(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (!input[*i] || !is_redirector_char(input[*i]))
+	if (!input[*i] || !is_redirector(input[*i]))
 		return (NULL);
 	start = *i;
-	while (is_redirector_char(input[*i]) && input[*i])
+	while (is_redirector(input[*i]) && input[*i])
 		(*i)++;
 	size = *i - start + 1;
 	red = malloc(sizeof(char) * size);

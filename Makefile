@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/02 18:18:12 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/08 15:55:40 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 # Source files
 FUN			:=	main.c \
 				builtin_caller.c \
+				builtin_echo.c \
 				builtin_env.c \
 				builtin_export.c \
 				builtin_pwd.c \
