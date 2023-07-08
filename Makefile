@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/02 12:29:57 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/08 15:55:40 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,16 @@ FUN			:=	main.c \
 				builtin_echo.c \
 				builtin_env.c \
 				builtin_export.c \
+				builtin_pwd.c \
 				cleaner.c \
 				env_parser.c \
+				env_shifter.c \
 				env_utils.c \
 				exec_finder.c \
 				input_parser_gets.c \
 				input_parser.c \
-				input_utils.c
+				input_utils.c \
+				input_stringify.c
 
 
 # Object files

@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/02 12:19:23 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:54:35 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_cli
 	char			*cmd;
 	char			*args;
 	char			*director;
+	char			*full_exec;
 	struct s_cli	*next;
 }					t_cli;
 
@@ -60,15 +61,18 @@ typedef struct s_ctrl
 	t_args	*args;
 	t_cli	*cli;
 	t_env	*env;
+	char	*exec_path;
 }			t_ctrl;
 
 /* STRINGIFY FUNCTIONS */
 char	**stringify_envp(t_env *list);
+char	**stringify_args(char *args);
 int		count_list(t_env *list);
 
 /* PARSE ENV FUNCTIONS */
 // Main
 t_env	*parse_env(char **env);
+void	update_env(char **argv, char *cmd);
 
 // Utils
 t_env	*add_var(t_env *prev, char *var);
@@ -77,6 +81,7 @@ t_env	*remove_var(char *str, t_env *list);
 char	*get_var_value(char *value, t_env *env_list);
 void	set_var(const char *src, t_env *node);
 void	clear_command_input(t_cli *cli);
+void	clear_ptr_array(char **array);
 void	exit_program(int code);
 
 /* PARSE INPUT FUNCTIONS */
@@ -105,6 +110,7 @@ void	call_builtin(char *builtin, char **args, t_env *env);
 // Commands
 void	b_export(t_env *env, char **args);
 void	b_env(t_env *list);
+void	b_pwd(void);
 void	b_echo(char **args, int fd);
 
 #endif
