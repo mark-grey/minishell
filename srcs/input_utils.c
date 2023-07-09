@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:20:34 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 21:48:51 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:55:22 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,9 @@ int	is_quote(char c)
 
 /* VERIFICA SE É CARACTERE DE REDIRECIONADOR
  */
-int	is_redirector_char(char c)
+int	is_redirector(char c)
 {
 	return (c == '>' || c == '<' || c == '|');
-}
-
-/* VERIFICA SE É REDIRECIONADOR
- */
-int	is_redirector(char *red)
-{
-	return (\
-		!ft_strncmp(red, ">>\0", 3) || \
-		!ft_strncmp(red, "<<\0", 3) || \
-		!ft_strncmp(red, ">\0", 2) || \
-		!ft_strncmp(red, "<\0", 2) || \
-		!ft_strncmp(red, "|\0", 2));
 }
 
 /* VERIFICA SE É BUILTIN

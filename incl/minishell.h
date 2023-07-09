@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 22:00:46 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 09:21:02 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ t_cli	*parse_input(char *input, char *path);
 int		bar_input(char *input);
 int		is_builtin(char *cmd);
 int		is_exec(char *path, char *cmd);
-int		is_redirector(char *red);
-int		is_redirector_char(char c);
+int		is_redirector(char c);
 int		is_quote(char c);
 char	*parse_path(char *path, char *cmd);
 
@@ -103,7 +102,10 @@ void	get_quote(char *input, int *i);
 void	call_builtin(char *builtin, char **args, t_env *env);
 
 // Commands
-void	b_export(t_env *env, char **args);
+void	b_echo(char **args);
 void	b_env(t_env *list);
+void	b_export(t_env *env, char **args);
+void	b_pwd(void);
+void	b_unset(t_env *env, char **args);
 
 #endif
