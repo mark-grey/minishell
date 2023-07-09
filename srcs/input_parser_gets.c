@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 10:50:39 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:25:46 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char	*get_cli(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (is_redirector_char(input[*i]) || !input[*i])
+	if (!input[*i] || is_bracket(input[*i]) || is_pipe(input[*i]))
 		return (NULL);
 	start = *i;
-	while (input[*i] && !is_redirector_char(input[*i]))
+	while (input[*i] && !is_bracket(input[*i]) && !is_pipe(input[*i]))
 	{
 		if (is_quote(input[*i]))
 			get_quote(input, i);
@@ -74,10 +74,10 @@ char	*get_redirector(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (!input[*i] || !is_redirector_char(input[*i]))
+	if (!input[*i] || (!is_bracket(input[*i]) && !is_pipe(input[*i])))
 		return (NULL);
 	start = *i;
-	while (is_redirector_char(input[*i]) && input[*i])
+	while (input[*i] && (is_pipe(input[*i]) || is_bracket(input[*i])))
 		(*i)++;
 	size = *i - start + 1;
 	red = malloc(sizeof(char) * size);

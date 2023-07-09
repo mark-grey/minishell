@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 10:48:00 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 17:31:26 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ void	exit_program(int code);
 t_cli	*parse_input(char *input, char *path);
 
 // Validators
-int		bar_input(char *input);
 int		is_builtin(char *cmd);
 int		is_exec(char *path, char *cmd);
 int		is_redirector(char *red);
-int		is_redirector_char(char c);
+int		is_bracket(char c);
+int		is_pipe(char c);
 int		is_quote(char c);
+int		bar_input(char *input);
 char	*parse_path(char *path, char *cmd);
 
 // Gets
