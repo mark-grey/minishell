@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/08 22:12:46 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/09 10:16:42 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ FUN			:=	main.c \
 				input_parser_gets.c \
 				input_parser.c \
 				input_utils.c \
-				input_stringify.c
+				input_stringify.c \
+				input_validator.c 
 
 
 # Object files

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 16:15:25 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 09:23:49 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,25 @@
  */
 void	cmd_divider(char *cli, t_cli *newnode, char *path)
 {
-	int	start;
-	int	end;
+	int		start;
+	int		end;
+	char	*temp;
 
 	start = 0;
 	end = 0;
+	temp = NULL;
 	newnode->cmd = get_cmd(cli, &start, &end, path);
 	if (!newnode->cmd)
-		newnode->args = cli;
+		newnode->args = stringify_args(cli);
 	else
-		newnode->args = get_args(cli, &start, &end);
+	{
+		temp = get_args(cli, &start, &end);
+		newnode->args = stringify_args(temp);
+		if (temp)
+			free(temp);
+	}
+	if (cli)
+		free(cli);
 }
 
 /* INSERE O COMANDO EXECUTAVEL
@@ -46,19 +55,8 @@ static void	set_exec(t_cli *newnode)
 	control = get_control();
 	if (newnode->cmd && !is_builtin(newnode->cmd))
 	{
-		newnode->full_exec = control->exec_path;
+		newnode->exec = control->exec_path;
 		control->exec_path = NULL;
-	}
-}
-
-void	validate_redirector(char *cli, char *director)
-{
-	if (director && !is_redirector(*director))
-	{
-		free(director);
-		if (cli)
-			free(cli);
-		exit_program(-1);
 	}
 }
 
@@ -69,7 +67,6 @@ t_cli	*add_cli(t_cli *prev, char *cli, char *director, char *path)
 {
 	t_cli	*newnode;
 
-	validate_redirector(cli, director);
 	newnode = malloc(sizeof(t_cli));
 	if (!newnode)
 	{
