@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 19:34:20 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 20:49:00 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:13:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	call_builtin(char *builtin, char **args, t_env *env)
 	if (!ft_strncmp(builtin, "ping\0", 5))
 		printf("pong\n");
 	else if (!ft_strncmp(builtin, "cd\0", 3))
-		printf("cd\n");
+		b_cd(path, env);
 	else if (!ft_strncmp(builtin, "pwd\0", 4))
 		b_pwd();
 	else if (!ft_strncmp(builtin, "echo\0", 5))
