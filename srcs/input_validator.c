@@ -6,34 +6,79 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 16:45:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:15:40 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	validate_args(char **args)
+static int	check_unclosed_quotes(char *str)
+{
+	char	quote;
+
+	quote = 0;
+	while (*str)
+	{
+		if (is_quote(*str) && !quote)
+			quote = *str;
+		else if (*str == quote)
+			quote = 0;
+		str++;
+	}
+	return (quote != 0);
+}
+
+static void	print_err(char c, char b)
+{
+	ft_putstr_fd("Syntax error near unexpected token '", 2);
+	write (2, &c, 1);
+	if (c == b && c != '|')
+		write (2, &c, 1);
+	ft_putstr_fd("'\n", 2);
+}
+
+static int	bad_redirector(char *str, int *i)
+{
+	char	red;
+	int		fail;
+
+	red = *str++;
+	fail = 0;
+	(*i)++;
+	if (*str == '|')
+		fail = 1;
+	else if (*str == '<' || *str == '>')
+	{
+		(*i)++;
+		str++;
+		if (is_redirector_char(*str))
+			fail = 1;
+	}
+	if (fail)
+		print_err(red, *(str - 1));
+	return (fail);
+}
+
+int	bar_input(char *input)
 {
 	int	i;
 
-	while (*args)
+	if (!input)
+		return (-1);
+	if (check_unclosed_quotes(input))
 	{
-		i = -1;
-		while ((*args)[++i])
-			if (is_quote((*args)[i]) && get_quote((*args)[i], &i))
-				exit_program(-1);
-		args++;
+		ft_putstr_fd("Unclosed quote\n", 2);
+		return (1);
 	}
-}
-
-void	validate_redirector(char *director)
-{
-	if (director && !is_redirector(director))
-		exit_program(-1);
-}
-
-void	validate_cli(t_cli *cli)
-{
-	validate_redirector(cli->director);
-	validate_args(cli->args);
+	i = 0;
+	while (input[i])
+	{
+		if (is_quote(input[i]))
+			get_quote(input, &i);
+		if (is_redirector_char(input[i]))
+			if (bad_redirector(&input[i], &i))
+				return (2);
+		i++;
+	}
+	return (0);
 }

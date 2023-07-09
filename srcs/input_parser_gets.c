@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 19:11:34 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:23:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,13 @@
  * conteúdo quotado.
  * Sai do programa se não fechar o quote.
  */
-int		get_quote(char *input, int *i)
+void	get_quote(char *input, int *i)
 {
 	char	quote;
 
 	quote = input[(*i)++];
 	while (input[*i] != quote && input[*i])
 		(*i)++;
-	if (!input[(*i)--])
-		return (-1);
-	return (1);
 }
 
 /* PEGA O COMANDO 
@@ -131,6 +128,5 @@ char	*get_args(char *cli, int *start, int *end)
 	}
 	else
 		args = NULL;
-//	free (cli);
 	return (args);
 }

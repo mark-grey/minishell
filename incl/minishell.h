@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 16:33:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:00:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	exit_program(int code);
 t_cli	*parse_input(char *input, char *path);
 
 // Validators
+int		bar_input(char *input);
 int		is_builtin(char *cmd);
 int		is_exec(char *path, char *cmd);
 int		is_redirector(char *red);
@@ -95,7 +96,7 @@ char	*get_cli(char *input, int *i);
 char	*get_redirector(char *input, int *i);
 char	*get_cmd(char *cli, int *start, int *end, char *path);
 char	*get_args(char *cli, int *start, int *end);
-int		get_quote(char *input, int *i);
+void	get_quote(char *input, int *i);
 
 /* BUILTINS */
 // Main

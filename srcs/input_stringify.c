@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 17:36:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:23:51 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	count_args(char *args, int single_arg)
 	while (args[i])
 	{
 		if (is_quote(args[i]))
-			i += ft_abs(get_quote(args, &i));
+			get_quote(args, &i);
 		while (ft_isblank(args[i + 1]))
 			args++;
 		if (ft_isblank(args[i]) || !args[i + 1])
