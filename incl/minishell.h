@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 20:47:14 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 09:21:02 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,17 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_args
-{
-	char			*arg;
-	struct s_args	*next;
-}					t_args;
-
 typedef struct s_cli
 {
 	char			*cmd;
-	char			*args;
+	char			**args;
 	char			*director;
-	char			*full_exec;
+	char			*exec;
 	struct s_cli	*next;
 }					t_cli;
 
 typedef struct s_ctrl
 {
-	t_args	*args;
 	t_cli	*cli;
 	t_env	*env;
 	char	*exec_path;
@@ -89,6 +82,7 @@ void	exit_program(int code);
 t_cli	*parse_input(char *input, char *path);
 
 // Validators
+int		bar_input(char *input);
 int		is_builtin(char *cmd);
 int		is_exec(char *path, char *cmd);
 int		is_redirector(char c);

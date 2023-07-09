@@ -1,16 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   t_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 09:23:59 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:01:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+static void	print_args(char **args)
+{
+	int			i;
+
+	i = 1;
+	while (*args)
+		printf("\nPRINTING ARGS\narg%i: %s\n", i++, *args++);
+}
+
+static void	print_cmds(void)
+{
+	t_ctrl	*ctrl = get_control();
+	t_cli	*temp;
+
+	if (ctrl)
+		temp = ctrl->cli;
+	else
+		temp = NULL;
+	int	i = 1;
+	while (temp)
+	{
+		if (temp && temp->cmd)
+			printf("Command %i: %s\n", i, temp->cmd);
+		if (temp && temp->args)
+			print_args(temp->args);
+		if (temp && temp->director)
+			printf("Dir %i: %s\n", i, temp->director);
+		if (temp && temp->exec)
+			printf("Exec: %i: %s\n", i, temp->exec);
+		i++;
+		temp = temp->next;
+		write(1, "\n", 1);
+	}
+}
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
@@ -28,7 +64,10 @@ void	prompt_user(const char *prompt, t_env *env_list)
 		cmds = parse_input(line, path);
 		ctrl = get_control();
 		if (ctrl->cli)
+		{
+			print_cmds();
 			clear_command_input(cmds);
+		}
 		ctrl->cli = NULL;
 	}
 	free(line);

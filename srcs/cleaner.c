@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 10:25:37 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/28 21:08:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:50:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	clear_command_input(t_cli *cli)
 	if (cli->cmd)
 		free(cli->cmd);
 	if (cli->args)
-		free(cli->args);
+		clear_ptr_array(cli->args);
 	if (cli->director)
 		free(cli->director);
-	if (cli->full_exec)
-		free(cli->full_exec);
+	if (cli->exec)
+		free(cli->exec);
 	free(cli);
 }
 
