@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:39:29 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 09:23:49 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:00:31 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ t_cli	*parse_input(char *input, char *path)
 	char	*director;
 	int		i;
 
+	if (!input)
+		return (NULL);
 	i = 0;
 	cli = get_cli(input, &i);
 	director = get_redirector(input, &i);
