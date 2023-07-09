@@ -6,13 +6,13 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:02:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/29 20:42:11 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:14:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_env	*exist_var(t_env *list, char *arg)
+static t_env	*validate_if_var_exist(t_env *list, char *arg)
 {
 	int	len;
 
@@ -30,7 +30,7 @@ static void	new_var(t_env *env, char *args)
 {
 	t_env	*var_to_update;
 
-	var_to_update = exist_var(env, args);
+	var_to_update = validate_if_var_exist(env, args);
 	if (!var_to_update)
 		add_var(env, args);
 	else
