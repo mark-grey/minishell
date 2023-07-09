@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/09 09:20:54 by maalexan         ###   ########.fr        #
+#    Updated: 2023/07/09 10:16:42 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 # Source files
 FUN			:=	main.c \
 				builtin_caller.c \
+				builtin_cd.c \
 				builtin_echo.c \
 				builtin_env.c \
 				builtin_export.c \

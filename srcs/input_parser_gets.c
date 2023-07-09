@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser_gets.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 09:22:37 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 10:50:39 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_cli(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (is_redirector(input[*i]) || !input[*i])
+	if (is_redirector_char(input[*i]) || !input[*i])
 		return (NULL);
 	start = *i;
 	while (input[*i] && !is_redirector_char(input[*i]))
@@ -74,10 +74,10 @@ char	*get_redirector(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (!input[*i] || !is_redirector(input[*i]))
+	if (!input[*i] || !is_redirector_char(input[*i]))
 		return (NULL);
 	start = *i;
-	while (is_redirector(input[*i]) && input[*i])
+	while (is_redirector_char(input[*i]) && input[*i])
 		(*i)++;
 	size = *i - start + 1;
 	red = malloc(sizeof(char) * size);
