@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/09 20:10:41 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:29:15 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*copy_expansion(char *line, int len)
 	int		i;
 	int		j;
 	int		quoted;
+	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -79,7 +80,10 @@ char	*copy_expansion(char *line, int len)
 		if (line[j] == '\'')
 			quoted = !quoted;
 		if (!quoted && line[j] == '$')
-			i += expand_var(line, &j, &expanded);
+		{
+			temp = expanded + i;
+			i += expand_var(line, &j, &temp) + 1;
+		}
 		expanded[i++] = line[j++];
 	}
 	expanded[i] = '\0';
