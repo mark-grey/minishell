@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 19:42:49 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:21:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	validate_pipe(char *input, int *i)
 		j--;
 	if (!is_pipe(input[j]) && !ft_isblank(input[j]))
 		return (0);
-	print_error("unable to find matching `", "|");
+	print_error("syntax error near unexpected token `", "|");
 	return (-1);
 }
 
