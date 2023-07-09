@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 16:27:33 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:38:48 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ t_cli	*parse_input(char *input, char *path);
 char	*expanded_line(char *line);
 
 // Validators
-int		bar_input(char *input);
 int		is_builtin(char *cmd);
 int		is_exec(char *path, char *cmd);
 int		is_redirector(char *red);
-int		is_redirector_char(char c);
+int		is_bracket(char c);
+int		is_pipe(char c);
 int		is_quote(char c);
+int		bar_input(char *input);
 char	*parse_path(char *path, char *cmd);
 
 // Gets

@@ -3,102 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   input_validator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 23:27:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:21:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_err(char quote, char red_curr, char red_next)
+static void	print_error(char *msg, char *ref)
 {
 	ft_putstr_fd("minishell: ", 2);
-	if (quote)
-	{
-		ft_putstr_fd("unable to find matching `", 2);
-		write(2, &quote, 1);
-	}
-	else
-	{
-		ft_putstr_fd("syntax error near unexpected token '", 2);
-		write (2, &red_curr, 1);
-		if (red_curr == red_next && red_curr != '|')
-			write (2, &red_curr, 1);
-	}
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(ref, 2);
 	ft_putstr_fd("'\n", 2);
 }
 
-static int	check_unclosed_quotes(char *str)
+static int	check_unclosed_quotes(char *input, int *i)
 {
 	char	quote;
 
-	quote = 0;
-	while (*str)
-	{
-		if (is_quote(*str) && !quote)
-			quote = *str;
-		else if (*str == quote)
-			quote = 0;
-		str++;
-	}
-	if (quote)
-		print_err(quote, 0, 0);
-	return (quote != 0);
-}
-
-static int	evaluate_redirector(char red_curr, char red_next)
-{
-	if (red_curr == '|')
+	quote = input[*i];
+	get_quote(input, i);
+	if (input[*i])
 		return (0);
-	if (is_redirector_char(red_next) && red_curr == red_next)
-		return (1);
-	return (0);
+	print_error("unable to find matching `", &quote);
+	return (-1);
 }
 
-static int	bad_redirector(char *str, int *i)
+static int	validate_pipe(char *input, int *i)
 {
-	char	red;
-	int		fail;
+	int	j;
 
-	red = *str++;
-	fail = 0;
-	(*i)++;
-	if (!evaluate_redirector(red, *str))
-		fail = 1;
-	else if (*str == '<' || *str == '>')
+	j = *i;
+	if (j)
+		j--;
+	while (ft_isblank(input[j]) && j)
+		j--;
+	if (!is_pipe(input[j]) && !ft_isblank(input[j]))
+		return (0);
+	print_error("syntax error near unexpected token `", "|");
+	return (-1);
+}
+
+static int	validate_brackets(char *input, int *i)
+{
+	char	c;
+
+	c = input[(*i)++];
+	if (input[*i] != c || !input[*i])
 	{
-		(*i)++;
-		str++;
-		if (is_redirector_char(*str--))
-			fail = 1;
+		(*i)--;
+		return (0);
 	}
-	str--;
-	if (fail)
-		print_err(0, red, *(str + 1));
-	return (fail);
+	(*i)++;
+	while (ft_isblank(input[*i]))
+		(*i)++;
+	if (!(is_pipe(input[*i]) || is_bracket(input[*i]) || !input[*i]))
+	{
+		return (0);
+	}
+	c = input[*i];
+	if (!c)
+		print_error("syntax error near unexpected token `", "newline");
+	else if (is_pipe(c) || is_bracket(c))
+		print_error("syntax error near unexpected token `", &c);
+	return (-1);
 }
 
 int	bar_input(char *input)
 {
 	int	i;
 
-	i = 0;
-	while (ft_isblank(input[i]))
-		i++;
-	if (!input || is_redirector(input) || is_redirector(&input[i]))
-		return (-1);
-	if (check_unclosed_quotes(input))
-		return (1);
-	while (input[i])
+	if (!input)
+		return (0);
+	i = -1;
+	while (input[++i])
 	{
 		if (is_quote(input[i]))
-			get_quote(input, &i);
-		if (is_redirector_char(input[i]))
-			if (bad_redirector(&input[i], &i))
-				return (2);
-		i++;
+			if (check_unclosed_quotes(input, &i))
+				return (-1);
+		if (input[i] && is_pipe(input[i]))
+			if (validate_pipe(input, &i))
+				return (-1);
+		if (input[i] && is_bracket(input[i]))
+			if (validate_brackets(input, &i))
+				return (-1);
 	}
 	return (0);
 }

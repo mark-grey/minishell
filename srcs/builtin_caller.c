@@ -6,15 +6,16 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 19:34:20 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 10:28:48 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:19:11 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 void	call_builtin(char *builtin, char **args, t_env *env)
 {
+	if (!builtin)
+		return ;
 	if (!ft_strncmp(builtin, "ping\0", 5))
 		printf("pong\n");
 	else if (!ft_strncmp(builtin, "cd\0", 3))
