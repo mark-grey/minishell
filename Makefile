@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/08 22:02:21 by maalexan         ###   ########.fr        #
+#    Updated: 2023/07/09 09:18:17 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS		:=	-Wall -Wextra -Werror -g -I $(HDR_DIR)
 BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 
 # Source files
-FUN			:=	t_main.c \
+FUN			:=	main.c \
 				builtin_caller.c \
 				builtin_env.c \
 				builtin_export.c \
