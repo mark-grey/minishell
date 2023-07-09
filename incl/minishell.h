@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 10:48:00 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:27:33 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	exit_program(int code);
 /* PARSE INPUT FUNCTIONS */
 // Main
 t_cli	*parse_input(char *input, char *path);
+char	*expanded_line(char *line);
 
 // Validators
 int		bar_input(char *input);

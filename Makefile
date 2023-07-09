@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/09 10:16:42 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/09 16:35:46 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS		:=	-Wall -Wextra -Werror -g -I $(HDR_DIR)
 BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 
 # Source files
-FUN			:=	main.c \
+FUN			:=	t_main.c \
 				builtin_caller.c \
 				builtin_cd.c \
 				builtin_echo.c \
@@ -43,7 +43,8 @@ FUN			:=	main.c \
 				input_parser.c \
 				input_utils.c \
 				input_stringify.c \
-				input_validator.c 
+				input_validator.c \
+				input_expand.c 
 
 
 # Object files
