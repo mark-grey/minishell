@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/05 19:59:22 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:19:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	line = readline(prompt);
 	if (!line)
 		exit_program(127);
-	cmds = parse_input(line, path);
-
-	
-	
-	ctrl = get_control();
-	if (ctrl->cli)
-		clear_command_input(cmds);
-	ctrl->cli = NULL;
+	if (!bar_input(line))
+	{
+		cmds = parse_input(line, path);
+		ctrl = get_control();
+		if (ctrl->cli)
+			clear_command_input(cmds);
+		ctrl->cli = NULL;
+	}
 	free(line);
 }
 

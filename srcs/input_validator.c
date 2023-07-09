@@ -6,11 +6,29 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 22:15:40 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:27:18 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_err(char quote, char red_curr, char red_next)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (quote)
+	{
+		ft_putstr_fd("unable to find matching `", 2);
+		write(2, &quote, 1);
+	}
+	else
+	{
+		ft_putstr_fd("syntax error near unexpected token '", 2);
+		write (2, &red_curr, 1);
+		if (red_curr == red_next && red_curr != '|')
+			write (2, &red_curr, 1);
+	}
+	ft_putstr_fd("'\n", 2);
+}
 
 static int	check_unclosed_quotes(char *str)
 {
@@ -25,16 +43,18 @@ static int	check_unclosed_quotes(char *str)
 			quote = 0;
 		str++;
 	}
+	if (quote)
+		print_err(quote, 0, 0);
 	return (quote != 0);
 }
 
-static void	print_err(char c, char b)
+static int	evaluate_redirector(char red_curr, char red_next)
 {
-	ft_putstr_fd("Syntax error near unexpected token '", 2);
-	write (2, &c, 1);
-	if (c == b && c != '|')
-		write (2, &c, 1);
-	ft_putstr_fd("'\n", 2);
+	if (red_curr == '|')
+		return (0);
+	if (is_redirector_char(red_next) && red_curr == red_next)
+		return (1);
+	return (0);
 }
 
 static int	bad_redirector(char *str, int *i)
@@ -45,17 +65,18 @@ static int	bad_redirector(char *str, int *i)
 	red = *str++;
 	fail = 0;
 	(*i)++;
-	if (*str == '|')
+	if (!evaluate_redirector(red, *str))
 		fail = 1;
 	else if (*str == '<' || *str == '>')
 	{
 		(*i)++;
 		str++;
-		if (is_redirector_char(*str))
+		if (is_redirector_char(*str--))
 			fail = 1;
 	}
+	str--;
 	if (fail)
-		print_err(red, *(str - 1));
+		print_err(0, red, *(str + 1));
 	return (fail);
 }
 
@@ -63,14 +84,13 @@ int	bar_input(char *input)
 {
 	int	i;
 
-	if (!input)
+	i = 0;
+	while (ft_isblank(input[i]))
+		i++;
+	if (!input || is_redirector(input) || is_redirector(&input[i]))
 		return (-1);
 	if (check_unclosed_quotes(input))
-	{
-		ft_putstr_fd("Unclosed quote\n", 2);
 		return (1);
-	}
-	i = 0;
 	while (input[i])
 	{
 		if (is_quote(input[i]))
