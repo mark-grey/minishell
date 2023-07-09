@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 19:18:38 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:42:49 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,19 @@ static int	validate_brackets(char *input, int *i)
 {
 	char	c;
 
-	c = input[(*i)];
-	(*i)++;
+	c = input[(*i)++];
 	if (input[*i] != c || !input[*i])
+	{
+		(*i)--;
 		return (0);
+	}
 	(*i)++;
 	while (ft_isblank(input[*i]))
 		(*i)++;
 	if (!(is_pipe(input[*i]) || is_bracket(input[*i]) || !input[*i]))
+	{
 		return (0);
+	}
 	c = input[*i];
 	if (!c)
 		print_error("syntax error near unexpected token `", "newline");
