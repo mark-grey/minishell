@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 10:12:18 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 10:37:56 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@ static int	change_to_home_path(t_env *env)
 	if (!home)
 	{
 		perror("cd: HOME not set");
-		return (1);
+		return (-1);
 	}
 	if (chdir(home->value))
 		return (0);
-	printf("cd: %s\n", strerror(errno));
-	return (errno);
+	perror("cd: chdir failed");
+	return (-1);
 }
 
 //change path to path
 static int	change_to_arg_path(char *path)
 {
 	if (chdir(path))
-		return (0)
-	printf("cd: %s\n", strerror(errno));
-	return (errno);
+		return (0);
+	perror("cd: chdir failed");
+	return (-1);
 }
 
 int	b_cd(char **path, t_env *env)
 {
 	if (!env)
-		return (-2);
+		return (-1);
 	else if ((*path)[1])
 		return (perror("cd: too many arguments"), 1);
 	else if (!(*path))

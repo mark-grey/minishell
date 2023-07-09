@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 09:23:59 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/09 10:23:59 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	if (!bar_input(line))
 	{
 		cmds = parse_input(line, path);
+
+		call_builtin(cmds->cmd, cmds->args, env_list);
+
 		ctrl = get_control();
 		if (ctrl->cli)
 			clear_command_input(cmds);
