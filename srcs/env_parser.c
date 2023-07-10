@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/29 20:43:19 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:53:10 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ t_env	*remove_var(char *str, t_env *list)
 	current = list;
 	while (current)
 	{
+		if (!ft_strncmp(str, "_", 2))
+			break ;
 		if (!ft_strncmp(str, current->key, ft_strlen(str) + 1))
 		{
 			if (prev == NULL)
