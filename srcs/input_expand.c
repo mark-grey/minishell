@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/09 20:29:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:09:52 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static int	expand_var(char *line, int *i, char **copy)
 	else
 	{
 		len = assess_len(start, &line[*i] - start, copy);
-		(*i)--;
+		if (!copy)
+			(*i)--;
 	}
 	return (len);
 }
@@ -65,28 +66,26 @@ char	*copy_expansion(char *line, int len)
 {
 	char	*expanded;
 	int		i;
-	int		j;
 	int		quoted;
-	char	*temp;
+	char	*cursor;
 
 	i = 0;
-	j = 0;
 	quoted = 0;
 	expanded = malloc(sizeof(char) * len);
 	if (!expanded)
 		exit_program(OUT_OF_MEMORY);
-	while (line[j])
+	cursor = expanded;
+	while (line[i])
 	{
-		if (line[j] == '\'')
+		if (line[i] == '\'')
 			quoted = !quoted;
-		if (!quoted && line[j] == '$')
-		{
-			temp = expanded + i;
-			i += expand_var(line, &j, &temp) + 1;
-		}
-		expanded[i++] = line[j++];
+		if (!quoted && line[i] == '$')
+			cursor += expand_var(line, &i, &cursor);
+		if (line[i] != '$')
+			*cursor++ = line[i];
+		i++;
 	}
-	expanded[i] = '\0';
+	*cursor = '\0';
 	return (expanded);
 }
 
