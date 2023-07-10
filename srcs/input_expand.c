@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/10 10:09:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/10 17:56:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,17 @@ static int	expand_var(char *line, int *i, char **copy)
 
 	(*i)++;
 	start = &line[*i];
-	len = 0;
+	len = 1;
 	if (ft_isdigit(*start))
-		len = 0;
+		(*i)++;
 	else if (*start == '?')
-		len = 0; //change after implementing special var
+		(*i)++; //change after implementing special var
 	else
 		while (ft_isalnum(line[*i]) || line[*i] == '_')
 			(*i)++;
-	if (&line[*i] == start)
-		len = 0;
-	else
-	{
-		len = assess_len(start, &line[*i] - start, copy);
-		if (!copy)
-			(*i)--;
-	}
+	len = assess_len(start, &line[*i] - start, copy);
+	if (!copy)
+		(*i)--;
 	return (len);
 }
 
@@ -81,9 +76,7 @@ char	*copy_expansion(char *line, int len)
 			quoted = !quoted;
 		if (!quoted && line[i] == '$')
 			cursor += expand_var(line, &i, &cursor);
-		if (line[i] != '$')
-			*cursor++ = line[i];
-		i++;
+		*cursor++ = line[i++];
 	}
 	*cursor = '\0';
 	return (expanded);
@@ -109,6 +102,7 @@ char	*expanded_line(char *line)
 			total_len++;
 		i++;
 	}
+	printf("Total len is %i\n", total_len);
 	test = copy_expansion(line, total_len + 1);
 	return (test);
 }
