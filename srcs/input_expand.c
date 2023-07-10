@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/10 17:56:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:47:38 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	assess_len(char *str, int len, char **copy)
 	char	*src;
 	char	temp;
 
-	if (!str || !len)
+	if (!*str || !len)
 		return (0);
 	src = NULL;
 	control = get_control();
@@ -52,8 +52,6 @@ static int	expand_var(char *line, int *i, char **copy)
 		while (ft_isalnum(line[*i]) || line[*i] == '_')
 			(*i)++;
 	len = assess_len(start, &line[*i] - start, copy);
-	if (!copy)
-		(*i)--;
 	return (len);
 }
 
@@ -76,33 +74,33 @@ char	*copy_expansion(char *line, int len)
 			quoted = !quoted;
 		if (!quoted && line[i] == '$')
 			cursor += expand_var(line, &i, &cursor);
-		*cursor++ = line[i++];
+		else if (line[i])
+			*cursor++ = line[i++];
 	}
 	*cursor = '\0';
 	return (expanded);
 }
 
-char	*expanded_line(char *line)
+char	*expand_line(char *line)
 {
 	int		i;
 	int		total_len;
-	char	*test;
 
 	i = 0;
 	total_len = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'')
-			get_quote(line, &i);
-		if (!line[i])
-			break ;
+			total_len += get_quote(line, &i);
 		if (line[i] == '$')
 			total_len += expand_var(line, &i, NULL);
-		else
+		if (line[i])
+		{
 			total_len++;
-		i++;
+			i++;
+		}
 	}
-	printf("Total len is %i\n", total_len);
-	test = copy_expansion(line, total_len + 1);
-	return (test);
+	if (total_len)
+		return (copy_expansion(line, total_len + 1));
+	return (NULL);
 }
