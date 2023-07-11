@@ -6,12 +6,19 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/11 18:26:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:55:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+	This function receives the variable name and it's intended 
+	length, and looks for a match in the envp list.
+	In order to be able to guarantee a match, the original
+	string's first char after the variable name is temporary
+	replaced by a null char, which is returned afterwards
+*/
 static int	assess_len(char *str, int len, char **copy)
 {
 	t_ctrl	*control;
@@ -36,6 +43,13 @@ static int	assess_len(char *str, int len, char **copy)
 	return (0);
 }
 
+
+/*
+	Once the indication of a variable is found ("$" char)
+	this function runs through it's valid chars to find
+	out the intended name, and return it's expanded length,
+	or zero in case there is no matches in the environment
+*/
 static int	expand_var(char *line, int *i, char **copy)
 {
 	char	*start;
@@ -55,11 +69,21 @@ static int	expand_var(char *line, int *i, char **copy)
 	return (len);
 }
 
-int		valid_var_name(char c)
+/*
+	Bash variable names can only have alpha numeric 
+	characters or an underscore "_" but there is a 
+	special variable "$?" that must be treated
+*/
+static int	valid_var_name(char c)
 {
 	return (c == '?' || ft_isalnum(c) || c == '_');
 }
 
+/*
+	Once the length has been assessed, this function will
+	then copy the variable (if it exists), so it can provide
+	an expanded version of the captured readline
+*/
 char	*copy_expansion(char *line, int len)
 {
 	char	*expanded;
@@ -86,6 +110,13 @@ char	*copy_expansion(char *line, int len)
 	return (expanded);
 }
 
+
+/*
+	Checks the line taken from prompt in order to 
+	expand variables indicated by $.
+	This first part is responsible to calculate the
+	total length of the string to inform it to malloc
+*/
 char	*expand_line(char *line)
 {
 	int		i;
@@ -99,7 +130,7 @@ char	*expand_line(char *line)
 			total_len += get_quote(line, &i);
 		if (line[i] == '$' && valid_var_name(line[i + 1]))
 			total_len += expand_var(line, &i, NULL);
-		else if (line[i])//removed the else here
+		else if (line[i])
 		{
 			total_len++;
 			i++;
@@ -109,6 +140,3 @@ char	*expand_line(char *line)
 		return (copy_expansion(line, total_len + 1));
 	return (NULL);
 }
-
-
-//lol $-putz '$PATH' "PATH" $PATH "$PATH" "$a" s$_$PATH $
