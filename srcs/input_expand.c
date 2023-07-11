@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/10 20:47:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:16:18 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ static int	expand_var(char *line, int *i, char **copy)
 	return (len);
 }
 
+int		valid_var_name(char c)
+{
+	return (c == '?' || ft_isalnum(c) || c == '_');
+}
+
 char	*copy_expansion(char *line, int len)
 {
 	char	*expanded;
@@ -72,7 +77,7 @@ char	*copy_expansion(char *line, int len)
 	{
 		if (line[i] == '\'')
 			quoted = !quoted;
-		if (!quoted && line[i] == '$')
+		if (!quoted && line[i] == '$' && valid_var_name(line[i + 1]))
 			cursor += expand_var(line, &i, &cursor);
 		else if (line[i])
 			*cursor++ = line[i++];
@@ -92,7 +97,7 @@ char	*expand_line(char *line)
 	{
 		if (line[i] == '\'')
 			total_len += get_quote(line, &i);
-		if (line[i] == '$')
+		if (line[i] == '$' && valid_var_name(line[i + 1]))
 			total_len += expand_var(line, &i, NULL);
 		if (line[i])
 		{
@@ -104,3 +109,6 @@ char	*expand_line(char *line)
 		return (copy_expansion(line, total_len + 1));
 	return (NULL);
 }
+
+
+//lol $-putz '$PATH' "PATH" $PATH "$PATH" "$a" s$_$PATH $
