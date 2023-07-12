@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 20:57:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/10 18:56:21 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:54:53 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	print_args (char **args)
 	}
 }
 
-void	b_echo(char **args)
+int	b_echo(char **args)
 {
 	if (!args)
-		return ;
+		return (0);
 	if (ft_strncmp(*args, "-n\0", 3))
 	{
 		print_args(args);
@@ -36,4 +36,5 @@ void	b_echo(char **args)
 		args++;
 		print_args(args);
 	}
+	return (0);
 }
