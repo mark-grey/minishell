@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:02:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 22:14:32 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/11 21:52:34 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	b_export(t_env *env, char **args)
 		return ;
 	while (*args)
 	{
+		if (!ft_strchr(*args, '='))
+		{
+			args++;
+			continue ;
+		}
 		new_var(env, *args);
 		args++;
 	}
