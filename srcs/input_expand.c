@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/11 19:55:28 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:59:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	assess_len(char *str, int len, char **copy)
 		return (ft_strlen(src));
 	return (0);
 }
-
 
 /*
 	Once the indication of a variable is found ("$" char)
@@ -109,7 +108,6 @@ char	*copy_expansion(char *line, int len)
 	*cursor = '\0';
 	return (expanded);
 }
-
 
 /*
 	Checks the line taken from prompt in order to 
