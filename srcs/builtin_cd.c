@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/10 20:13:47 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/11 21:05:39 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,50 @@ static int	change_to_arg_path(char *path)
 	return (-1);
 }
 
+//expand tilde to home
+static int	concat_tilde(char *path, char *home)
+{
+	char	*full_path;
+	int		status;
+
+	path++;
+	full_path = ft_strjoin(home, path);
+	if (!full_path)
+		return (OUT_OF_MEMORY);
+	status = change_to_arg_path(full_path);
+	free(full_path);
+	return (status);
+}
+
+//change to tilde path
+static int	change_to_tilde_path(char *path, t_env *env)
+{
+	t_env	*home;
+
+	home = search_var("HOME", env);
+	if (!home)
+	{
+		printf("cd: HOME not set\n");
+		return (-1);
+	}
+	if (!ft_strncmp(path, "~", 2) || !ft_strncmp(path, "~/", 3))
+		return (change_to_home_path(home));
+	else if (!ft_strncmp(path, "~/", 2))
+		return (concat_tilde(path, home->value));
+	printf("cd: chdir failed\n");
+	return (-1);
+}
+
 int	b_cd(char **path, t_env *env)
 {
 	if (!env)
 		return (-1);
-	if (!path)
+	else if (!path)
 		return (change_to_home_path(env));
 	else if (path[1])
 		return (printf("cd: too many arguments\n"), 1);
+	else if (!ft_strncmp(*path, "~", 1))
+		return (change_to_tilde_path(*path, env));
 	else
 		return (change_to_arg_path(*path));
 }
