@@ -1,16 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   t_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/11 21:31:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/11 20:54:42 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_args(char **args)
+{
+	int			i;
+
+	i = 1;
+	while (*args)
+		printf("\nPRINTING ARGS\narg%i: %s\n", i++, *args++);
+}
+
+static void	print_cmds(void)
+{
+	t_ctrl	*ctrl = get_control();
+	t_cli	*temp;
+
+	if (ctrl)
+		temp = ctrl->cli;
+	else
+		temp = NULL;
+	int	i = 1;
+	while (temp)
+	{
+		if (temp && temp->cmd)
+			printf("Command %i: %s\n", i, temp->cmd);
+		if (temp && temp->args)
+			print_args(temp->args);
+		if (temp && temp->director)
+			printf("Dir %i: %s\n", i, temp->director);
+		if (temp && temp->exec)
+			printf("Exec: %i: %s\n", i, temp->exec);
+		i++;
+		temp = temp->next;
+		write(1, "\n", 1);
+	}
+}
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
@@ -18,26 +53,25 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	t_cli	*cmds;
 	t_ctrl	*ctrl;
 	char	*path;
-	char	*expanded;
+	char	*exp;
 
+	exp = NULL;
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
 		exit_program(127);
-	expanded = NULL;
-	if (!bar_input(line))
+	exp = expand_line(line);
+	printf ("Test:\n%s\n", exp);
+	cmds = parse_input(line, path);
+	ctrl = get_control();
+	if (ctrl->cli)
 	{
-		expanded = expand_line(line);
-		cmds = parse_input(expanded, path);
-		if (cmds)
-			call_builtin(cmds->cmd, cmds->args, env_list);
-		ctrl = get_control();
-		if (ctrl->cli)
-			clear_command_input(cmds);
-		ctrl->cli = NULL;
-		if (expanded)
-			free(expanded);
+		print_cmds();
+		clear_command_input(cmds);
 	}
+	ctrl->cli = NULL;
+	if (exp)
+		free(exp);
 	free(line);
 }
 

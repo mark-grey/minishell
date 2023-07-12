@@ -3,20 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   input_validator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 20:21:41 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/11 21:23:17 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_error(char *msg, char *ref)
+static void	print_error(char *msg, char *refstr, char refchar)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(msg, 2);
-	ft_putstr_fd(ref, 2);
+	if (refstr)
+		ft_putstr_fd(refstr, 2);
+	if (refchar)
+		write(2, &refchar, 1);
 	ft_putstr_fd("'\n", 2);
 }
 
@@ -28,7 +31,7 @@ static int	check_unclosed_quotes(char *input, int *i)
 	get_quote(input, i);
 	if (input[*i])
 		return (0);
-	print_error("unable to find matching `", &quote);
+	print_error("unable to find matching `", NULL, quote);
 	return (-1);
 }
 
@@ -43,7 +46,7 @@ static int	validate_pipe(char *input, int *i)
 		j--;
 	if (!is_pipe(input[j]) && !ft_isblank(input[j]))
 		return (0);
-	print_error("syntax error near unexpected token `", "|");
+	print_error("syntax error near unexpected token `", NULL, '|');
 	return (-1);
 }
 
@@ -66,9 +69,9 @@ static int	validate_brackets(char *input, int *i)
 	}
 	c = input[*i];
 	if (!c)
-		print_error("syntax error near unexpected token `", "newline");
+		print_error("syntax error near unexpected token `", "newline", 0);
 	else if (is_pipe(c) || is_bracket(c))
-		print_error("syntax error near unexpected token `", &c);
+		print_error("syntax error near unexpected token `", NULL, c);
 	return (-1);
 }
 
