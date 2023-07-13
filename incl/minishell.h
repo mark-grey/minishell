@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/12 20:54:17 by inwagner         ###   ########.fr       */
-=======
-/*   Updated: 2023/07/10 20:47:31 by maalexan         ###   ########.fr       */
->>>>>>> f17eb59a42bd5dfdfbfde46661c204ee6cba7df4
+/*   Updated: 2023/07/12 21:27:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

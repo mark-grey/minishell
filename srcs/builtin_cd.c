@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/11 21:05:39 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:49:05 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,29 @@ static int	change_to_tilde_path(char *path, t_env *env)
 
 int	b_cd(char **path, t_env *env)
 {
+	int		status;
+	char	current_path[PATH_MAX];
+	char	*new_pwd;
+	t_env	*pwd_variable;
+
 	if (!env)
-		return (-1);
+		status = -1;
 	else if (!path)
-		return (change_to_home_path(env));
+		status = change_to_home_path(env);
 	else if (path[1])
-		return (printf("cd: too many arguments\n"), 1);
+		status = printf("cd: too many arguments\n") - 24;
 	else if (!ft_strncmp(*path, "~", 1))
-		return (change_to_tilde_path(*path, env));
+		status = change_to_tilde_path(*path, env);
 	else
-		return (change_to_arg_path(*path));
+		status = change_to_arg_path(*path);
+	pwd_variable = search_var("PWD", env);
+	if (!pwd_variable)
+		return (status);
+	getcwd(current_path, sizeof(current_path));
+	new_pwd = ft_strjoin("PWD=", current_path);	
+	set_var(new_pwd, pwd_variable);
+	free(new_pwd);
+	return (status);
 }
 
 /* ERROS POSSÍVEIS DO COMANDO "Change Directory"
