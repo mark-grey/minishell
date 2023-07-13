@@ -6,13 +6,13 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 20:57:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 20:54:53 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:02:03 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_args (char **args)
+static void	print_args(char **args)
 {
 	while (*args)
 	{

@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 21:49:05 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:02:34 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	change_to_home_path(t_env *env)
 	printf("cd: chdir failed\n");
 	return (-1);
 }
+
 //change path to path
 static int	change_to_arg_path(char *path)
 {
@@ -92,7 +93,7 @@ int	b_cd(char **path, t_env *env)
 	if (!pwd_variable)
 		return (status);
 	getcwd(current_path, sizeof(current_path));
-	new_pwd = ft_strjoin("PWD=", current_path);	
+	new_pwd = ft_strjoin("PWD=", current_path);
 	set_var(new_pwd, pwd_variable);
 	free(new_pwd);
 	return (status);
