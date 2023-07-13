@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/09 17:31:48 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/11 20:57:09 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ FUN			:=	main.c \
 				input_parser.c \
 				input_utils.c \
 				input_stringify.c \
-				input_validator.c 
+				input_validator.c \
+				input_expand.c 
 
 
 # Object files
