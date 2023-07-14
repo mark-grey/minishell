@@ -6,38 +6,42 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/11 21:31:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:53:19 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	apply_prompt(char *line, char *path)
+{
+	t_cli	*cmds;
+	t_ctrl	*ctrl;
+	char	*expanded;
+
+	ctrl = get_control();
+	expanded = expand_line(line);
+	cmds = parse_input(expanded, path);
+	if (cmds)
+		call_builtin(cmds->cmd, cmds->args, ctrl->env);
+//	update_env(cmds->args, cmds->cmd);
+	if (ctrl->cli)
+		clear_command_input(cmds);
+	ctrl->cli = NULL;
+	if (expanded)
+		free(expanded);
+}
+
 void	prompt_user(const char *prompt, t_env *env_list)
 {
 	char	*line;
-	t_cli	*cmds;
-	t_ctrl	*ctrl;
 	char	*path;
-	char	*expanded;
 
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
 		exit_program(127);
-	expanded = NULL;
 	if (!bar_input(line))
-	{
-		expanded = expand_line(line);
-		cmds = parse_input(expanded, path);
-		if (cmds)
-			call_builtin(cmds->cmd, cmds->args, env_list);
-		ctrl = get_control();
-		if (ctrl->cli)
-			clear_command_input(cmds);
-		ctrl->cli = NULL;
-		if (expanded)
-			free(expanded);
-	}
+		apply_prompt(line, path);
 	free(line);
 }
 
