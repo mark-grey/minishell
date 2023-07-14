@@ -1,49 +1,77 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   t_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/14 16:11:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/11 20:54:42 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	apply_prompt(char *line, char *path)
+static void	print_args(char **args)
 {
-	t_cli	*cmds;
-	t_ctrl	*ctrl;
-	char	*expanded;
+	int			i;
 
-	ctrl = get_control();
-	expanded = expand_line(line);
-	cmds = parse_input(expanded, path);
-	if (cmds)
+	i = 1;
+	while (*args)
+		printf("\nPRINTING ARGS\narg%i: %s\n", i++, *args++);
+}
+
+static void	print_cmds(void)
+{
+	t_ctrl	*ctrl = get_control();
+	t_cli	*temp;
+
+	if (ctrl)
+		temp = ctrl->cli;
+	else
+		temp = NULL;
+	int	i = 1;
+	while (temp)
 	{
-		update_env(cmds->args, cmds->cmd, cmds->exec);
-		call_builtin(cmds->cmd, cmds->args, ctrl->env);
+		if (temp && temp->cmd)
+			printf("Command %i: %s\n", i, temp->cmd);
+		if (temp && temp->args)
+			print_args(temp->args);
+		if (temp && temp->director)
+			printf("Dir %i: %s\n", i, temp->director);
+		if (temp && temp->exec)
+			printf("Exec: %i: %s\n", i, temp->exec);
+		i++;
+		temp = temp->next;
+		write(1, "\n", 1);
 	}
-	if (ctrl->cli)
-		clear_command_input(cmds);
-	ctrl->cli = NULL;
-	if (expanded)
-		free(expanded);
 }
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
 	char	*line;
+	t_cli	*cmds;
+	t_ctrl	*ctrl;
 	char	*path;
+	char	*exp;
 
+	exp = NULL;
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
 		exit_program(127);
-	if (!bar_input(line))
-		apply_prompt(line, path);
+	exp = expand_line(line);
+	printf ("Test:\n%s\n", exp);
+	cmds = parse_input(line, path);
+	ctrl = get_control();
+	if (ctrl->cli)
+	{
+		print_cmds();
+		clear_command_input(cmds);
+	}
+	ctrl->cli = NULL;
+	if (exp)
+		free(exp);
 	free(line);
 }
 
@@ -54,7 +82,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	control = get_control();
 	control->env = parse_env(env);
-	update_env(argv, NULL, NULL);
+	update_env(argv, NULL);
 	while (1)
 		prompt_user("minishell:> ", control->env);
 }

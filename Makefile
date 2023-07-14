@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/06/26 19:14:25 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/11 20:57:09 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,25 @@ BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
-				cleaners.c \
-				env_parse.c \
+				builtin_caller.c \
+				builtin_cd.c \
+				builtin_echo.c \
+				builtin_env.c \
+				builtin_export.c \
+				builtin_pwd.c \
+				builtin_unset.c \
+				cleaner.c \
+				env_parser.c \
+				env_shifter.c \
 				env_utils.c \
-				exec_finders.c \
-				input_parse_gets.c \
-				input_parse_utils.c \
-				input_parse.c \
+				exec_finder.c \
+				exec_utils.c \
+				input_parser_gets.c \
+				input_parser.c \
+				input_utils.c \
+				input_stringify.c \
+				input_validator.c \
+				input_expand.c 
 
 
 # Object files

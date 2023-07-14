@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/25 14:39:48 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:39:35 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,6 @@ int	count_list(t_env *list)
 		i++;
 	}
 	return (i);
-}
-
-void	print_var_list(t_env *list)
-{
-	if (!list)
-		return ;
-	printf("%s=%s\n", list->key, list->value);
-	print_var_list(list->next);
 }
 
 char	*get_var_value(char *value, t_env *env_list)

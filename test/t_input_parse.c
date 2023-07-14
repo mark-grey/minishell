@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:28:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/22 21:15:07 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:30:56 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,29 @@ int	is_builtin(char *str, t_env *env_list)
 	}
 	return (0);
 }
+
+========
+
+static void	print_args(char **args)
+{
+	int	i;
+
+	i = 1;
+	if (!args)
+		return ;
+	while (*args)
+		printf("[%i]%s\t", i++, *args++);
+}
+
+static void	print_cli_list(t_cli *list)
+{
+	if (!list)
+		return ;
+	printf("Cmd: %s \t//\t", list->cmd);
+	printf("Args: ");
+	print_args(list->args);
+	printf(" \t//\tDirector: %s\n", list->director);
+	print_cli_list(list->next);
+}
+
 */

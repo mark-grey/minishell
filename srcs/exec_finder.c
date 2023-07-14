@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_finders.c                                     :+:      :+:    :+:   */
+/*   exec_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/22 21:07:50 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:22:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	Builds a complete filename for checking with the access function,
-	joining the path and exec so the access function can be called
-	regardless of the current directory
-*/
+ * Builds a complete filename for checking with the access function,
+ * joining the path and exec so the access function can be called
+ * regardless of the current directory
+ */
 static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 {
 	char	*full;
 
 	full = malloc(path_len + cmd_len + 2);
 	if (!full)
-		return (NULL);
+		exit_program(OUT_OF_MEMORY);
 	ft_memcpy(full, path, path_len);
 	ft_memcpy(full + path_len + 1, cmd, cmd_len);
 	full[path_len] = '/';
@@ -32,15 +32,20 @@ static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 }
 
 /*
-	Checks if the complete path is an executable
+	Checks if the complete path is an executable, stat() checks file status,
+	S_ISREG makes sure it's a regular file, and access() validates permission 
+	to execute it
 */
 static char	*check_exec(char *path, char *cmd, int path_len, int cmd_len)
 {
-	char	*str;
+	char		*str;
+	struct stat	file_status;
 
 	str = NULL;
 	str = get_full_path(path, cmd, path_len, cmd_len);
-	if (access(str, X_OK))
+	if (stat(str, &file_status) || \
+		!S_ISREG(file_status.st_mode) || \
+		access(str, X_OK))
 	{
 		free(str);
 		str = NULL;
@@ -49,8 +54,8 @@ static char	*check_exec(char *path, char *cmd, int path_len, int cmd_len)
 }
 
 /*
-	Searches the directory "path" for an executable named "cmd"
-*/
+ * Searches the directory "path" for an executable named "cmd"
+ */
 static char	*find_exec(char *path, char *cmd)
 {
 	struct dirent	*files;
@@ -77,6 +82,29 @@ static char	*find_exec(char *path, char *cmd)
 }
 
 /*
+	Checks for executable on current dir "." or parent dir ".."
+*/
+static char	*search_dot_dirs(char *cmd)
+{
+	char	*str;
+
+	if (!cmd || (cmd[0] != '.' && cmd[0] != '/'))
+		return (NULL);
+	str = NULL;
+	if (cmd[0] == '/' && cmd[1])
+		str = check_exec(NULL, &cmd[1], 0, ft_strlen(&cmd[1]));
+	if (ft_strlen(cmd) < 3)
+		return (str);
+	if (cmd[0] == '.' && cmd[1] == '/')
+		str = check_exec(".", &cmd[2], 1, ft_strlen(&cmd[2]));
+	if (ft_strlen(cmd) < 4)
+		return (str);
+	if (cmd[0] == '.' && cmd[1] == '.' && cmd[2] == '/')
+		str = check_exec("..", &cmd[3], 2, ft_strlen(&cmd[3]));
+	return (str);
+}
+
+/*
 	Loops through path variable to find executable file
 */
 char	*parse_path(char *env_path, char *cmd)
@@ -84,10 +112,11 @@ char	*parse_path(char *env_path, char *cmd)
 	char	*token;
 	char	*str;
 
-	str = NULL;
-	str = find_exec(".", cmd);
+	str = search_dot_dirs(cmd);
 	if (str)
 		return (str);
+	if (!env_path)
+		return (NULL);
 	token = ft_strtok(env_path, ":");
 	while (token)
 	{

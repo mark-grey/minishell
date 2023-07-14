@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_env_parse.c                                      :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:01:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 20:37:18 by inwagner         ###   ########.fr       */
+/*   Created: 2023/06/29 20:57:15 by inwagner          #+#    #+#             */
+/*   Updated: 2023/07/12 22:02:03 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_str_env(char **env)
+static void	print_args(char **args)
 {
-	while (*env)
+	while (*args)
 	{
-		ft_putstr_fd(*env++, 1);
-		write(1, "\n", 2);
-	}
-	write(1, "\n", 1);
-}
-
-void	print_env(t_env *list)
-{
-	while (list)
-	{
-		printf("%s=%s\n", list->key, list->value);
-		list = list->next;
+		printf("%s", *args++);
+		if (*args)
+			printf(" ");
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int	b_echo(char **args)
 {
-	t_env	*env_list;
-
-	(void)argc;
-	(void)argv;
-	print_env(env);
-	env_list = parse_env(env);
-	print_var_list(env_list);
-	(void)env_list;
+	if (!args)
+		return (0);
+	if (ft_strncmp(*args, "-n\0", 3))
+	{
+		print_args(args);
+		printf("\n");
+	}
+	else
+	{
+		args++;
+		print_args(args);
+	}
+	return (0);
 }

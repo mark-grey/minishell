@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_env_parse.c                                      :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:01:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 20:37:18 by inwagner         ###   ########.fr       */
+/*   Created: 2023/07/08 20:35:40 by inwagner          #+#    #+#             */
+/*   Updated: 2023/07/12 20:55:05 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_str_env(char **env)
+int	b_unset(t_env *env, char **args)
 {
-	while (*env)
+	if (!args)
+		return (0);
+	while (*args)
 	{
-		ft_putstr_fd(*env++, 1);
-		write(1, "\n", 2);
+		remove_var(*args, env);
+		args++;
 	}
-	write(1, "\n", 1);
-}
-
-void	print_env(t_env *list)
-{
-	while (list)
-	{
-		printf("%s=%s\n", list->key, list->value);
-		list = list->next;
-	}
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	t_env	*env_list;
-
-	(void)argc;
-	(void)argv;
-	print_env(env);
-	env_list = parse_env(env);
-	print_var_list(env_list);
-	(void)env_list;
+	return (0);
 }

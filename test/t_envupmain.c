@@ -3,47 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/14 16:11:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:03:33 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	apply_prompt(char *line, char *path)
+static void	better_env(t_env *list)
 {
-	t_cli	*cmds;
-	t_ctrl	*ctrl;
-	char	*expanded;
+	t_env	*cursor;
 
-	ctrl = get_control();
-	expanded = expand_line(line);
-	cmds = parse_input(expanded, path);
-	if (cmds)
+	if (!list)
+		return ;
+	cursor = list->next;
+	while (cursor)
 	{
-		update_env(cmds->args, cmds->cmd, cmds->exec);
-		call_builtin(cmds->cmd, cmds->args, ctrl->env);
+		printf("%s=%s\n", cursor->key, cursor->value);
+		cursor = cursor->next;
 	}
-	if (ctrl->cli)
-		clear_command_input(cmds);
-	ctrl->cli = NULL;
-	if (expanded)
-		free(expanded);
+	printf("%s=%s\n", list->key, list->value);
 }
 
 void	prompt_user(const char *prompt, t_env *env_list)
 {
 	char	*line;
+	t_cli	*cmds;
+	t_ctrl	*ctrl;
 	char	*path;
+	char	**argv;
 
+	argv = NULL;
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
 		exit_program(127);
-	if (!bar_input(line))
-		apply_prompt(line, path);
+	cmds = parse_input(line, path);
+	ctrl = get_control();
+	if (ctrl->cli)
+	{
+		if (ctrl->cli->args)
+			argv = stringify_args(ctrl->cli->args);
+		update_env(argv, ctrl->cli->cmd);
+		if (argv)
+		{
+			clear_ptr_array(argv);
+			argv = NULL;
+		}
+		better_env(ctrl->env);
+		clear_command_input(cmds);
+	}
+	ctrl->cli = NULL;
 	free(line);
 }
 
@@ -54,7 +66,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	control = get_control();
 	control->env = parse_env(env);
-	update_env(argv, NULL, NULL);
+	update_env(argv, NULL);
+	better_env(control->env);
 	while (1)
 		prompt_user("minishell:> ", control->env);
 }

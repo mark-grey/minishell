@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parse_gets.c                                 :+:      :+:    :+:   */
+/*   input_parser_gets.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/27 21:26:48 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:36:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@
  * conteúdo quotado.
  * Sai do programa se não fechar o quote.
  */
-void	get_quote(char *input, int *i)
+int	get_quote(char *input, int *i)
 {
 	char	quote;
+	int		count;
 
+	count = 1;
 	quote = input[(*i)++];
 	while (input[*i] != quote && input[*i])
-			(*i)++;
-	if (!input[*i])
-		exit_program(23);
+	{
+		(*i)++;
+		count++;
+	}
+	return (count);
 }
 
 /* PEGA O COMANDO 
@@ -41,10 +45,10 @@ char	*get_cli(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (is_redirector(input[*i]) || !input[*i])
+	if (!input[*i] || is_bracket(input[*i]) || is_pipe(input[*i]))
 		return (NULL);
 	start = *i;
-	while (!is_redirector(input[*i]) && input[*i])
+	while (input[*i] && !is_bracket(input[*i]) && !is_pipe(input[*i]))
 	{
 		if (is_quote(input[*i]))
 			get_quote(input, i);
@@ -76,10 +80,10 @@ char	*get_redirector(char *input, int *i)
 
 	while (ft_isblank(input[*i]) && input[*i])
 		(*i)++;
-	if (!input[*i] || !is_redirector(input[*i]))
+	if (!input[*i] || (!is_bracket(input[*i]) && !is_pipe(input[*i])))
 		return (NULL);
 	start = *i;
-	while (is_redirector(input[*i]) && input[*i])
+	while (input[*i] && (is_pipe(input[*i]) || is_bracket(input[*i])))
 		(*i)++;
 	size = *i - start + 1;
 	red = malloc(sizeof(char) * size);
@@ -130,6 +134,5 @@ char	*get_args(char *cli, int *start, int *end)
 	}
 	else
 		args = NULL;
-	free (cli);
 	return (args);
 }
