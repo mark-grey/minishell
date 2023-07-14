@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 21:27:32 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:10:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		count_list(t_env *list);
 /* PARSE ENV FUNCTIONS */
 // Main
 t_env	*parse_env(char **env);
-void	update_env(char **argv, char *cmd);
+void	update_env(char **argv, char *cmd, char *exec);
 
 // Utils
 t_env	*add_var(t_env *prev, char *var);

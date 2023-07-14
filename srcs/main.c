@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/14 15:53:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:11:18 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static void	apply_prompt(char *line, char *path)
 	expanded = expand_line(line);
 	cmds = parse_input(expanded, path);
 	if (cmds)
+	{
+		update_env(cmds->args, cmds->cmd, cmds->exec);
 		call_builtin(cmds->cmd, cmds->args, ctrl->env);
-//	update_env(cmds->args, cmds->cmd);
+	}
 	if (ctrl->cli)
 		clear_command_input(cmds);
 	ctrl->cli = NULL;
@@ -52,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	control = get_control();
 	control->env = parse_env(env);
-	update_env(argv, NULL);
+	update_env(argv, NULL, NULL);
 	while (1)
 		prompt_user("minishell:> ", control->env);
 }
