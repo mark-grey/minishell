@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/10 20:47:31 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:10:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		count_list(t_env *list);
 /* PARSE ENV FUNCTIONS */
 // Main
 t_env	*parse_env(char **env);
-void	update_env(char **argv, char *cmd);
+void	update_env(char **argv, char *cmd, char *exec);
 
 // Utils
 t_env	*add_var(t_env *prev, char *var);
@@ -106,10 +106,10 @@ void	call_builtin(char *builtin, char **args, t_env *env);
 
 // Commands
 int		b_cd(char **path, t_env *env);
-void	b_echo(char **args);
-void	b_env(t_env *list);
-void	b_export(t_env *env, char **args);
-void	b_pwd(void);
-void	b_unset(t_env *env, char **args);
+int		b_echo(char **args);
+int		b_env(t_env *list);
+int		b_export(t_env *env, char **args);
+int		b_pwd(void);
+int		b_unset(t_env *env, char **args);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/05 23:13:47 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:10:13 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,13 @@ static t_env	*update_underscore(t_env *head, char **argv, char *cmd)
 	return (cursor);
 }
 
-void	update_env(char **argv, char *cmd)
+void	update_env(char **argv, char *cmd, char *exec)
 {
 	t_ctrl	*control;
 
 	control = get_control();
-	control->env = update_underscore(control->env, argv, cmd);
+	if (exec)
+		control->env = update_underscore(control->env, argv, exec);
+	else
+		control->env = update_underscore(control->env, argv, cmd);
 }

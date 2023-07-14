@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/09 10:37:56 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:02:34 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,83 @@ static int	change_to_home_path(t_env *env)
 	home = search_var("HOME", env);
 	if (!home)
 	{
-		perror("cd: HOME not set");
+		printf("cd: HOME not set\n");
 		return (-1);
 	}
-	if (chdir(home->value))
+	if (!chdir(home->value))
 		return (0);
-	perror("cd: chdir failed");
+	printf("cd: chdir failed\n");
 	return (-1);
 }
 
 //change path to path
 static int	change_to_arg_path(char *path)
 {
-	if (chdir(path))
+	if (!chdir(path))
 		return (0);
-	perror("cd: chdir failed");
+	printf("cd: chdir failed\n");
+	return (-1);
+}
+
+//expand tilde to home
+static int	concat_tilde(char *path, char *home)
+{
+	char	*full_path;
+	int		status;
+
+	path++;
+	full_path = ft_strjoin(home, path);
+	if (!full_path)
+		return (OUT_OF_MEMORY);
+	status = change_to_arg_path(full_path);
+	free(full_path);
+	return (status);
+}
+
+//change to tilde path
+static int	change_to_tilde_path(char *path, t_env *env)
+{
+	t_env	*home;
+
+	home = search_var("HOME", env);
+	if (!home)
+	{
+		printf("cd: HOME not set\n");
+		return (-1);
+	}
+	if (!ft_strncmp(path, "~", 2) || !ft_strncmp(path, "~/", 3))
+		return (change_to_home_path(home));
+	else if (!ft_strncmp(path, "~/", 2))
+		return (concat_tilde(path, home->value));
+	printf("cd: chdir failed\n");
 	return (-1);
 }
 
 int	b_cd(char **path, t_env *env)
 {
+	int		status;
+	char	current_path[PATH_MAX];
+	char	*new_pwd;
+	t_env	*pwd_variable;
+
 	if (!env)
-		return (-1);
-	else if ((*path)[1])
-		return (perror("cd: too many arguments"), 1);
-	else if (!(*path))
-		return (change_to_home_path(env));
+		status = -1;
+	else if (!path)
+		status = change_to_home_path(env);
+	else if (path[1])
+		status = printf("cd: too many arguments\n") - 24;
+	else if (!ft_strncmp(*path, "~", 1))
+		status = change_to_tilde_path(*path, env);
 	else
-		return (change_to_arg_path(*path));
+		status = change_to_arg_path(*path);
+	pwd_variable = search_var("PWD", env);
+	if (!pwd_variable)
+		return (status);
+	getcwd(current_path, sizeof(current_path));
+	new_pwd = ft_strjoin("PWD=", current_path);
+	set_var(new_pwd, pwd_variable);
+	free(new_pwd);
+	return (status);
 }
 
 /* ERROS POSSÍVEIS DO COMANDO "Change Directory"
