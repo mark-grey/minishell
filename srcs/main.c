@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/14 16:11:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:20:45 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	apply_prompt(char *line, char *path)
 	{
 		update_env(cmds->args, cmds->cmd, cmds->exec);
 		call_builtin(cmds->cmd, cmds->args, ctrl->env);
+		call_execve(cmds->exec, cmds->args, ctrl->env);
 	}
 	if (ctrl->cli)
 		clear_command_input(cmds);
