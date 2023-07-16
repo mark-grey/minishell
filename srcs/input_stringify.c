@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 20:21:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 20:33:23 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	quote_closes(char *str)
 		if (*str++ == quote)
 			return (1);
 	return (0);
-
 }
 
 static int	count_args(char *args, int single_arg)
