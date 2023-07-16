@@ -8,8 +8,8 @@
 	- [x] pwd with no options
 	- [x] export with no options
 	- [x] unset with no options
-	- [x] env with no options or arguments
-	- [x] exit with no options
+	- [x] **[Needs bugfix]** env with no options or arguments
+	- [x] **[Needs bugfix]** exit with no options
 - [x] Display a prompt when waiting for a new command.
 - [x] Have a working history.
 - [x] Search and launch the right executable (based on the PATH variable or using a relative or an absolute path).
@@ -17,13 +17,13 @@
 - [x] Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).
 - [x] Handle ’ (single quote) which should prevent the shell from interpreting the meta-characters in the quoted sequence.
 - [x] Handle " (double quote) which should prevent the shell from interpreting the meta-characters in the quoted sequence except for $ (dollar sign)
+- [x] **[Needs bugfix]** Handle environment variables ($ followed by a sequence of characters) which should expand to their values.
 - [ ] Handle $? which should expand to the exit status of the most recently executed foreground pipeline.
-- [ ] Handle environment variables ($ followed by a sequence of characters) which should expand to their values.
+- [x] In interactive mode:
+	- [x] ctrl-C displays a new prompt on a new line.
+	- [x] ctrl-D exits the shell.
+	- [x] ctrl-\ does nothing.
 - [ ] Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
-- [ ] In interactive mode:
-	- [ ] ctrl-C displays a new prompt on a new line.
-	- [ ] ctrl-D exits the shell.
-	- [ ] ctrl-\ does nothing.
 - [ ] Implement redirections:
 	- [ ] < should redirect input.
 	- [ ] > should redirect output.
