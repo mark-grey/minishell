@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 16:58:00 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:29:11 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void sigint_handler(int sig_int)
 	(void)sig_int;
 	write(1, "\n", 1);
 	rl_on_new_line(); // Mover o cursor para uma nova linha
-	rl_replace_line("", 0); // Limpar a linha de entrada atual
+	rl_replace_line("", STDIN_FILENO); // Limpar a linha de entrada atual
 	rl_redisplay(); // Redisplay o prompt
 }
 
