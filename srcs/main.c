@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 16:50:02 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/16 17:05:59 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_ctrl				*control;
+	t_ctrl	*control;
 
 	(void)argc;
 	control = get_control();

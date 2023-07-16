@@ -6,12 +6,15 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 16:50:02 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:58:00 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* MODO INTERATIVO
+
+*/
 static void sigint_handler(int sig_int)
 {
 	(void)sig_int;
@@ -26,3 +29,12 @@ void	set_signals(void)
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
+
+/* MODO NÃO INTERATIVO
+Usado quando o minishell está no modo não-interativo,
+o que significa que não está aguardando a entrada do
+usuário. Por exemplo, quando um comando está em execução
+(ou seja, cat), o minishell não deve reagir a SIGINT e
+SIGQUIT porque apenas o processo em execução (cat)
+precisa reagir a esses sinais.
+*/
