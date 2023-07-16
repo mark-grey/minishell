@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 16:45:21 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:50:02 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 	control = get_control();
 	control->env = parse_env(env);
 	update_env(argv, NULL, NULL);
-	handle_signals();
+	set_signals();
 	while (1)
 		prompt_user("minishell:> ", control->env);
 	exit_program(0);

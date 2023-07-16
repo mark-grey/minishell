@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 16:42:57 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:50:02 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void sigint_handler(int sig_int)
 	rl_redisplay(); // Redisplay o prompt
 }
 
-void	handle_signals(void)
+void	set_signals(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);

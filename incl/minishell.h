@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 16:43:13 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:50:02 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,6 @@ int		b_unset(t_env *env, char **args);
 void	call_execve(char *exec, char **args, t_env *env);
 
 /* SIGNALS */
-void	handle_signals(void);
+void	set_signals(void);
 
 #endif
