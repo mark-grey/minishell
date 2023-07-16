@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/15 11:20:45 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 12:29:13 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	line = readline(prompt);
 	if (!line)
 		exit_program(127);
+	add_history(line);
 	if (!bar_input(line))
 		apply_prompt(line, path);
 	free(line);
@@ -58,4 +59,5 @@ int	main(int argc, char **argv, char **env)
 	update_env(argv, NULL, NULL);
 	while (1)
 		prompt_user("minishell:> ", control->env);
+	exit_program(0);
 }

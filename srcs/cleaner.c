@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 10:25:37 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/08 17:50:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 12:28:45 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void	exit_program(int code)
 		clear_var_list(control->env);
 	if (control->cli)
 		clear_command_input(control->cli);
+	rl_clear_history();
 	exit(code);
 }
