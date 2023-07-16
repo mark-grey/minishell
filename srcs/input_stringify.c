@@ -6,11 +6,25 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/08 19:23:51 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 20:21:19 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	quote_closes(char *str)
+{
+	char	quote;
+
+	if (*str != '\'' && *str != '"')
+		return (0);
+	quote = *str++;
+	while (*str)
+		if (*str++ == quote)
+			return (1);
+	return (0);
+
+}
 
 static int	count_args(char *args, int single_arg)
 {
@@ -21,7 +35,7 @@ static int	count_args(char *args, int single_arg)
 	count = 0;
 	while (args[i])
 	{
-		if (is_quote(args[i]))
+		if (is_quote(args[i] && quote_closes(&args[i])))
 			get_quote(args, &i);
 		while (ft_isblank(args[i + 1]))
 			args++;
@@ -48,7 +62,7 @@ static char	*strlcpy_quoted(char *args, int len)
 	i = -1;
 	has_quote = 0;
 	while (++i < len -1 && !has_quote)
-		if (is_quote(args[i]))
+		if (is_quote(args[i]) && quote_closes(&args[i]))
 			has_quote = (int)args[i];
 	if (has_quote)
 		len -= 2;

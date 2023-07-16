@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/14 16:10:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 20:03:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		is_bracket(char c);
 int		is_pipe(char c);
 int		is_quote(char c);
 int		bar_input(char *input);
+int		quote_closes(char *str);
 char	*parse_path(char *path, char *cmd);
 
 // Gets
@@ -101,15 +102,20 @@ char	*get_args(char *cli, int *start, int *end);
 int		get_quote(char *input, int *i);
 
 /* BUILTINS */
-// Main
+/* Main */
 void	call_builtin(char *builtin, char **args, t_env *env);
 
-// Commands
+/* Commands */
 int		b_cd(char **path, t_env *env);
 int		b_echo(char **args);
 int		b_env(t_env *list);
 int		b_export(t_env *env, char **args);
 int		b_pwd(void);
 int		b_unset(t_env *env, char **args);
+
+/* EXECS */
+/* Main */
+
+void	call_execve(char *exec, char **args, t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 22:24:30 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/10 20:36:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 20:02:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_cli(char *input, int *i)
 	start = *i;
 	while (input[*i] && !is_bracket(input[*i]) && !is_pipe(input[*i]))
 	{
-		if (is_quote(input[*i]))
+		if (quote_closes(&input[*i]) && is_quote(input[*i]))
 			get_quote(input, i);
 		(*i)++;
 	}
