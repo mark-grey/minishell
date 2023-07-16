@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/11 20:57:09 by maalexan         ###   ########.fr        #
+#    Updated: 2023/07/15 11:19:06 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ FUN			:=	main.c \
 				env_utils.c \
 				exec_finder.c \
 				exec_utils.c \
+				exec_run.c \
 				input_parser_gets.c \
 				input_parser.c \
 				input_utils.c \
