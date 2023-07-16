@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/15 14:12:39 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:43:13 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,9 @@ int		b_unset(t_env *env, char **args);
 
 /* EXECS */
 /* Main */
-
 void	call_execve(char *exec, char **args, t_env *env);
+
+/* SIGNALS */
+void	handle_signals(void);
 
 #endif
