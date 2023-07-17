@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 17:29:11 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:59:07 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,33 @@
 /* MODO INTERATIVO
 
 */
-static void sigint_handler(int sig_int)
+static void sig_handler(int sig)
 {
-	(void)sig_int;
+	if (sig != SIGINT)
+		return ;
 	write(1, "\n", 1);
 	rl_on_new_line(); // Mover o cursor para uma nova linha
 	rl_replace_line("", STDIN_FILENO); // Limpar a linha de entrada atual
 	rl_redisplay(); // Redisplay o prompt
 }
 
-void	set_signals(void)
+void	set_signals(int reset)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	struct sigaction	s_act;
+
+	s_act = (struct sigaction){0};
+	if (reset)
+		s_act.sa_handler = SIG_DFL;
+	else
+		s_act.sa_handler = &sig_handler;
+	s_act.sa_flags = 0;
+	sigemptyset(&s_act.sa_mask);
+	if (sigaction(SIGINT, &s_act, NULL) < 0)
+		perror("sigint");
+	if (!reset)
+		s_act.sa_handler = SIG_IGN;
+	if (sigaction(SIGQUIT, &s_act, NULL) < 0)
+		perror("sigquit");
 }
 
 /* MODO NÃO INTERATIVO

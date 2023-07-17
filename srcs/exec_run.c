@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 11:07:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/15 14:58:02 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:58:00 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	run_fork(char *exec, char **args, t_env *env)
 
 	packed_args = wrap_args(exec, args);
 	packed_env = stringify_envp(env);
+	set_signals(1);
 	if (execve(exec, packed_args, packed_env) < 0)
 	{
 		printf("Failed to run program %s\n", exec);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 17:05:59 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:54:03 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 	control = get_control();
 	control->env = parse_env(env);
 	update_env(argv, NULL, NULL);
-	set_signals();
+	set_signals(0);
 	while (1)
 		prompt_user("minishell:> ", control->env);
 	exit_program(0);
