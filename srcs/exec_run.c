@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_run.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 11:07:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/17 16:37:39 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:36:37 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ static void	run_fork(char *exec, char **args, t_env *env)
 	set_signals(DEFAULT);
 	if (execve(exec, packed_args, packed_env) < 0)
 	{
-		printf("Failed to run program %s\n", exec);
+		ft_putstr_fd("Failed to run program ", STDERR_FILENO);
+		ft_putstr_fd(exec, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		clear_ptr_array(packed_env);
 		if (packed_args)
 			free(packed_args);
@@ -74,7 +76,7 @@ void	call_execve(char *exec, char **args, t_env *env)
 	if (!forked)
 		run_fork(exec, args, env);
 	if (forked < 0)
-		printf("Failed to create child process\n");
+		ft_putstr_fd("Failed to create child process\n", STDERR_FILENO);
 	else
 	{
 		waitpid(forked, &wstatus, 0);

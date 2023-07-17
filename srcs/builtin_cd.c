@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 22:02:34 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:50:30 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static int	change_to_home_path(t_env *env)
 	home = search_var("HOME", env);
 	if (!home)
 	{
-		printf("cd: HOME not set\n");
+		ft_putstr_fd("cd: HOME not set\n", STDOUT_FILENO);
 		return (-1);
 	}
 	if (!chdir(home->value))
 		return (0);
-	printf("cd: chdir failed\n");
+	ft_putstr_fd("cd: chdir failed\n", STDERR_FILENO);
 	return (-1);
 }
 
@@ -34,7 +34,7 @@ static int	change_to_arg_path(char *path)
 {
 	if (!chdir(path))
 		return (0);
-	printf("cd: chdir failed\n");
+	ft_putstr_fd("cd: chdir failed\n", STDERR_FILENO);
 	return (-1);
 }
 
@@ -61,14 +61,14 @@ static int	change_to_tilde_path(char *path, t_env *env)
 	home = search_var("HOME", env);
 	if (!home)
 	{
-		printf("cd: HOME not set\n");
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 		return (-1);
 	}
 	if (!ft_strncmp(path, "~", 2) || !ft_strncmp(path, "~/", 3))
 		return (change_to_home_path(home));
 	else if (!ft_strncmp(path, "~/", 2))
 		return (concat_tilde(path, home->value));
-	printf("cd: chdir failed\n");
+	ft_putstr_fd("cd: chdir failed\n", STDERR_FILENO);
 	return (-1);
 }
 
@@ -84,7 +84,10 @@ int	b_cd(char **path, t_env *env)
 	else if (!path)
 		status = change_to_home_path(env);
 	else if (path[1])
-		status = printf("cd: too many arguments\n") - 24;
+	{
+		status = 1;
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+	}
 	else if (!ft_strncmp(*path, "~", 1))
 		status = change_to_tilde_path(*path, env);
 	else
@@ -95,8 +98,7 @@ int	b_cd(char **path, t_env *env)
 	getcwd(current_path, sizeof(current_path));
 	new_pwd = ft_strjoin("PWD=", current_path);
 	set_var(new_pwd, pwd_variable);
-	free(new_pwd);
-	return (status);
+	return (free(new_pwd), status);
 }
 
 /* ERROS POSSÍVEIS DO COMANDO "Change Directory"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_caller.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 19:34:20 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/14 15:58:54 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:43:35 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	call_builtin(char *builtin, char **args, t_env *env)
 {
 	if (!builtin)
 		return ;
-	if (!ft_strncmp(builtin, "ping", 5))
-		printf("pong\n");
-	else if (!ft_strncmp(builtin, "cd", 3))
+	if (!ft_strncmp(builtin, "cd", 3))
 		b_cd(args, env);
 	else if (!ft_strncmp(builtin, "pwd", 4))
 		b_pwd();
@@ -29,7 +27,7 @@ void	call_builtin(char *builtin, char **args, t_env *env)
 	else if (!ft_strncmp(builtin, "export", 7))
 		b_export(env, args);
 	else if (!ft_strncmp(builtin, "env", 4))
-		b_env(env);
+		b_env(args, env);
 	else if (!ft_strncmp(builtin, "exit", 5))
 		exit_program(0);
 }

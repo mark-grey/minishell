@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/11 21:23:17 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:40:06 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void	print_error(char *msg, char *refstr, char refchar)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
 	if (refstr)
-		ft_putstr_fd(refstr, 2);
+		ft_putstr_fd(refstr, STDERR_FILENO);
 	if (refchar)
-		write(2, &refchar, 1);
-	ft_putstr_fd("'\n", 2);
+		ft_putchar_fd(refchar, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
 }
 
 static int	check_unclosed_quotes(char *input, int *i)
