@@ -21,7 +21,7 @@
 	- [x] <kbd>Ctrl</kbd>+<kbd>C</kbd> displays a new prompt on a new line.
 	- [x] <kbd>Ctrl</kbd>+<kbd>D</kbd> exits the shell.
 	- [x] <kbd>Ctrl</kbd>+<kbd>\\</kbd> does nothing.
-- [ ] Handle <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>D</kbd> and <kbd>Ctrl</kbd>+<kbd>\\</kbd> which should behave like in bash.
+- [x] Handle <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>D</kbd> and <kbd>Ctrl</kbd>+<kbd>\\</kbd> which should behave like in bash.
 - [ ] Implement redirections:
 	- [ ] `>` should redirect output.
 	- [ ] `<` should redirect input.
