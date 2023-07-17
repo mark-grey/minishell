@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 16:07:23 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:40:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	char	*line;
 	char	*path;
 
-	set_signals(0);
+	set_signals(ACTIVE);
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
@@ -58,7 +58,6 @@ int	main(int argc, char **argv, char **env)
 	control = get_control();
 	control->env = parse_env(env);
 	update_env(argv, NULL, NULL);
-	set_signals(0);
 	while (1)
 		prompt_user("minishell:> ", control->env);
 	exit_program(0);
