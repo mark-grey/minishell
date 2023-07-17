@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 14:59:07 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:14:13 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ static void sig_handler(int sig)
 	rl_redisplay(); // Redisplay o prompt
 }
 
-void	set_signals(int reset)
+void	set_signals(int mode)
 {
-	struct sigaction	s_act;
-
-	s_act = (struct sigaction){0};
-	if (reset)
-		s_act.sa_handler = SIG_DFL;
-	else
-		s_act.sa_handler = &sig_handler;
-	s_act.sa_flags = 0;
-	sigemptyset(&s_act.sa_mask);
-	if (sigaction(SIGINT, &s_act, NULL) < 0)
-		perror("sigint");
-	if (!reset)
-		s_act.sa_handler = SIG_IGN;
-	if (sigaction(SIGQUIT, &s_act, NULL) < 0)
-		perror("sigquit");
+	if (mode == 0)
+	{
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (mode == 1)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
+	if (mode == 2)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
 
 /* MODO NÃO INTERATIVO

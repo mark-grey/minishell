@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 11:07:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/17 14:58:00 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:19:08 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	call_execve(char *exec, char **args, t_env *env)
 	wstatus = 0;
 	if (!exec)
 		return ;
+	set_signals(2);
 	forked = fork();
 	if (!forked)
 		run_fork(exec, args, env);

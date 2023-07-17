@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 14:54:03 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:07:23 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	char	*line;
 	char	*path;
 
+	set_signals(0);
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!line)
