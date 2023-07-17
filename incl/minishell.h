@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 20:03:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:26:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # include <readline/readline.h>
 
 # define OUT_OF_MEMORY 1
+# define ACTIVE 0
+# define INACTIVE 1
+# define DEFAULT 2
 
 // Structs
 typedef struct s_env
@@ -115,7 +118,9 @@ int		b_unset(t_env *env, char **args);
 
 /* EXECS */
 /* Main */
-
 void	call_execve(char *exec, char **args, t_env *env);
+
+/* SIGNALS */
+void	set_signals(int mode);
 
 #endif
