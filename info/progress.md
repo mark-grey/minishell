@@ -8,8 +8,8 @@
 	- [x] `pwd` with no options
 	- [x] `export` with no options
 	- [x] `unset` with no options
-	- [x] **[Needs bugfix]** `env` with no options or arguments
-	- [x] **[Needs bugfix]** `exit` with no options
+	- [x] `env` with no options or arguments
+	- [x] `exit` with no options
 - [x] Display a **prompt** when waiting for a new command.
 - [x] Have a working **history**.
 - [x] Search and launch the right executable (based on the **PATH** variable or using a relative or an absolute path).
@@ -21,7 +21,7 @@
 	- [x] <kbd>Ctrl</kbd>+<kbd>C</kbd> displays a new prompt on a new line.
 	- [x] <kbd>Ctrl</kbd>+<kbd>D</kbd> exits the shell.
 	- [x] <kbd>Ctrl</kbd>+<kbd>\\</kbd> does nothing.
-- [ ] Handle <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>D</kbd> and <kbd>Ctrl</kbd>+<kbd>\\</kbd> which should behave like in bash.
+- [x] Handle <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>D</kbd> and <kbd>Ctrl</kbd>+<kbd>\\</kbd> which should behave like in bash.
 - [ ] Implement redirections:
 	- [ ] `>` should redirect output.
 	- [ ] `<` should redirect input.

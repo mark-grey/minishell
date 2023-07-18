@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:12:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 20:52:16 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:33:57 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	b_pwd(void)
 
 	if (!getcwd(current_path, sizeof(current_path)))
 		exit_program(-1);
-	printf("%s\n", current_path);
+	ft_putstr_fd(current_path, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }

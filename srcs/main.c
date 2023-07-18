@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 18:53:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:58:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	char	*line;
 	char	*path;
 
+	set_signals(ACTIVE);
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
 	if (!command_count() && !line)

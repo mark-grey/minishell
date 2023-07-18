@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 20:57:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 22:02:03 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:33:10 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	print_args(char **args)
 {
 	while (*args)
 	{
-		printf("%s", *args++);
+		ft_putstr_fd(*args++, STDOUT_FILENO);
 		if (*args)
-			printf(" ");
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 }
 
@@ -29,7 +29,7 @@ int	b_echo(char **args)
 	if (ft_strncmp(*args, "-n\0", 3))
 	{
 		print_args(args);
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 	else
 	{
