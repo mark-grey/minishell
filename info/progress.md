@@ -9,7 +9,7 @@
 	- [x] `export` with no options
 	- [x] `unset` with no options
 	- [x] `env` with no options or arguments
-	- [x] **[Needs bugfix]** `exit` with no options
+	- [x] `exit` with no options
 - [x] Display a **prompt** when waiting for a new command.
 - [x] Have a working **history**.
 - [x] Search and launch the right executable (based on the **PATH** variable or using a relative or an absolute path).
