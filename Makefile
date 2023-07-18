@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/16 15:02:57 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/17 20:23:23 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ FUN			:=	main.c \
 				input_stringify.c \
 				input_validator.c \
 				input_expand.c \
-				signal_handler.c
+				signal_handler.c \
+				special_var.c 
 
 
 # Object files
