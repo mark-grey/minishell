@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:51:12 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/18 17:59:30 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:10:25 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	special_var_treat(char **copy, int *index)
 
 	size = 0;
 	ctrl = get_control();
-	temp = ctrl->last_exit;
+	temp = (unsigned char)ctrl->last_exit;
 	(*index)++;
 	if (!temp)
 		temp = 1;
@@ -44,6 +44,6 @@ int	special_var_treat(char **copy, int *index)
 		size++;
 	}
 	if (copy)
-		copy_i_to_str(ctrl->last_exit, *copy, size);
+		copy_i_to_str((unsigned char)ctrl->last_exit, *copy, size);
 	return (size);
 }
