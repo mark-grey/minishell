@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 14:40:12 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:48:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	change_directory(const char *path)
 	else
 	{
 		free(old_pwd);
-		ft_putstr_fd("cd: chdir failed\n", STDERR_FILENO);
+		ft_putstr_fd("cd: cannot change directory\n", STDERR_FILENO);
 		return (1);
 	}
 }
@@ -100,7 +100,7 @@ int	b_cd(char **path, t_env *env)
 			return (change_directory(home->value));
 		if (!ft_strncmp(*path, "~/", 2))
 			return (concat_tilde(*path, home->value));
-		return (ft_putstr_fd("cd: chdir failed\n", STDERR_FILENO), 1);
+		return (ft_putstr_fd("cd: cannot change directory\n", STDERR_FILENO), 1);
 	}
 	else
 		return (change_directory(*path));
