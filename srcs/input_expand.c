@@ -6,18 +6,18 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/16 20:24:47 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:15:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	This function receives the variable name and it's intended 
-	length, and looks for a match in the envp list.
-	In order to be able to guarantee a match, the original
-	string's first char after the variable name is temporary
-	replaced by a null char, which is returned afterwards
+**	This function receives the variable name and it's intended 
+**	length, and looks for a match in the envp list.
+**	In order to be able to guarantee a match, the original
+**	string's first char after the variable name is temporary
+**	replaced by a null char, which is returned afterwards
 */
 static int	assess_len(char *str, int len, char **copy)
 {
@@ -44,10 +44,10 @@ static int	assess_len(char *str, int len, char **copy)
 }
 
 /*
-	Once the indication of a variable is found ("$" char)
-	this function runs through it's valid chars to find
-	out the intended name, and return it's expanded length,
-	or zero in case there is no matches in the environment
+**	Once the indication of a variable is found ("$" char)
+**	this function runs through it's valid chars to find
+**	out the intended name, and return it's expanded length,
+**	or zero in case there is no matches in the environment
 */
 static int	expand_var(char *line, int *i, char **copy)
 {
@@ -60,7 +60,7 @@ static int	expand_var(char *line, int *i, char **copy)
 	if (ft_isdigit(*start))
 		(*i)++;
 	else if (*start == '?')
-		(*i)++; //change after implementing special var
+		return (special_var_treat(copy, i));
 	else
 		while (ft_isalnum(line[*i]) || line[*i] == '_')
 			(*i)++;
@@ -69,9 +69,9 @@ static int	expand_var(char *line, int *i, char **copy)
 }
 
 /*
-	Bash variable names can only have alpha numeric 
-	characters or an underscore "_" but there is a 
-	special variable "$?" that must be treated
+**	Bash variable names can only have alpha numeric 
+**	characters or an underscore "_" but there is a 
+**	special variable "$?" that must be treated
 */
 static int	valid_var_name(char c)
 {
@@ -79,9 +79,9 @@ static int	valid_var_name(char c)
 }
 
 /*
-	Once the length has been assessed, this function will
-	then copy the variable (if it exists), so it can provide
-	an expanded version of the captured readline
+**	Once the length has been assessed, this function will
+**	then copy the variable (if it exists), so it can provide
+**	an expanded version of the captured readline
 */
 char	*copy_expansion(char *line, int len)
 {
@@ -110,10 +110,10 @@ char	*copy_expansion(char *line, int len)
 }
 
 /*
-	Checks the line taken from prompt in order to 
-	expand variables indicated by $.
-	This first part is responsible to calculate the
-	total length of the string to inform it to malloc
+**	Checks the line taken from prompt in order to 
+**	expand variables indicated by $.
+**	This first part is responsible to calculate the
+**	total length of the string to inform it to malloc
 */
 char	*expand_line(char *line)
 {

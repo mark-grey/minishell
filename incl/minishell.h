@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 17:26:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:14:40 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_ctrl
 	t_cli	*cli;
 	t_env	*env;
 	char	*exec_path;
+	int		last_exit;
 }			t_ctrl;
 
 /* STRINGIFY FUNCTIONS */
@@ -79,7 +80,7 @@ void	set_var(const char *src, t_env *node);
 void	clear_command_input(t_cli *cli);
 void	clear_ptr_array(char **array);
 void	exit_program(int code);
-
+int		special_var_treat(char **copy, int *index);
 /* PARSE INPUT FUNCTIONS */
 // Main
 t_cli	*parse_input(char *input, char *path);
