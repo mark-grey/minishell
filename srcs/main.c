@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 18:58:19 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:44:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	apply_prompt(char *line, char *path)
 
 	ctrl = get_control();
 	expanded = expand_line(line);
+	free(line);
+	ctrl->read_line = expanded;
 	cmds = parse_input(expanded, path);
 	if (cmds)
 	{
@@ -39,6 +41,7 @@ static void	apply_prompt(char *line, char *path)
 	ctrl->cli = NULL;
 	if (expanded)
 		free(expanded);
+	ctrl->read_line = NULL;
 }
 
 void	prompt_user(const char *prompt, t_env *env_list)
@@ -56,7 +59,8 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	add_history(line);
 	if (!bar_input(line))
 		apply_prompt(line, path);
-	free(line);
+	else
+		free(line);
 }
 
 int	main(int argc, char **argv, char **env)

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 10:25:37 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/18 18:12:47 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:48:52 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	exit_program(int code)
 	if (control->cli)
 		clear_command_input(control->cli);
 	rl_clear_history();
+	if (control->read_line)
+		free(control->read_line);
 	if (code)
 		exit((unsigned char)code);
 	exit((unsigned char)control->last_exit);
