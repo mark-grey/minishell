@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_caller.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 19:34:20 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 17:46:50 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:30:54 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	call_builtin(char *builtin, char **args, t_env *env)
 	else if (!ft_strncmp(builtin, "export", 7))
 		ctrl->last_exit = b_export(env, args);
 	else if (!ft_strncmp(builtin, "env", 4))
-		ctrl->last_exit = b_env(env);
+		ctrl->last_exit = b_env(args, env);
 	else if (!ft_strncmp(builtin, "exit", 5))
-		exit_program(0);
+		b_exit(args);
 }

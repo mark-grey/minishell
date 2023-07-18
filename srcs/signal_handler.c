@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 17:42:54 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:33:02 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	sig_handler(int sig)
 	if (sig != SIGINT)
 		return ;
 	ctrl = get_control();
-	write(1, "\n", 1);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	ctrl->last_exit = 130;
 	rl_on_new_line();
 	rl_replace_line("", STDIN_FILENO);
@@ -47,7 +47,7 @@ static void	non_interactive_mode(int sig)
 	ctrl = get_control();
 	if (sig == SIGINT)
 		ctrl->last_exit = 130;
-	write (1, "\n", 1);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
 void	set_signals(int mode)
