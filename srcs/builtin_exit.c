@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 21:07:00 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 15:17:11 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:39:11 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_str_digit(char *arg)
 int	b_exit(char **args)
 {
 	if (is_str_digit(args[0]) && !args[1])
-		exit_program(args[0] % 256);
+		exit_program(ft_atoi(args[0]) % 256);
 	if (is_str_digit(args[0]) && args[1])
 		return (ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO), 1);
 	if (!is_str_digit(args[0]) && args[1])
