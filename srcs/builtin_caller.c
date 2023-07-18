@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 19:34:20 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 19:43:35 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:18:25 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	call_builtin(char *builtin, char **args, t_env *env)
 	else if (!ft_strncmp(builtin, "env", 4))
 		b_env(args, env);
 	else if (!ft_strncmp(builtin, "exit", 5))
-		exit_program(0);
+		b_exit(args);
 }

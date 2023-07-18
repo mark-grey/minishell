@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/16 15:02:57 by inwagner         ###   ########.fr        #
+#    Updated: 2023/07/17 21:22:22 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ FUN			:=	main.c \
 				builtin_cd.c \
 				builtin_echo.c \
 				builtin_env.c \
+				builtin_exit.c \
 				builtin_export.c \
 				builtin_pwd.c \
 				builtin_unset.c \
