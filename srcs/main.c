@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 12:29:13 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:53:52 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static unsigned int	command_count(void)
+{
+	static unsigned int	count;
+
+	return (count++);
+}
 
 static void	apply_prompt(char *line, char *path)
 {
@@ -41,8 +48,10 @@ void	prompt_user(const char *prompt, t_env *env_list)
 
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
-	if (!line)
+	if (!command_count() && !line)
 		exit_program(127);
+	else if (!line)
+		exit_program(0);
 	add_history(line);
 	if (!bar_input(line))
 		apply_prompt(line, path);
