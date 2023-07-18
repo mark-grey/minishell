@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:51:12 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/17 21:14:46 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:59:30 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	copy_i_to_str(int num, char *str, int len)
 	{
 		while (num)
 		{
-			str[len--] = (num % 10) + '0';
+			str[--len] = (num % 10) + '0';
 			num /= 10;
 		}
 	}

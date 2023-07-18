@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 11:07:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/17 16:37:39 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:36:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ static void	run_fork(char *exec, char **args, t_env *env)
 
 void	call_execve(char *exec, char **args, t_env *env)
 {
+	t_ctrl	*ctrl;
 	pid_t	forked;
 	int		wstatus;
 
+	ctrl = get_control();
 	wstatus = 0;
 	if (!exec)
 		return ;
@@ -79,6 +81,6 @@ void	call_execve(char *exec, char **args, t_env *env)
 	{
 		waitpid(forked, &wstatus, 0);
 		if (WIFEXITED(wstatus))
-			wstatus = (WEXITSTATUS(wstatus));
+			ctrl->last_exit = (WEXITSTATUS(wstatus));
 	}
 }

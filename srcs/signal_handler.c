@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 16:40:55 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:42:54 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 */
 static void	sig_handler(int sig)
 {
+	t_ctrl	*ctrl;
+
 	if (sig != SIGINT)
 		return ;
+	ctrl = get_control();
 	write(1, "\n", 1);
+	ctrl->last_exit = 130;
 	rl_on_new_line();
 	rl_replace_line("", STDIN_FILENO);
 	rl_redisplay();
@@ -38,7 +42,11 @@ static void	sig_handler(int sig)
 
 static void	non_interactive_mode(int sig)
 {
-	(void)sig;
+	t_ctrl	*ctrl;
+
+	ctrl = get_control();
+	if (sig == SIGINT)
+		ctrl->last_exit = 130;
 	write (1, "\n", 1);
 }
 
