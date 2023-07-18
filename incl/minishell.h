@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 21:21:56 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:25:33 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*get_args(char *cli, int *start, int *end);
 int		get_quote(char *input, int *i);
 
 /* BUILTINS */
-/* Main */
+/* Controller */
 void	call_builtin(char *builtin, char **args, t_env *env);
 
 /* Commands */
@@ -116,6 +116,8 @@ int		b_exit(char **args);
 int		b_export(t_env *env, char **args);
 int		b_pwd(void);
 int		b_unset(t_env *env, char **args);
+
+void	new_var(t_env *env, char *args);
 
 /* EXECS */
 /* Main */
