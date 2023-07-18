@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 21:07:00 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 18:39:11 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:00:21 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int	b_exit(char **args)
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 		exit_program(2);
 	}
-	return (1);
+	return (exit_program(0), 0);
 }
