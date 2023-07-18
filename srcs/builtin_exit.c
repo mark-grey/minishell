@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 21:07:00 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 21:28:28 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:53:44 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	b_exit(char **args)
 		return (ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO), 1);
 	if (!is_str_digit(args[0]) && args[1])
 	{
-		ft_putstr_fd("exit: a: numeric argument required\n", STDERR_FILENO);
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 		exit_program(2);
 	}
-	return (0);
+	return (1);
 }
