@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:01:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/06/28 20:37:18 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:38:22 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_str_env(char **env)
 {
 	while (*env)
 	{
-		ft_putstr_fd(*env++, 1);
+		ft_putstr_fd(*env++, STDOUT_FILENO);
 		write(1, "\n", 2);
 	}
 	write(1, "\n", 1);

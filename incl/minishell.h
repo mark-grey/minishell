@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/16 20:03:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:41:17 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # include <readline/readline.h>
 
 # define OUT_OF_MEMORY 1
+# define ACTIVE 0
+# define INACTIVE 1
+# define DEFAULT 2
 
 // Structs
 typedef struct s_env
@@ -55,6 +58,8 @@ typedef struct s_ctrl
 	t_cli	*cli;
 	t_env	*env;
 	char	*exec_path;
+	char	*read_line;
+	int		last_exit;
 }			t_ctrl;
 
 /* STRINGIFY FUNCTIONS */
@@ -76,7 +81,7 @@ void	set_var(const char *src, t_env *node);
 void	clear_command_input(t_cli *cli);
 void	clear_ptr_array(char **array);
 void	exit_program(int code);
-
+int		special_var_treat(char **copy, int *index);
 /* PARSE INPUT FUNCTIONS */
 // Main
 t_cli	*parse_input(char *input, char *path);
@@ -102,20 +107,25 @@ char	*get_args(char *cli, int *start, int *end);
 int		get_quote(char *input, int *i);
 
 /* BUILTINS */
-/* Main */
+/* Controller */
 void	call_builtin(char *builtin, char **args, t_env *env);
 
 /* Commands */
 int		b_cd(char **path, t_env *env);
 int		b_echo(char **args);
-int		b_env(t_env *list);
+int		b_env(char **path, t_env *list);
+int		b_exit(char **args);
 int		b_export(t_env *env, char **args);
 int		b_pwd(void);
 int		b_unset(t_env *env, char **args);
 
+void	new_var(t_env *env, char *args);
+
 /* EXECS */
 /* Main */
-
 void	call_execve(char *exec, char **args, t_env *env);
+
+/* SIGNALS */
+void	set_signals(int mode);
 
 #endif

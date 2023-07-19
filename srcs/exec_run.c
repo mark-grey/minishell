@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_run.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 11:07:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/15 14:58:02 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:31:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ static void	run_fork(char *exec, char **args, t_env *env)
 
 	packed_args = wrap_args(exec, args);
 	packed_env = stringify_envp(env);
+	set_signals(DEFAULT);
 	if (execve(exec, packed_args, packed_env) < 0)
 	{
-		printf("Failed to run program %s\n", exec);
+		ft_putstr_fd("Failed to run program ", STDERR_FILENO);
+		ft_putstr_fd(exec, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		clear_ptr_array(packed_env);
 		if (packed_args)
 			free(packed_args);
@@ -62,21 +65,24 @@ static void	run_fork(char *exec, char **args, t_env *env)
 
 void	call_execve(char *exec, char **args, t_env *env)
 {
+	t_ctrl	*ctrl;
 	pid_t	forked;
 	int		wstatus;
 
+	ctrl = get_control();
 	wstatus = 0;
 	if (!exec)
 		return ;
+	set_signals(INACTIVE);
 	forked = fork();
 	if (!forked)
 		run_fork(exec, args, env);
 	if (forked < 0)
-		printf("Failed to create child process\n");
+		ft_putstr_fd("Failed to create child process\n", STDERR_FILENO);
 	else
 	{
 		waitpid(forked, &wstatus, 0);
 		if (WIFEXITED(wstatus))
-			wstatus = (WEXITSTATUS(wstatus));
+			ctrl->last_exit = (WEXITSTATUS(wstatus));
 	}
 }

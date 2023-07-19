@@ -8,8 +8,8 @@
 	- [x] `pwd` with no options
 	- [x] `export` with no options
 	- [x] `unset` with no options
-	- [x] **[Needs bugfix]** `env` with no options or arguments
-	- [x] **[Needs bugfix]** `exit` with no options
+	- [x] `env` with no options or arguments
+	- [x] `exit` with no options
 - [x] Display a **prompt** when waiting for a new command.
 - [x] Have a working **history**.
 - [x] Search and launch the right executable (based on the **PATH** variable or using a relative or an absolute path).
@@ -21,15 +21,15 @@
 	- [x] <kbd>Ctrl</kbd>+<kbd>C</kbd> displays a new prompt on a new line.
 	- [x] <kbd>Ctrl</kbd>+<kbd>D</kbd> exits the shell.
 	- [x] <kbd>Ctrl</kbd>+<kbd>\\</kbd> does nothing.
-- [ ] Handle <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>D</kbd> and <kbd>Ctrl</kbd>+<kbd>\\</kbd> which should behave like in bash.
+- [x] Handle <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>D</kbd> and <kbd>Ctrl</kbd>+<kbd>\\</kbd> which should behave like in bash.
 - [ ] Implement redirections:
 	- [ ] `>` should redirect output.
 	- [ ] `<` should redirect input.
 	- [ ] `>>` should redirect output in append mode.
 	- [ ] `<<` should be given a delimiter, then read the input until a line containing the delimiter is seen. However, it doesn’t have to update the history!
 - [ ] Implement pipes (`|` character). The output of each command in the pipeline is connected to the input of the next command via a pipe.
-- [ ] Handle `$?` which should expand to the exit status of the most recently executed foreground pipeline.
-	- [ ] Exit/Error status management.
+- [x] Handle `$?` which should expand to the exit status of the most recently executed foreground pipeline.
+	- [x] Exit/Error status management.
 
 ## Bonus
 

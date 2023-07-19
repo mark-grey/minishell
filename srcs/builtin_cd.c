@@ -6,39 +6,65 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:10:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 22:02:34 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:48:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//change path to variable home
-static int	change_to_home_path(t_env *env)
+/* RETORNA O DIRETÓRIO ATUAL
+*/
+char	*get_pwd(char *prefix)
 {
-	t_env	*home;
+	char	current_path[PATH_MAX];
+	char	*pwd;
 
-	home = search_var("HOME", env);
-	if (!home)
-	{
-		printf("cd: HOME not set\n");
-		return (-1);
-	}
-	if (!chdir(home->value))
-		return (0);
-	printf("cd: chdir failed\n");
-	return (-1);
+	getcwd(current_path, sizeof(current_path));
+	pwd = ft_strjoin(prefix, current_path);
+	return (pwd);
 }
 
-//change path to path
-static int	change_to_arg_path(char *path)
+/* ATUALIZA A VARIÁVEL COM O DIRETÓRIO INFORMADO
+*/
+void	set_pwd(char *pwd)
 {
+	t_ctrl	*control;
+
+	control = get_control();
+	if (!pwd)
+		return ;
+	new_var(control->env, pwd);
+}
+
+/* MUDA O DIRETÓRIO PARA O CAMINHO INFORMADO.
+** Para atualizar o PWD e o OLDPWD é necessário pegar o diretório
+** antes e depois da mudança de diretório.
+*/
+int	change_directory(const char *path)
+{
+	char	*pwd;
+	char	*old_pwd;
+
+	old_pwd = get_pwd("OLDPWD=");
 	if (!chdir(path))
+	{
+		pwd = get_pwd("PWD=");
+		set_pwd(pwd);
+		set_pwd(old_pwd);
+		free(pwd);
+		free(old_pwd);
 		return (0);
-	printf("cd: chdir failed\n");
-	return (-1);
+	}
+	else
+	{
+		free(old_pwd);
+		ft_putstr_fd("cd: cannot change directory\n", STDERR_FILENO);
+		return (1);
+	}
 }
 
-//expand tilde to home
+/* CONCATENA HOME COM O RESTANTE DO CAMINHO
+*/
 static int	concat_tilde(char *path, char *home)
 {
 	char	*full_path;
@@ -48,55 +74,36 @@ static int	concat_tilde(char *path, char *home)
 	full_path = ft_strjoin(home, path);
 	if (!full_path)
 		return (OUT_OF_MEMORY);
-	status = change_to_arg_path(full_path);
+	status = change_directory(full_path);
 	free(full_path);
 	return (status);
 }
 
-//change to tilde path
-static int	change_to_tilde_path(char *path, t_env *env)
+int	b_cd(char **path, t_env *env)
 {
 	t_env	*home;
 
 	home = search_var("HOME", env);
-	if (!home)
+	if (!path || !*path)
 	{
-		printf("cd: HOME not set\n");
-		return (-1);
+		if (!home)
+			return (ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO), 1);
+		return (change_directory(home->value));
 	}
-	if (!ft_strncmp(path, "~", 2) || !ft_strncmp(path, "~/", 3))
-		return (change_to_home_path(home));
-	else if (!ft_strncmp(path, "~/", 2))
-		return (concat_tilde(path, home->value));
-	printf("cd: chdir failed\n");
-	return (-1);
-}
-
-int	b_cd(char **path, t_env *env)
-{
-	int		status;
-	char	current_path[PATH_MAX];
-	char	*new_pwd;
-	t_env	*pwd_variable;
-
-	if (!env)
-		status = -1;
-	else if (!path)
-		status = change_to_home_path(env);
 	else if (path[1])
-		status = printf("cd: too many arguments\n") - 24;
+		return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), 1);
 	else if (!ft_strncmp(*path, "~", 1))
-		status = change_to_tilde_path(*path, env);
+	{
+		if (!home)
+			return (ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO), 1);
+		if (!ft_strncmp(*path, "~", 2) || !ft_strncmp(*path, "~/", 3))
+			return (change_directory(home->value));
+		if (!ft_strncmp(*path, "~/", 2))
+			return (concat_tilde(*path, home->value));
+		return (ft_putstr_fd("cd: cannot change directory\n", STDERR_FILENO), 1);
+	}
 	else
-		status = change_to_arg_path(*path);
-	pwd_variable = search_var("PWD", env);
-	if (!pwd_variable)
-		return (status);
-	getcwd(current_path, sizeof(current_path));
-	new_pwd = ft_strjoin("PWD=", current_path);
-	set_var(new_pwd, pwd_variable);
-	free(new_pwd);
-	return (status);
+		return (change_directory(*path));
 }
 
 /* ERROS POSSÍVEIS DO COMANDO "Change Directory"
