@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/19 15:18:29 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/19 18:33:29 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	count_args(char *args, int single_arg)
 	count = 0;
 	while (args[i])
 	{
-		if (is_quote(args[i] && quote_closes(&args[i])))
+		if (is_quote(args[i]) && quote_closes(&args[i]))
 			get_quote(args, &i);
 		while (ft_isblank(args[i + 1]))
-			args++;
+			i++;
 		if (ft_isblank(args[i]) || !args[i + 1])
 		{
 			if (single_arg && args[i + 1])
@@ -116,7 +116,7 @@ char	**stringify_args(char *args)
 	int		i;
 	int		count;
 	char	**pointers;
-printf("I'll have to deal with this shit: %s\n", args);
+
 	if (!args)
 		return (NULL);
 	i = 0;
