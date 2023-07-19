@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:49:23 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 18:33:02 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:50:36 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	non_interactive_mode(int sig)
 	ctrl = get_control();
 	if (sig == SIGINT)
 		ctrl->last_exit = 130;
+	if (sig == SIGQUIT)
+		ctrl->last_exit = 131;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 

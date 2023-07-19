@@ -6,11 +6,18 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:37:15 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 18:13:35 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:44:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static unsigned int	command_count(void)
+{
+	static unsigned int	count;
+
+	return (count++);
+}
 
 static void	apply_prompt(char *line, char *path)
 {
@@ -20,6 +27,8 @@ static void	apply_prompt(char *line, char *path)
 
 	ctrl = get_control();
 	expanded = expand_line(line);
+	free(line);
+	ctrl->read_line = expanded;
 	cmds = parse_input(expanded, path);
 	if (cmds)
 	{
@@ -32,6 +41,7 @@ static void	apply_prompt(char *line, char *path)
 	ctrl->cli = NULL;
 	if (expanded)
 		free(expanded);
+	ctrl->read_line = NULL;
 }
 
 void	prompt_user(const char *prompt, t_env *env_list)
@@ -42,12 +52,15 @@ void	prompt_user(const char *prompt, t_env *env_list)
 	set_signals(ACTIVE);
 	path = get_var_value("PATH", env_list);
 	line = readline(prompt);
-	if (!line)
+	if (!command_count() && !line)
 		exit_program(127);
+	else if (!line)
+		exit_program(0);
 	add_history(line);
 	if (!bar_input(line))
 		apply_prompt(line, path);
-	free(line);
+	else
+		free(line);
 }
 
 int	main(int argc, char **argv, char **env)

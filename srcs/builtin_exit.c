@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 21:07:00 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 18:39:11 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:47:34 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	is_str_digit(char *arg)
 
 int	b_exit(char **args)
 {
+	if (!args || !*args)
+		return (exit_program(0), 0);
 	if (is_str_digit(args[0]) && !args[1])
 		exit_program(ft_atoi(args[0]) % 256);
 	if (is_str_digit(args[0]) && args[1])
@@ -31,5 +33,5 @@ int	b_exit(char **args)
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 		exit_program(2);
 	}
-	return (1);
+	return (exit_program(0), 0);
 }
