@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 20:41:17 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:07:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int		is_pipe(char c);
 int		is_quote(char c);
 int		bar_input(char *input);
 int		quote_closes(char *str);
+int		valid_var_name(char c);
+char	*var_has_quote(t_env *env_var);
 char	*parse_path(char *path, char *cmd);
 
 // Gets

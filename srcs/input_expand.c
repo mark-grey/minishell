@@ -6,11 +6,18 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/18 21:30:46 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:58:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	copy_and_hide(t_env *var, char *dst, char *src)
+{
+	if (!ft_strncmp(var->key, src, ft_strlen(src)))
+		*dst++ = '$';
+	ft_memcpy(dst, src, ft_strlen(src));
+}
 
 /*
 **	This function receives the variable name and it's intended 
@@ -34,11 +41,13 @@ static int	assess_len(char *str, int len, char **copy)
 	str[len] = '\0';
 	variable = search_var(str, control->env);
 	if (variable)
-		src = variable->value;
+		src = var_has_quote(variable);
 	str[len] = temp;
 	if (copy && src)
-		ft_memcpy(*copy, src, ft_strlen(src));
-	if (src)
+		copy_and_hide(variable, *copy, src);
+	if (src && !ft_strncmp(variable->key, src, ft_strlen(src)))
+		return (ft_strlen(src) + 1);
+	else if (src)
 		return (ft_strlen(src));
 	return (0);
 }
@@ -66,16 +75,6 @@ static int	expand_var(char *line, int *i, char **copy)
 			(*i)++;
 	len = assess_len(start, &line[*i] - start, copy);
 	return (len);
-}
-
-/*
-**	Bash variable names can only have alpha numeric 
-**	characters or an underscore "_" but there is a 
-**	special variable "$?" that must be treated
-*/
-static int	valid_var_name(char c)
-{
-	return (c == '?' || ft_isalnum(c) || c == '_');
 }
 
 /*
