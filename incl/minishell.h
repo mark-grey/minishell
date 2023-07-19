@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/18 22:07:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/19 14:21:38 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		is_redirector(char *red);
 int		is_bracket(char c);
 int		is_pipe(char c);
 int		is_quote(char c);
+int		is_a_quoted_var(char *str);
 int		bar_input(char *input);
 int		quote_closes(char *str);
 int		valid_var_name(char c);

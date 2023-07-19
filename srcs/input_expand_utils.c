@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 21:13:56 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/18 22:58:43 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/19 14:44:44 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,58 @@ char	*var_has_quote(t_env *env_var)
 		if (is_quote(*cursor++))
 			return (env_var->key);
 	return (env_var->value);
+}
+
+/*
+**	Verifies if the received string has
+**	unclosed quotes, to enable adequate
+**	treatment as necessary
+**/
+int	quote_closes(char *str)
+{
+	char	quote;
+	int		paired_quotes;
+
+	if (*str != '\'' && *str != '"')
+		return (0);
+	quote = *str++;
+	paired_quotes = 0;
+	while (*str)
+		if (*str++ == quote)
+			paired_quotes = !paired_quotes;
+	return (paired_quotes);
+}
+
+/*
+**	Guarantees the string
+**	has only one quote
+**/
+int	has_single_quote(char *str)
+{
+	int	quote;
+
+	quote = 0;
+	while (*str)
+		if (is_quote(*str++))
+			quote++;
+	if (quote == 1)
+		return (1);
+	return (0);
+}
+
+/*
+**	Confirms that the string is an
+**	environment variable and that
+**	it has only one quote
+**/
+int	is_a_quoted_var(char *str)
+{
+	t_ctrl	*ctrl;
+	t_env	*var;
+
+	ctrl = get_control();
+	var = search_var(str, ctrl->env);
+	if (!var || !has_single_quote(var->value))
+		return (0);
+	return (1);
 }

@@ -6,25 +6,27 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 19:24:48 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/19 15:18:29 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	quote_closes(char *str)
+static char	*expand_variable(char *src)
 {
-	char	quote;
-	int		paired_quotes;
+	t_ctrl	*ctrl;
+	t_env	*var;
+	char	*str;
+	int		len;
 
-	if (*str != '\'' && *str != '"')
-		return (0);
-	quote = *str++;
-	paired_quotes = 0;
-	while (*str)
-		if (*str++ == quote)
-			paired_quotes = !paired_quotes;
-	return (paired_quotes);
+	ctrl = get_control();
+	var = search_var(src, ctrl->env);
+	len = ft_strlen(var->value) + 1;
+	str = malloc(sizeof(char) * len);
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, var->value, len);
+	return (str);
 }
 
 static int	count_args(char *args, int single_arg)
@@ -60,6 +62,8 @@ static char	*strlcpy_quoted(char *args, int len)
 	int		i;
 	int		has_quote;
 
+	if (*args == '$' && is_a_quoted_var(args + 1))
+		return (expand_variable(args + 1));
 	i = -1;
 	has_quote = 0;
 	while (++i < len -1 && !has_quote)
@@ -112,7 +116,7 @@ char	**stringify_args(char *args)
 	int		i;
 	int		count;
 	char	**pointers;
-
+printf("I'll have to deal with this shit: %s\n", args);
 	if (!args)
 		return (NULL);
 	i = 0;
@@ -127,3 +131,17 @@ char	**stringify_args(char *args)
 		pointers[i++] = set_arg(args, pointers);
 	return (pointers);
 }
+
+/*
+export pog="oi'io" bog='mi"im'
+
+static void	print_args(char **args)
+{
+	while (*args)
+	{
+		ft_putstr_fd(*args++, STDOUT_FILENO);
+		if (*args)
+			ft_putstr_fd(" ", STDOUT_FILENO);
+	}
+}
+*/
