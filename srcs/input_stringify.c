@@ -6,12 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/19 18:33:29 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/19 21:52:00 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static char	*expand_variable(char *src)
 {
 	t_ctrl	*ctrl;
@@ -27,8 +27,86 @@ static char	*expand_variable(char *src)
 		return (NULL);
 	ft_strlcpy(str, var->value, len);
 	return (str);
+}*/
+
+int	goto_next_quote(char *args)
+{
+	int		i;
+	char	quote;
+
+	i = 1;
+	if (!quote_closes(args))
+		return (1);
+	quote = *args++;
+	while (*args++ != quote)
+		i++;
+	return (i + 1);
 }
 
+int	count_args(char *args)
+{
+	int	count;
+
+	count = 0;
+	while (ft_isblank(*args))
+		args++;
+	while (*args)
+	{
+		if (is_quote(*args))
+			args += goto_next_quote(args);
+		else
+			args++;
+		if (ft_isblank(*args) || !*args)
+			count++;
+		while (ft_isblank(*args))
+			args++;
+	}
+	return (count);
+}
+
+char	**stringify_args(char *args)
+{
+	char	**pointers;
+	int		size;
+printf("Im receiving %s\n", args);
+	pointers = NULL;
+	if (!args)
+		return (NULL);
+	size = count_args(args);
+	printf ("size is %i\n", size);
+	exit_program(1);
+	return (pointers);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 static int	count_args(char *args, int single_arg)
 {
 	int	i;
@@ -53,6 +131,7 @@ static int	count_args(char *args, int single_arg)
 		}
 		i++;
 	}
+	printf("args: %i\n", count);
 	return (count);
 }
 
@@ -108,6 +187,7 @@ static char	*set_arg(char *args, char **pointer)
 		clear_ptr_array(pointer);
 		exit_program(OUT_OF_MEMORY);
 	}
+	new_arg = 0;
 	return (str);
 }
 
@@ -129,19 +209,24 @@ char	**stringify_args(char *args)
 	i = 0;
 	while (i < count)
 		pointers[i++] = set_arg(args, pointers);
+	print_args(pointers);
 	return (pointers);
 }
 
-/*
+
 export pog="oi'io" bog='mi"im'
 
 static void	print_args(char **args)
 {
+	int	i = 0;
+
 	while (*args)
 	{
+		printf ("arg %i\n", ++i);
 		ft_putstr_fd(*args++, STDOUT_FILENO);
-		if (*args)
-			ft_putstr_fd(" ", STDOUT_FILENO);
+		//if (*args)
+		//	ft_putstr_fd(" ", STDOUT_FILENO);
+		write (1, "\n", STDOUT_FILENO);
 	}
 }
 */

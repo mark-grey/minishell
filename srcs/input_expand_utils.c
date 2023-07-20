@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 21:13:56 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/19 14:44:44 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/19 21:41:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ char	*var_has_quote(t_env *env_var)
 int	quote_closes(char *str)
 {
 	char	quote;
-	int		paired_quotes;
 
 	if (*str != '\'' && *str != '"')
 		return (0);
 	quote = *str++;
-	paired_quotes = 0;
-	while (*str)
-		if (*str++ == quote)
-			paired_quotes = !paired_quotes;
-	return (paired_quotes);
+	while (*str && *str != quote)
+		str++;
+	return (*str == quote);
 }
 
 /*
