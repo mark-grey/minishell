@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/19 21:52:00 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:41:02 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	goto_next_quote(char *args)
 
 	i = 1;
 	if (!quote_closes(args))
-		return (1);
+		return (0);
 	quote = *args++;
 	while (*args++ != quote)
 		i++;
-	return (i + 1);
+	return (i);
 }
 
 int	count_args(char *args)
@@ -53,7 +53,7 @@ int	count_args(char *args)
 	while (*args)
 	{
 		if (is_quote(*args))
-			args += goto_next_quote(args);
+			args += goto_next_quote(args) + 1;
 		else
 			args++;
 		if (ft_isblank(*args) || !*args)
@@ -68,39 +68,23 @@ char	**stringify_args(char *args)
 {
 	char	**pointers;
 	int		size;
+	int		i;
 printf("Im receiving %s\n", args);
 	pointers = NULL;
 	if (!args)
 		return (NULL);
 	size = count_args(args);
+	pointers = malloc(sizeof(char *) * size + 1);
+	if (!pointers)
+		exit_program(OUT_OF_MEMORY);
+	i = 0;
+	while (i <= size)
+		pointers[i++] = NULL;
+	i = 0;
 	printf ("size is %i\n", size);
 	exit_program(1);
 	return (pointers);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
