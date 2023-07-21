@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/21 16:58:08 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:01:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,60 @@ int	goto_next_quote(char *args)
 	return (i);
 }
 
+int	size_minus_quotes(char *arg, int len)
+{
+	int	i;
+	int temp;
+
+	i = 0;
+	while (i < len)
+	{
+		temp = 0;
+		if (is_quote(arg[i]))
+			temp += goto_next_quote(&arg[i]);
+		if (temp)
+		{
+			i += temp;
+			len -= 2;
+		}
+		i++;
+	}
+	return (i);
+}
+
+static char *copy_argument(char *arg, int len)
+{
+	char	*str;
+	int		i;
+	int		copychars;
+
+	len = size_minus_quotes(arg, len);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	printf("my len should be %i\n", len);
+	while (i < len)
+	{
+		copychars = 0;
+		if (is_quote(*arg))
+			copychars += goto_next_quote(arg);
+		if (copychars)
+		{
+			printf("copychars triggered on %s and with value of %i\n", arg, copychars);
+			ft_memcpy(&str[i], arg + 1, copychars - 1);
+			arg += copychars + 1;
+			i += copychars - 1;
+		}
+		else
+			str[i++] = *arg++;
+	}
+	printf("ended da shit with %i\n", i);
+	str[i] = '\0';
+	printf ("just copied %s with len %i\n", str, (int)ft_strlen(str));
+	return (str);
+}
+
 char	*get_next_arg(char *args, char **pointers, int done)
 {
 	static int	current;
@@ -73,16 +127,14 @@ char	*get_next_arg(char *args, char **pointers, int done)
 		else
 			current++;
 	}
-	str = malloc(sizeof(char) * (current - start + 1));
+	str = copy_argument(&args[start], current - start);
 	if (!str)
 	{
 		clear_ptr_array(pointers);
 		exit_program(OUT_OF_MEMORY);
 	}
-	ft_strlcpy(str, &args[start], current - start + 1);
-	printf("Str is %s len is %i strlen is %i\n", str, current - start, (int)ft_strlen(str));
 	if (done)
-		printf("heh\n");
+		current = 0;
 	return (str);
 }
 
