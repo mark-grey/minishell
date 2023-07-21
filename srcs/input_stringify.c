@@ -6,11 +6,25 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/20 09:41:02 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:58:08 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	printargs(char **args)
+{
+	int	i = 0;
+
+	while (*args)
+	{
+		printf ("arg %i\n", ++i);
+		ft_putstr_fd(*args++, STDOUT_FILENO);
+		//if (*args)
+		//	ft_putstr_fd(" ", STDOUT_FILENO);
+		write (1, "\n", STDOUT_FILENO);
+	}
+}
 /*
 static char	*expand_variable(char *src)
 {
@@ -41,6 +55,35 @@ int	goto_next_quote(char *args)
 	while (*args++ != quote)
 		i++;
 	return (i);
+}
+
+char	*get_next_arg(char *args, char **pointers, int done)
+{
+	static int	current;
+	char		*str;
+	int			start;
+
+	while (ft_isblank(args[current]))
+		current++;
+	start = current;
+	while (args[current] && !ft_isblank(args[current]))
+	{
+		if (is_quote(args[current]))
+			current += goto_next_quote(&args[current]) + 1;
+		else
+			current++;
+	}
+	str = malloc(sizeof(char) * (current - start + 1));
+	if (!str)
+	{
+		clear_ptr_array(pointers);
+		exit_program(OUT_OF_MEMORY);
+	}
+	ft_strlcpy(str, &args[start], current - start + 1);
+	printf("Str is %s len is %i strlen is %i\n", str, current - start, (int)ft_strlen(str));
+	if (done)
+		printf("heh\n");
+	return (str);
 }
 
 int	count_args(char *args)
@@ -74,19 +117,22 @@ printf("Im receiving %s\n", args);
 	if (!args)
 		return (NULL);
 	size = count_args(args);
-	pointers = malloc(sizeof(char *) * size + 1);
+	pointers = malloc(sizeof(char *) * (size + 1));
 	if (!pointers)
 		exit_program(OUT_OF_MEMORY);
 	i = 0;
 	while (i <= size)
 		pointers[i++] = NULL;
 	i = 0;
+	while (i < size)
+	{
+		pointers[i] = get_next_arg(args, pointers, i == size - 1);
+		i++;
+	}
 	printf ("size is %i\n", size);
-	exit_program(1);
+	printargs(pointers);
 	return (pointers);
 }
-
-
 
 
 
@@ -95,6 +141,7 @@ static int	count_args(char *args, int single_arg)
 {
 	int	i;
 	int	count;
+
 
 	i = 0;
 	count = 0;
