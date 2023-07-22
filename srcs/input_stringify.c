@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/21 18:06:20 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/21 22:34:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,18 @@ int	size_minus_quotes(char *arg, int len)
 		}
 		i++;
 	}
-	return (i);
+	return (len);
 }
 
-static char *copy_argument(char *arg, int len)
+static char *copy_argument(char *arg, int len, int i)
 {
 	char	*str;
-	int		i;
 	int		copychars;
 
 	len = size_minus_quotes(arg, len);
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	i = 0;
 	while (i < len)
 	{
 		copychars = 0;
@@ -110,7 +108,7 @@ char	*get_next_arg(char *args, char **pointers, int done)
 		else
 			current++;
 	}
-	str = copy_argument(&args[start], current - start);
+	str = copy_argument(&args[start], current - start, 0);
 	if (!str)
 	{
 		clear_ptr_array(pointers);
