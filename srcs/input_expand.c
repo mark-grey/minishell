@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/21 22:58:09 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/22 10:13:29 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ char	*copy_expansion(char *line, int len)
 	char	*cursor;
 
 	i = 0;
-	quoted = 0;
 	expanded = malloc(sizeof(char) * len);
 	if (!expanded)
 		exit_program(OUT_OF_MEMORY);
 	cursor = expanded;
 	while (line[i])
 	{
+		quoted = 0;
 		if (line[i] == '$' && line[i + 1] == '\'')
 			i++;
 		if (line[i] == '\'' && quote_closes(&line[i]))
-			quoted = !quoted;
+			quoted = 1;
 		if (!quoted && line[i] == '$' && valid_var_name(line[i + 1]))
 			cursor += expand_var(line, &i, &cursor);
 		else if (line[i])
