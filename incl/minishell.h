@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/19 14:21:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:27:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ void	clear_command_input(t_cli *cli);
 void	clear_ptr_array(char **array);
 void	exit_program(int code);
 int		special_var_treat(char **copy, int *index);
+int		goto_next_quote(char *args);
+int		count_args(char *args);
+int		size_minus_quotes(char *arg, int len);
 /* PARSE INPUT FUNCTIONS */
 // Main
 t_cli	*parse_input(char *input, char *path);

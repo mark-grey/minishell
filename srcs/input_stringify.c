@@ -6,13 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 16:18:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/21 22:34:04 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:25:32 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
 static char	*expand_variable(char *src)
 {
 	t_ctrl	*ctrl;
@@ -28,44 +27,9 @@ static char	*expand_variable(char *src)
 		return (NULL);
 	ft_strlcpy(str, var->value, len);
 	return (str);
-}*/
-
-int	goto_next_quote(char *args)
-{
-	int		i;
-	char	quote;
-
-	i = 1;
-	if (!quote_closes(args))
-		return (0);
-	quote = *args++;
-	while (*args++ != quote)
-		i++;
-	return (i);
 }
 
-int	size_minus_quotes(char *arg, int len)
-{
-	int	i;
-	int temp;
-
-	i = 0;
-	while (i < len)
-	{
-		temp = 0;
-		if (is_quote(arg[i]))
-			temp += goto_next_quote(&arg[i]);
-		if (temp)
-		{
-			i += temp;
-			len -= 2;
-		}
-		i++;
-	}
-	return (len);
-}
-
-static char *copy_argument(char *arg, int len, int i)
+static char	*copy_argument(char *arg, int len, int i)
 {
 	char	*str;
 	int		copychars;
@@ -119,25 +83,27 @@ char	*get_next_arg(char *args, char **pointers, int done)
 	return (str);
 }
 
-int	count_args(char *args)
+void	expand_quoted_vars(char **args)
 {
-	int	count;
+	int		i;
+	char	*temp;
 
-	count = 0;
-	while (ft_isblank(*args))
-		args++;
-	while (*args)
+	i = 0;
+	while (args[i])
 	{
-		if (is_quote(*args))
-			args += goto_next_quote(args) + 1;
-		else
-			args++;
-		if (ft_isblank(*args) || !*args)
-			count++;
-		while (ft_isblank(*args))
-			args++;
+		if (args[i][0] == '$' && is_a_quoted_var(&args[i][1]))
+		{
+			temp = expand_variable(&args[i][1]);
+			if (!temp)
+			{
+				clear_ptr_array(args);
+				exit_program(OUT_OF_MEMORY);
+			}
+			free(args[i]);
+			args[i] = temp;
+		}
+		i++;
 	}
-	return (count);
 }
 
 char	**stringify_args(char *args)
@@ -162,5 +128,6 @@ char	**stringify_args(char *args)
 		pointers[i] = get_next_arg(args, pointers, i == size - 1);
 		i++;
 	}
+	expand_quoted_vars(pointers);
 	return (pointers);
 }
