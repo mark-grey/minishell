@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/22 10:13:29 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/23 11:04:15 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	copy_key_or_value(t_env *var, char *dst, char *src)
 {
-	if (!ft_strncmp(var->key, src, ft_strlen(src)))
+	if (!ft_strncmp(var->key, src, ft_strlen(src)) && \
+		ft_strncmp(var->key, var->value, ft_strlen(var->value))) 
 		*dst++ = '$';
 	ft_memcpy(dst, src, ft_strlen(src));
 }
@@ -29,7 +30,7 @@ static void	copy_key_or_value(t_env *var, char *dst, char *src)
 static int	assess_len(char *str, int len, char **copy)
 {
 	t_ctrl	*control;
-	t_env	*variable;
+	t_env	*var;
 	char	*src;
 	char	temp;
 
@@ -39,13 +40,14 @@ static int	assess_len(char *str, int len, char **copy)
 	control = get_control();
 	temp = str[len];
 	str[len] = '\0';
-	variable = search_var(str, control->env);
-	if (variable)
-		src = var_has_quote(variable);
+	var = search_var(str, control->env);
+	if (var)
+		src = var_has_quote(var);
 	str[len] = temp;
 	if (copy && src)
-		copy_key_or_value(variable, *copy, src);
-	if (src && !ft_strncmp(variable->key, src, ft_strlen(src)))
+		copy_key_or_value(var, *copy, src);
+	if (src && ft_strncmp(var->key, var->value, ft_strlen(var->value)) \
+		&& !ft_strncmp(var->key, src, ft_strlen(src)))
 		return (ft_strlen(src) + 1);
 	else if (src)
 		return (ft_strlen(src));
