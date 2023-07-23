@@ -6,19 +6,11 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:14:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/23 11:04:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/07/23 11:57:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	copy_key_or_value(t_env *var, char *dst, char *src)
-{
-	if (!ft_strncmp(var->key, src, ft_strlen(src)) && \
-		ft_strncmp(var->key, var->value, ft_strlen(var->value))) 
-		*dst++ = '$';
-	ft_memcpy(dst, src, ft_strlen(src));
-}
 
 /*
 **	This function receives the variable name and it's intended 
@@ -79,6 +71,19 @@ static int	expand_var(char *line, int *i, char **copy)
 	return (len);
 }
 
+static int	copy_between_quotes(char *line, int *i, char **dst)
+{
+	(*i)++;
+	while (line[*i] != '\'')
+	{
+		**dst = line[*i];
+		*dst += 1;
+		(*i)++;
+	}
+	(*i)++;
+	return (1);
+}
+
 /*
 **	Once the length has been assessed, this function will
 **	then copy the variable (if it exists), so it can provide
@@ -102,7 +107,7 @@ char	*copy_expansion(char *line, int len)
 		if (line[i] == '$' && line[i + 1] == '\'')
 			i++;
 		if (line[i] == '\'' && quote_closes(&line[i]))
-			quoted = 1;
+			quoted = copy_between_quotes(line, &i, &cursor);
 		if (!quoted && line[i] == '$' && valid_var_name(line[i + 1]))
 			cursor += expand_var(line, &i, &cursor);
 		else if (line[i])
@@ -130,7 +135,7 @@ char	*expand_line(char *line)
 		if (line[i] == '$' && line[i + 1] == '\'')
 			i++;
 		if (line[i] == '\'' && quote_closes(&line[i]))
-			total_len += get_quote(line, &i);
+			total_len += get_quote(line, &i) - 1;
 		if (line[i] == '$' && valid_var_name(line[i + 1]))
 			total_len += expand_var(line, &i, NULL);
 		else if (line[i])
