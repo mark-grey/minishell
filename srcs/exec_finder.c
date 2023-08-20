@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:08:04 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/28 20:22:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/08/12 19:50:24 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
- * Builds a complete filename for checking with the access function,
- * joining the path and exec so the access function can be called
- * regardless of the current directory
- */
+/*	CONSTRUCTOR
+** Builds a complete filename for checking with the access function,
+** joining the path and exec so the access function can be called
+** regardless of the current directory
+*/
 static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 {
 	char	*full;
@@ -31,10 +31,10 @@ static char	*get_full_path(char *path, char *cmd, int path_len, int cmd_len)
 	return (full);
 }
 
-/*
-	Checks if the complete path is an executable, stat() checks file status,
-	S_ISREG makes sure it's a regular file, and access() validates permission 
-	to execute it
+/*	EXEC PATH VALIDATOR
+** Checks if the complete path is an executable, stat() checks file status,
+** S_ISREG makes sure it's a regular file, and access() validates permission 
+** to execute it
 */
 static char	*check_exec(char *path, char *cmd, int path_len, int cmd_len)
 {
@@ -53,9 +53,9 @@ static char	*check_exec(char *path, char *cmd, int path_len, int cmd_len)
 	return (str);
 }
 
-/*
- * Searches the directory "path" for an executable named "cmd"
- */
+/*	SEARCH BY PATH
+** Searches the directory "path" for an executable named "cmd"
+*/
 static char	*find_exec(char *path, char *cmd)
 {
 	struct dirent	*files;
@@ -81,8 +81,8 @@ static char	*find_exec(char *path, char *cmd)
 	return (full_path);
 }
 
-/*
-	Checks for executable on current dir "." or parent dir ".."
+/*	SEARCH BY DOT
+** Checks for executable on current dir "." or parent dir ".."
 */
 static char	*search_dot_dirs(char *cmd)
 {
@@ -104,8 +104,8 @@ static char	*search_dot_dirs(char *cmd)
 	return (str);
 }
 
-/*
-	Loops through path variable to find executable file
+/*	EXEC SEARCHER
+** Loops through path variable to find executable file
 */
 char	*parse_path(char *env_path, char *cmd)
 {

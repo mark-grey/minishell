@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_unset.c                                    :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 20:35:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/12 20:55:05 by inwagner         ###   ########.fr       */
+/*   Created: 2023/08/12 16:06:12 by inwagner          #+#    #+#             */
+/*   Updated: 2023/08/12 16:06:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	b_unset(t_env *env, char **args)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	if (!args)
-		return (0);
-	while (*args)
+	while (*str1 && *str2)
 	{
-		remove_var(*args, env);
-		args++;
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
 	}
-	return (0);
+	return (*str1 - *str2);
 }

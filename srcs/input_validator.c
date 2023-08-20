@@ -6,21 +6,24 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/17 19:40:06 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/08/12 21:52:00 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_error(char *msg, char *refstr, char refchar)
+int	print_error(char *msg, char *refstr, char refchar)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd("msh: ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	if (refstr)
 		ft_putstr_fd(refstr, STDERR_FILENO);
 	if (refchar)
 		ft_putchar_fd(refchar, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
+	if (refstr || refchar)
+		ft_putstr_fd("'", STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (1);
 }
 
 static int	check_unclosed_quotes(char *input, int *i)
@@ -37,45 +40,35 @@ static int	check_unclosed_quotes(char *input, int *i)
 
 static int	validate_pipe(char *input, int *i)
 {
-	int	j;
-
-	j = *i;
-	if (j)
-		j--;
-	while (ft_isblank(input[j]) && j)
-		j--;
-	if (!is_pipe(input[j]) && !ft_isblank(input[j]))
-		return (0);
-	print_error("syntax error near unexpected token `", NULL, '|');
-	return (-1);
+	if (is_bracket(input[*i + 1]))
+		(*i)++;
+	if (input[*i + 1] == input[*i] && !is_pipe(input[*i]))
+		(*i)++;
+	(*i)++;
+	while (input[*i] && ft_isblank(input[*i]))
+		(*i)++;
+	if (is_pipe(input[*i]) || is_bracket(input[*i]))
+		return (print_error("syntax error near unexpected token `", NULL, input[*i]));
+	if (!input[*i])
+		(*i)--;
+	return (0);
 }
 
 static int	validate_brackets(char *input, int *i)
 {
-	char	c;
-
-	c = input[(*i)++];
-	if (input[*i] != c || !input[*i])
-	{
-		(*i)--;
-		return (0);
-	}
-	(*i)++;
-	while (ft_isblank(input[*i]))
+	if (input[*i + 1] == input[*i])
 		(*i)++;
-	if (!(is_pipe(input[*i]) || is_bracket(input[*i]) || !input[*i]))
-	{
-		return (0);
-	}
-	c = input[*i];
-	if (!c)
-		print_error("syntax error near unexpected token `", "newline", 0);
-	else if (is_pipe(c) || is_bracket(c))
-		print_error("syntax error near unexpected token `", NULL, c);
-	return (-1);
+	(*i)++;
+	while (input[*i] && ft_isblank(input[*i]))
+		(*i)++;
+	if (!input[*i])
+		return (print_error("syntax error near unexpected token `", "newline", 0));
+	if (is_pipe(input[*i]) || is_bracket(input[*i]))
+		return (print_error("syntax error near unexpected token `", NULL, input[*i]));
+	return (0);
 }
 
-int	bar_input(char *input)
+int	validate_input(char *input)
 {
 	int	i;
 

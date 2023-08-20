@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/07/22 00:23:12 by maalexan         ###   ########.fr        #
+#    Updated: 2023/08/13 00:07:33 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,32 +27,19 @@ BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
-				builtin_caller.c \
-				builtin_cd.c \
-				builtin_echo.c \
-				builtin_env.c \
-				builtin_exit.c \
-				builtin_export.c \
-				builtin_pwd.c \
-				builtin_unset.c \
 				cleaner.c \
 				env_parser.c \
 				env_shifter.c \
 				env_utils.c \
 				exec_finder.c \
-				exec_utils.c \
 				exec_run.c \
-				input_parser_gets.c \
-				input_parser.c \
+				exec_utils.c \
 				input_utils.c \
-				input_stringify.c \
-				input_stringify_utils.c \
 				input_validator.c \
-				input_expand.c \
-				input_expand_utils.c \
+				prompt.c \
+				quick_sort.c \
 				signal_handler.c \
-				special_var.c 
-
+				tokenization.c
 
 # Object files
 OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)

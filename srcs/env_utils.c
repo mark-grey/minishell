@@ -6,24 +6,11 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:50:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/06/28 20:39:35 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:39:18 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	count_list(t_env *list)
-{
-	int	i;
-
-	i = 0;
-	while (list)
-	{
-		list = list->next;
-		i++;
-	}
-	return (i);
-}
 
 char	*get_var_value(char *value, t_env *env_list)
 {
@@ -36,6 +23,19 @@ char	*get_var_value(char *value, t_env *env_list)
 	if (env_node)
 		list_value = env_node->value;
 	return (list_value);
+}
+
+static int	count_list(t_env *list)
+{
+	int	i;
+
+	i = 0;
+	while (list)
+	{
+		list = list->next;
+		i++;
+	}
+	return (i);
 }
 
 static char	*copy_to_env(char *key, char *value)
@@ -55,7 +55,7 @@ static char	*copy_to_env(char *key, char *value)
 	return (new_var);
 }
 
-char	**stringify_envp(t_env *list)
+char	**stringify_env(t_env *list)
 {
 	char	**env;
 	int		i;

@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 17:06:10 by inwagner          #+#    #+#              #
-#    Updated: 2023/06/26 19:15:06 by inwagner         ###   ########.fr        #
+#    Updated: 2023/08/12 20:56:33 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ FTS		:=	ft_abs.c \
 			ft_putstr_fd.c \
 			ft_split.c \
 			ft_strchr.c \
+			ft_strcmp.c \
 			ft_strcspn.c \
 			ft_strdup.c \
 			ft_striteri.c \

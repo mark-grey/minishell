@@ -3,39 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 10:25:37 by maalexan          #+#    #+#             */
-/*   Updated: 2023/07/18 20:48:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/08/13 00:30:42 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	clear_var_list(t_env *list)
+void	clear_tokens(t_token *token)
 {
-	if (!list)
+	if (!token)
 		return ;
-	clear_var_list(list->next);
-	if (list->key)
-		free(list->key);
-	free(list);
-}
-
-void	clear_command_input(t_cli *cli)
-{
-	if (!cli)
-		return ;
-	clear_command_input(cli->next);
-	if (cli->cmd)
-		free(cli->cmd);
-	if (cli->args)
-		clear_ptr_array(cli->args);
-	if (cli->director)
-		free(cli->director);
-	if (cli->exec)
-		free(cli->exec);
-	free(cli);
+	clear_tokens(token->next);
+	if (token->str)
+		free(token->str);
+	free(token);
 }
 
 void	clear_ptr_array(char **array)
@@ -55,19 +39,31 @@ t_ctrl	*get_control(void)
 	return (&control);
 }
 
+static void	clear_env(t_env *list)
+{
+	if (!list)
+		return ;
+	clear_env(list->next);
+	if (list->key)
+		free(list->key);
+	free(list);
+}
+
 void	exit_program(int code)
 {
 	t_ctrl	*control;
 
 	control = get_control();
+	if (control->input)
+		free(control->input);
 	if (control->env)
-		clear_var_list(control->env);
-	if (control->cli)
-		clear_command_input(control->cli);
+		clear_env(control->env);
+	if (control->tokens)
+		clear_tokens(control->tokens);
+	if (control->path)
+		free(control->path);
 	rl_clear_history();
-	if (control->read_line)
-		free(control->read_line);
 	if (code)
 		exit((unsigned char)code);
-	exit((unsigned char)control->last_exit);
+	exit((unsigned char)control->status);
 }

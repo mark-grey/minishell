@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/07/23 11:57:59 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/08/20 14:19:49 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,38 @@
 # include <readline/readline.h>
 
 # define OUT_OF_MEMORY 1
+# define FD_ERROR 2
 # define ACTIVE 0
 # define INACTIVE 1
 # define DEFAULT 2
 
-// Structs
+/*	REDIRECTORS
+** |	pipe
+** <	input
+** <<	heredoc
+** >	overwrite
+** >>	append
+*/
+enum e_type
+{
+	BUILTIN = 1,
+	EXEC,
+	ARGUMENT
+	PIPE,
+	HEREDOC,
+	APPEND,
+	INPUT,
+	OVERWRITE,
+};
+
+enum e_quote
+{
+	SINGLE = 1,
+	DOUBLE
+};
+
+/*	Lists
+*/
 typedef struct s_env
 {
 	char			*key;
@@ -44,94 +71,66 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_token
+{
+	char			*str;
+	enum e_type		type;
+	enum e_quote	quote;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
+
+/*	Structs
+*/
+typedef struct s_ctrl
+{
+	char			*input;
+	struct s_token	*tokens;
+	struct s_env	*env;
+	struct s_cli	*commands;
+	char			*path;
+	int				status;
+}					t_ctrl;
+
 typedef struct s_cli
 {
-	char			*cmd;
 	char			**args;
-	char			*director;
-	char			*exec;
+	int				fd[2];
+	enum e_type		type;
 	struct s_cli	*next;
 }					t_cli;
 
-typedef struct s_ctrl
-{
-	t_cli	*cli;
-	t_env	*env;
-	char	*exec_path;
-	char	*read_line;
-	int		last_exit;
-}			t_ctrl;
+/*	Functions
+*/
+void	prompt_user(const char *prompt, t_env *env_list);
 
-/* STRINGIFY FUNCTIONS */
-char	**stringify_envp(t_env *list);
-char	**stringify_args(char *args);
-int		count_list(t_env *list);
-void	copy_key_or_value(t_env *var, char *dst, char *src);
-/* PARSE ENV FUNCTIONS */
-// Main
-t_env	*parse_env(char **env);
+void	set_signals(int mode);
+void	quick_sort(char **strings, int low, int high);
+
 void	update_env(char **argv, char *cmd, char *exec);
-
-// Utils
-t_env	*add_var(t_env *prev, char *var);
-t_env	*search_var(char *str, t_env *list);
-t_env	*remove_var(char *str, t_env *list);
-char	*get_var_value(char *value, t_env *env_list);
 void	set_var(const char *src, t_env *node);
-void	clear_command_input(t_cli *cli);
-void	clear_ptr_array(char **array);
-void	exit_program(int code);
-int		special_var_treat(char **copy, int *index);
-int		goto_next_quote(char *args);
-int		count_args(char *args);
-int		size_minus_quotes(char *arg, int len);
-/* PARSE INPUT FUNCTIONS */
-// Main
-t_cli	*parse_input(char *input, char *path);
-char	*expand_line(char *line);
+t_env	*parse_env(char **env);
+t_env	*remove_var(char *str, t_env *list);
+t_env	*search_var(char *str, t_env *list);
+t_env	*add_var(t_env *prev, char *var);
+char	*get_var_value(char *value, t_env *env_list);
+char	**stringify_env(t_env *list);
 
-// Validators
-int		is_builtin(char *cmd);
+t_ctrl	*get_control(void);
+void	exit_program(int code);
+void	clear_tokens(t_token *token);
+void	clear_ptr_array(char **array);
+
+char	*parse_path(char *env_path, char *cmd);
+void	call_execve(char **args, t_env *env);
+
+int		validate_input(char *input);
 int		is_exec(char *path, char *cmd);
-int		is_redirector(char *red);
+int		is_quote(char c);
 int		is_bracket(char c);
 int		is_pipe(char c);
-int		is_quote(char c);
-int		is_a_quoted_var(char *str);
-int		bar_input(char *input);
-int		quote_closes(char *str);
-int		valid_var_name(char c);
-char	*var_has_quote(t_env *env_var);
-char	*parse_path(char *path, char *cmd);
+void	get_quote(char *input, int *i);
 
-// Gets
-t_ctrl	*get_control(void);
-char	*get_cli(char *input, int *i);
-char	*get_redirector(char *input, int *i);
-char	*get_cmd(char *cli, int *start, int *end, char *path);
-char	*get_args(char *cli, int *start, int *end);
-int		get_quote(char *input, int *i);
-
-/* BUILTINS */
-/* Controller */
-void	call_builtin(char *builtin, char **args, t_env *env);
-
-/* Commands */
-int		b_cd(char **path, t_env *env);
-int		b_echo(char **args);
-int		b_env(char **path, t_env *list);
-int		b_exit(char **args);
-int		b_export(t_env *env, char **args);
-int		b_pwd(void);
-int		b_unset(t_env *env, char **args);
-
-void	new_var(t_env *env, char *args);
-
-/* EXECS */
-/* Main */
-void	call_execve(char *exec, char **args, t_env *env);
-
-/* SIGNALS */
-void	set_signals(int mode);
+int		tokenization(char *input);
 
 #endif
