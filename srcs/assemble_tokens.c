@@ -130,6 +130,8 @@ void	assemble_tokens(t_token *tok_nav)
 			cli_nav->args = assemble_command_node(tok_nav);
 		else if (tok_nav->type > PIPE)
 			tok_nav = get_last_fd(cli_nav, tok_nav)
+		else if (pipe(cli_nav->fd) < 0)
+			exit_program(FD_ERROR);
 		cli_nav->type = tok_nav->type;
 		tok_nav = tok_nav->next;
 		if (tok_nav)
@@ -138,7 +140,7 @@ void	assemble_tokens(t_token *tok_nav)
 			break ;
 		cli_nav = cli_nav->next;
 	}
-	prepare_pipes();	
+	prepare_pipes();
 }
 
 /*
