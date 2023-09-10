@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/05 21:29:20 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/09 16:25:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-
 
 # define OUT_OF_MEMORY 12
 # define DEFAULT 0
@@ -62,12 +61,6 @@ typedef enum e_type
 	ARGUMENT
 }	t_type;
 
-enum e_quote
-{
-	SINGLE = 1,
-	DOUBLE
-};
-
 /*	Lists
 */
 typedef struct s_env
@@ -85,12 +78,19 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_here
+{
+	int				fd;
+	struct s_here	*next;
+}					t_here;
+
 /*	Structs
 */
 typedef struct s_cli
 {
 	char			**args;
 	int				fd[2];
+	t_here			*heredoc;
 	enum e_type		type;
 	struct s_cli	*next;
 }					t_cli;
@@ -104,13 +104,6 @@ typedef struct s_ctrl
 	char			**pbox;
 	int				status;
 }					t_ctrl;
-
-
-typedef struct s_here
-{
-	int				fd;
-	struct s_here	*next;
-}					t_here;
 
 /*	Functions
 */
@@ -179,25 +172,25 @@ int		export_without_args(t_env *env);
 void	new_var(t_env *env, char *args);
 t_env	*validate_if_var_exist(t_env *list, char *arg);
 
-int		assemble_tokens(t_token *tok_nav);
+int		executor_constructor(t_token *tok);
+int		assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs);
+int		set_cli(t_cli *cli, t_token *tok);
 
 t_token	*remove_token(t_token *node);
-int		count_args(t_token *node);
-int		count_nodes(t_token *tok);
 int		has_heredoc(t_token	*tok);
 
-t_cli	*make_new_cli(t_here *head);
+t_cli	*add_cli(t_here *head);
 t_cli	*remove_cli(t_cli *cli);
 t_token	*discard_tokens(t_token *token);
-t_here	*make_new_heredoc(t_here *head);
+t_here	*add_heredoc(t_here *head);
 t_here	*get_heredocs(t_token *tok);
-t_cli	*pipe_fd(t_cli *cli);
-void	free_heredocs(t_here *doc, char closing);
-int		assemble_fds(t_cli *cli, t_token *tok, t_here *heredocs);
+int		free_heredocs(t_here *doc, char closing);
 
-int	run_commands(void);
-int	mother_forker(t_cli *commands, pid_t *forked, int amount);
+int		run_commands(void);
+int		mother_forker(t_cli *commands, pid_t *forked, int amount);
 void	execute_a_command(t_cli *commands);
+void	create_cli_list(t_token *tok, t_here *heredocs);
+
 //remove
 void	print_cli(void);
 void	print_token(t_token *tokens);
