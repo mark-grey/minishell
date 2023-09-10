@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 19:38:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/08/12 21:52:00 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:56:01 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static int	validate_pipe(char *input, int *i)
 	while (input[*i] && ft_isblank(input[*i]))
 		(*i)++;
 	if (is_pipe(input[*i]) || is_bracket(input[*i]))
-		return (print_error("syntax error near unexpected token `", NULL, input[*i]));
-	if (!input[*i])
-		(*i)--;
+		return (print_error("syntax error near unexpected token `", \
+				NULL, input[*i]));
+	(*i)--;
 	return (0);
 }
 
@@ -62,9 +62,12 @@ static int	validate_brackets(char *input, int *i)
 	while (input[*i] && ft_isblank(input[*i]))
 		(*i)++;
 	if (!input[*i])
-		return (print_error("syntax error near unexpected token `", "newline", 0));
+		return (print_error("syntax error near unexpected token `", \
+				"newline", 0));
 	if (is_pipe(input[*i]) || is_bracket(input[*i]))
-		return (print_error("syntax error near unexpected token `", NULL, input[*i]));
+		return (print_error("syntax error near unexpected token `", \
+				NULL, input[*i]));
+	(*i)--;
 	return (0);
 }
 

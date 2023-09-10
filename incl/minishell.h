@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/08/20 14:19:49 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/05 21:29:20 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-# define OUT_OF_MEMORY 1
-# define FD_ERROR 2
-# define ACTIVE 0
-# define INACTIVE 1
-# define DEFAULT 2
+
+# define OUT_OF_MEMORY 12
+# define DEFAULT 0
+# define ACTIVE 42
+# define INACTIVE 43
+# define CMD_NOT_EXECUTABLE 126
+# define CMD_NOT_FOUND 127
+
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
 
 /*	REDIRECTORS
 ** |	pipe
@@ -44,17 +50,17 @@
 ** >	overwrite
 ** >>	append
 */
-enum e_type
+typedef enum e_type
 {
-	BUILTIN = 1,
+	APPEND = 1,
+	HEREDOC,
+	OVERWRITE,
+	INPUT,
+	PIPE,
+	BUILTIN,
 	EXEC,
 	ARGUMENT
-	PIPE,
-	HEREDOC,
-	APPEND,
-	INPUT,
-	OVERWRITE,
-};
+}	t_type;
 
 enum e_quote
 {
@@ -74,24 +80,13 @@ typedef struct s_env
 typedef struct s_token
 {
 	char			*str;
-	enum e_type		type;
-	enum e_quote	quote;
+	t_type			type;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
 
 /*	Structs
 */
-typedef struct s_ctrl
-{
-	char			*input;
-	struct s_token	*tokens;
-	struct s_env	*env;
-	struct s_cli	*commands;
-	char			*path;
-	int				status;
-}					t_ctrl;
-
 typedef struct s_cli
 {
 	char			**args;
@@ -100,9 +95,26 @@ typedef struct s_cli
 	struct s_cli	*next;
 }					t_cli;
 
+typedef struct s_ctrl
+{
+	char			*input;
+	t_token			*tokens;
+	t_env			*env;
+	t_cli			*commands;
+	char			**pbox;
+	int				status;
+}					t_ctrl;
+
+
+typedef struct s_here
+{
+	int				fd;
+	struct s_here	*next;
+}					t_here;
+
 /*	Functions
 */
-void	prompt_user(const char *prompt, t_env *env_list);
+void	prompt_user(const char *prompt);
 
 void	set_signals(int mode);
 void	quick_sort(char **strings, int low, int high);
@@ -111,26 +123,83 @@ void	update_env(char **argv, char *cmd, char *exec);
 void	set_var(const char *src, t_env *node);
 t_env	*parse_env(char **env);
 t_env	*remove_var(char *str, t_env *list);
-t_env	*search_var(char *str, t_env *list);
+t_env	*search_var(char *var);
 t_env	*add_var(t_env *prev, char *var);
-char	*get_var_value(char *value, t_env *env_list);
-char	**stringify_env(t_env *list);
+char	*get_var_value(char *value);
+char	**stringify_env(t_env *list, int flag);
 
 t_ctrl	*get_control(void);
 void	exit_program(int code);
 void	clear_tokens(t_token *token);
-void	clear_ptr_array(char **array);
+void	clear_pbox(char **array);
+void	clear_cli(t_cli *cli);
 
-char	*parse_path(char *env_path, char *cmd);
+char	*get_exec_path(char *env_path, char *cmd);
 void	call_execve(char **args, t_env *env);
 
 int		validate_input(char *input);
-int		is_exec(char *path, char *cmd);
-int		is_quote(char c);
 int		is_bracket(char c);
 int		is_pipe(char c);
 void	get_quote(char *input, int *i);
 
+int		is_var(char var);
+int		is_builtin(char *cmd);
+int		is_redirector(char *red);
+int		is_quote(char quote);
+
 int		tokenization(char *input);
+int		parser(void);
+
+int		has_var(char *str);
+void	free_pbox(char **pbox, int size);
+void	null_pbox(char **pbox, int size);
+char	*copy_str(char *input, int start, int len);
+void	link_token(t_token *current, t_token *last);
+
+char	*set_pipe_token(char *input, int *i, t_token *token);
+char	*set_redirector_token(char *input, int *i, t_token *token);
+char	*set_str_token(char *input, int *i);
+
+char	*set_quoted_token(char *input, int *i);
+char	*set_expanded_token(char *input, int *i);
+
+char	*expand_token(char **str, int *j);
+char	*get_var(char *var, int *i);
+
+void	call_builtin(t_cli *cli);
+int		b_cd(char **path);
+int		b_echo(char **args);
+int		b_env(char **path, t_env *list);
+int		b_exit(char **args);
+int		b_export(t_env *env, char **args);
+int		b_pwd(void);
+int		b_unset(char **args, t_env *env);
+
+int		export_without_args(t_env *env);
+void	new_var(t_env *env, char *args);
+t_env	*validate_if_var_exist(t_env *list, char *arg);
+
+int		assemble_tokens(t_token *tok_nav);
+
+t_token	*remove_token(t_token *node);
+int		count_args(t_token *node);
+int		count_nodes(t_token *tok);
+int		has_heredoc(t_token	*tok);
+
+t_cli	*make_new_cli(t_here *head);
+t_cli	*remove_cli(t_cli *cli);
+t_token	*discard_tokens(t_token *token);
+t_here	*make_new_heredoc(t_here *head);
+t_here	*get_heredocs(t_token *tok);
+t_cli	*pipe_fd(t_cli *cli);
+void	free_heredocs(t_here *doc, char closing);
+int		assemble_fds(t_cli *cli, t_token *tok, t_here *heredocs);
+
+int	run_commands(void);
+int	mother_forker(t_cli *commands, pid_t *forked, int amount);
+void	execute_a_command(t_cli *commands);
+//remove
+void	print_cli(void);
+void	print_token(t_token *tokens);
 
 #endif

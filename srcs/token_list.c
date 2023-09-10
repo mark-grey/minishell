@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 19:09:57 by inwagner          #+#    #+#             */
-/*   Updated: 2023/08/27 10:55:05 by inwagner         ###   ########.fr       */
+/*   Created: 2023/08/16 22:49:59 by inwagner          #+#    #+#             */
+/*   Updated: 2023/08/16 22:50:58 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *src)
+void	link_token(t_token *current, t_token *last)
 {
-	size_t	len;
-
-	if (!src)
-		return (0);
-	len = 0;
-	while (src[len])
-		len++;
-	return (len);
+	if (!current || !last)
+		return ;
+	while (last->next)
+		last = last->next;
+	last->next = current;
+	current->prev = last;
 }

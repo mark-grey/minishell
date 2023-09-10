@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/08/13 00:07:33 by inwagner         ###   ########.fr        #
+#    Updated: 2023/09/07 15:22:33 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,19 +27,42 @@ BCFLAGS		:=	-Wall -Wextra -Werror -g -I ./bonus/incl
 
 # Source files
 FUN			:=	main.c \
+				assemble_tokens.c \
+				assemble_heredoc.c \
+				assemble_helpers.c \
+				assemble_fds.c \
+				assemble_utils.c \
+				builtin_caller.c \
+				builtin_cd.c \
+				builtin_echo.c \
+				builtin_env.c \
+				builtin_exit.c \
+				builtin_export_print.c \
+				builtin_export.c \
+				builtin_pwd.c \
+				builtin_unset.c \
 				cleaner.c \
 				env_parser.c \
 				env_shifter.c \
 				env_utils.c \
 				exec_finder.c \
 				exec_run.c \
-				exec_utils.c \
+				executor.c \
 				input_utils.c \
 				input_validator.c \
+				parser.c \
 				prompt.c \
 				quick_sort.c \
 				signal_handler.c \
-				tokenization.c
+				token_exp_var.c \
+				token_expander.c \
+				token_helper.c \
+				token_list.c \
+				token_setter.c \
+				token_str.c \
+				token_utils.c \
+				token.c \
+				t_printers.c
 
 # Object files
 OBJ			:=	$(FUN:%.c=$(OBJ_DIR)/%.o)
@@ -67,7 +90,7 @@ $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 	@cc $(BCFLAGS) -c $< -o $@
 
 val: all
-	@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./${NAME} || echo ""
+	@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./${NAME} || echo ""
 
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) --silent clean

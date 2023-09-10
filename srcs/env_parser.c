@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:34:50 by inwagner          #+#    #+#             */
-/*   Updated: 2023/08/12 18:53:06 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/08/27 18:46:35 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	set_var(const char *src, t_env *node)
 	ft_strlcpy(dst, src, len);
 	c = ft_strchr(dst, '=');
 	if (c)
+	{
 		*c = '\0';
+		node->value = ++c;
+	}
 	node->key = dst;
-	node->value = ++c;
 }
 
 /*	CRIAR VARIÁVEL
@@ -61,16 +63,18 @@ t_env	*add_var(t_env *prev, char *var)
 ** Procura uma variável na lista, e, caso não
 ** encontre, retorna nulo.
 */
-t_env	*search_var(char *str, t_env *list)
+t_env	*search_var(char *var)
 {
-	int	size;
+	t_env	*env;
+	int		size;
 
-	size = ft_strlen(str) + 1;
-	while (list)
+	env = get_control()->env;
+	size = ft_strlen(var) + 1;
+	while (env)
 	{
-		if (!ft_strncmp(str, list->key, size))
-			return (list);
-		list = list->next;
+		if (!ft_strncmp(var, env->key, size))
+			return (env);
+		env = env->next;
 	}
 	return (NULL);
 }
